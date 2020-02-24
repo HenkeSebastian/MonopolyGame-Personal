@@ -1,0 +1,33 @@
+﻿<!--User Control for the reusable avatar of each player.-->
+    <UserControl x:Class="Monopoly.View.PlayerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Monopoly.View"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100" Width="auto" Height="auto">
+        <UserControl.Resources>
+            <Storyboard x:Key="ActivePulseAnimation" Duration="0:0:1" RepeatBehavior="Forever">
+                <DoubleAnimation Storyboard.Target="{DynamicResource PlayerAvatar}" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0" Duration="0:0:0.5" From="0.0" To="1.0" FillBehavior="Stop"/>
+                <DoubleAnimation Storyboard.Target="{DynamicResource PlayerAvatar}" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0.5" Duration="0:0:0.5" From="1.0" To="0.0" FillBehavior="Stop"/>
+            </Storyboard>
+            <SolidColorBrush x:Name="OverlayColor" x:Key="OverlayColor" Color="RoyalBlue" Opacity="0"/>
+            <Border x:Key="PlayerAvatar" BorderBrush="{StaticResource OverlayColor}" BorderThickness="10">
+                <Image Source="{Binding Player.PlayerAvatar}"/>
+            </Border>
+        </UserControl.Resources>
+
+        <!--Interaction triggers for the playback of the border animation.-->
+        <b:Interaction.Triggers>
+            <b:DataTrigger Binding="{Binding Player.IsActive, Mode=OneWay}" Value="true">
+                <b:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Play"/>
+            </b:DataTrigger>
+            <b:DataTrigger Binding="{Binding Player.IsActive, Mode=OneWay}" Value="false">
+                <b:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Stop"/>
+            </b:DataTrigger>
+        </b:Interaction.Triggers>
+
+        <StaticResource ResourceKey="PlayerAvatar"/>
+    </UserControl>

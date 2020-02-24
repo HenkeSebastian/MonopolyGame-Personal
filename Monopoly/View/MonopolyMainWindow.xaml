@@ -1,0 +1,35 @@
+﻿<!--The main window container that holds the content control for the different user controls.
+    These are being switched out by the code in the "WindowContent" class.-->
+    <Window x:Class="Monopoly.View.MonopolyMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Monopoly.View"
+        xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
+        mc:Ignorable="d"
+        Title="MonopolyMainWindow"
+        x:Name="MonopolyMainWindowControl"
+        Margin="0" Padding="0" Width="{Binding WindowContent.WindowWidth, Mode=TwoWay}" Height="{Binding WindowContent.WindowHeight, Mode = TwoWay}">
+
+        <!--The resources of the different user control views and their respective view models.-->
+        <Window.Resources>
+            <DataTemplate DataType="{x:Type vm:StartScreenViewModel}">
+                <local:StartScreen/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:PlayerCreationViewModel}">
+                <local:PlayerCreationView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:GameViewViewModel}">
+                <local:GameView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:CloseGameViewModel}">
+                <local:CloseGame/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:StartingRollViewModel}">
+                <local:StartingRollView/>
+            </DataTemplate>
+        </Window.Resources>
+        <!--The Content control that holds the user controls.-->
+        <ContentControl x:Name="navigation" Content="{Binding WindowContent.SelectedViewModel}"/>
+    </Window>

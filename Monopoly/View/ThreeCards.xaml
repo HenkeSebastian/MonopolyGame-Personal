@@ -1,0 +1,72 @@
+﻿<!-- A user control used as a container for an ingame icon. (Three Street Monopoly) -->
+    <UserControl x:Class="Monopoly.View.ThreeCards"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Monopoly.View"
+             mc:Ignorable="d" Width="105" Height="140">
+        
+        <!--Main Grid-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--The street card in the Background-->
+            <Border Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="75" Height="100" Panel.ZIndex="0" BorderBrush="Black" BorderThickness="5" CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{Binding StreetColor1, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Row="0" Grid.Column="0"/>
+                    <Rectangle Fill="White" Grid.Row="1" Grid.Column="0"/>
+                </Grid>
+            </Border>
+
+            <!--The street card in the Middleground-->
+            <Border Grid.Row="1" Grid.RowSpan="4" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="75" Height="100" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="5" CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{Binding StreetColor2, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Row="0" Grid.Column="0"/>
+                    <Rectangle Fill="White" Grid.Row="1" Grid.Column="0"/>
+                </Grid>
+            </Border>
+            
+            <!--The street card in the Foreground-->
+            <Border Grid.Row="2" Grid.RowSpan="4" Grid.Column="2" Grid.ColumnSpan="4" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="75" Height="100" Panel.ZIndex="1" BorderBrush="Black" BorderThickness="5" CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="2*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Fill="{Binding StreetColor3, RelativeSource={RelativeSource AncestorType=UserControl}}" Grid.Row="0" Grid.Column="0"/>
+                    <Rectangle Fill="White" Grid.Row="1" Grid.Column="0"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </UserControl>

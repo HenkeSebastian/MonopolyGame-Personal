@@ -1,0 +1,115 @@
+﻿<!--User Control that shows the inventory for each player in the game.-->
+    <UserControl x:Class="Monopoly.View.PlayerCardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Monopoly.View"
+             xmlns:r="clr-namespace:MonopolyLibrary.Resources;assembly=MonopolyLibrary"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="400">
+        <!--Grid for the whole interface.-->
+        <Grid Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--The player Avatar.-->
+            <Viewbox Stretch="UniformToFill" Grid.Column="0" Grid.Row="0" Margin="0">
+                <local:PlayerView Padding="0" Margin="0"/>
+            </Viewbox>
+            
+            <!--All the streets in the game (owned an not owned by the player).-->
+            <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="2">
+                <StackPanel Orientation="Horizontal">
+                    <Viewbox>
+                        <local:TwoCards StreetColor1="{Binding Player.OwnedStreets[0].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[1].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[2].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[3].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[4].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[5].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[6].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[7].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[8].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[9].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[10].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[11].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[12].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[13].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[14].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[15].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[16].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:ThreeCards StreetColor1="{Binding Player.OwnedStreets[17].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[18].GameCard.StreetColor, FallbackValue=Gray}" StreetColor3="{Binding Player.OwnedStreets[19].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                    <Viewbox>
+                        <local:TwoCards StreetColor1="{Binding Player.OwnedStreets[20].GameCard.StreetColor, FallbackValue=Gray}" StreetColor2="{Binding Player.OwnedStreets[21].GameCard.StreetColor, FallbackValue=Gray}"/>
+                    </Viewbox>
+                </StackPanel>
+            </Viewbox>
+
+            <!--Subgrid for the upper part of the interface.-->
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!--Player name and the cash stat.-->
+                <Border Grid.Column="0" Grid.ColumnSpan="8" Grid.Row="0" Background="LightBlue">
+                    <DockPanel>
+                        <Label DockPanel.Dock="Right"  Content="{Binding Player.PlayerCash}" Margin="0,0,10,0" Padding="0" FontFamily="Roboto" FontSize="20" FontWeight="Thin" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Right"/>
+                        <Label DockPanel.Dock="Left" Content="{Binding Player.PlayerName}" Margin="10,0,0,0" Padding="0" FontFamily="Roboto" FontSize="20" FontWeight="Thin" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left"/>
+                    </DockPanel>
+                </Border>
+                
+                <!--Get out of prison cards.-->
+                <Viewbox Grid.Row="1" Grid.Column="0" Margin="5">
+                    <local:PrisonFreeCard Color="AliceBlue"/>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="1" Margin="5">
+                    <local:PrisonFreeCard Color="Red"/>
+                </Viewbox>
+                
+                <!--Train stations.-->
+                <Viewbox Grid.Row="1" Grid.Column="2" Margin="5">
+                    <local:TrainStation Color="{Binding Player.OwnedStreets[22].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="3" Margin="5">
+                    <local:TrainStation Color="{Binding Player.OwnedStreets[23].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="4" Margin="5">
+                    <local:TrainStation Color="{Binding Player.OwnedStreets[24].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Grid.Column="5" Margin="5">
+                    <local:TrainStation Color="{Binding Player.OwnedStreets[25].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+                
+                <!--Electric Company.-->
+                <Viewbox Grid.Row="1" Grid.Column="6" Margin="5">
+                    <local:ElectricCompany Color="Black" BackgroundColor="{Binding Player.OwnedStreets[26].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+                
+                <!--Water Works.-->
+                <Viewbox Grid.Row="1" Grid.Column="7" Margin="5">
+                    <local:WaterWorks Color="{Binding Player.OwnedStreets[27].GameCard.StreetColor, FallbackValue=Gray}"/>
+                </Viewbox>
+            </Grid>
+        </Grid>
+    </UserControl>
