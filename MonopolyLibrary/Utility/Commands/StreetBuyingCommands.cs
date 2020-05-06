@@ -29,11 +29,10 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void BuyStreet()
         {
-            //Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].PlayerBuyingStreet(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
-            //Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].AddOwningPlayer(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
-            Content.ManagingPlayer.GivePlayerGameCard(Content.ManagingPlayer.GetActivePlayer(), Content.GameViewViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()));
-            Content.ManagingPlayer.RemovePlayerMoney(Content.ManagingPlayer.GetActivePlayer(), Content.GameViewViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()).GameCard.StreetPrice);
-            //Content.CloseSecondaryWindow();
+            Content.ManagingPlayer.GetActivePlayer().PlayerAddGameCard(Content.GameBoardViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()));
+            Content.ManagingPlayer.GetActivePlayer().PlayerRemoveMoney(Content.GameBoardViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()).StreetPrice);
+            Content.GameBoardViewModel.SetDoneButton(true);
+            Content.ChangeDetailsView(Windows.IdleDetails);
         }
     }
 }

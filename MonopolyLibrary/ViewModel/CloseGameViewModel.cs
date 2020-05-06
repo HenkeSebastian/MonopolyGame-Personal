@@ -20,19 +20,6 @@ namespace MonopolyLibrary.ViewModel
 
 
         /// <summary>
-        /// Property for the WindowContent class for persistence and accessability of the other instanced classes.
-        /// </summary>
-        private WindowContent content;
-
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
-
-
-        /// <summary>
         /// Property that saves the window, that has called the closing window. Used for reverting to the calling window.
         /// </summary>
         private Windows calledWindow;

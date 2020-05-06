@@ -94,6 +94,13 @@ namespace MonopolyLibrary.Utility
         GameOver,
         EndScreen,
         ClosingScreen,
-        StartingRoll
+        StartingRoll,
+        GameBoardScreen,
+        IdleDetails,
+        GameCardDetails,
+        GameCard,
+        StreetInteractionDetails,
+        StreetBuyingDetails,
+        CommunityDetails
     }
 }

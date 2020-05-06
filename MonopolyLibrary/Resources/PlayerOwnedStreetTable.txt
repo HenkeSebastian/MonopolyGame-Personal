@@ -1,13 +1,13 @@
-﻿          00      Badstraße
-          01      Turmstraße
-          02      Chausseestraße
-          03      Elisenstraße
-          04      Poststraße
-          05      Seestraße
-          06      Hafenstraße
-          07      NeueStraße
-          08      MünchnerStraße
-          09      WienerStraße
+﻿           0      Badstraße
+           1      Turmstraße
+           2      Chausseestraße
+           3      Elisenstraße
+           4      Poststraße
+           5      Seestraße
+           6      Hafenstraße
+           7      NeueStraße
+           8      MünchnerStraße
+           9      WienerStraße
           10      BerlinerStraße
           11      TheaterStraße
           12      Museumstraße
@@ -26,3 +26,14 @@
           25      Hauptbahnhof
           26      EWerk
           27      Wasserwerk
+		  ___________________________________________
+		  Monopolies IDs
+
+		  0		Lila
+		  1		Hellblau
+		  2		Pink
+		  3		Orange
+		  4		Rot
+		  5		Gelb
+		  6	Grün
+		  7		Blau

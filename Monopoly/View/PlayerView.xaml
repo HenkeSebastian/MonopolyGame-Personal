@@ -15,16 +15,16 @@
             </Storyboard>
             <SolidColorBrush x:Name="OverlayColor" x:Key="OverlayColor" Color="RoyalBlue" Opacity="0"/>
             <Border x:Key="PlayerAvatar" BorderBrush="{StaticResource OverlayColor}" BorderThickness="10">
-                <Image Source="{Binding Player.PlayerAvatar}"/>
+                <Image Source="{Binding PlayerAvatar}"/>
             </Border>
         </UserControl.Resources>
 
         <!--Interaction triggers for the playback of the border animation.-->
         <b:Interaction.Triggers>
-            <b:DataTrigger Binding="{Binding Player.IsActive, Mode=OneWay}" Value="true">
+            <b:DataTrigger Binding="{Binding IsActive, Mode=OneWay}" Value="true">
                 <b:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Play"/>
             </b:DataTrigger>
-            <b:DataTrigger Binding="{Binding Player.IsActive, Mode=OneWay}" Value="false">
+            <b:DataTrigger Binding="{Binding IsActive, Mode=OneWay}" Value="false">
                 <b:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Stop"/>
             </b:DataTrigger>
         </b:Interaction.Triggers>

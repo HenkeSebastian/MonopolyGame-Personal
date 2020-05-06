@@ -13,26 +13,30 @@ namespace MonopolyLibrary.Tests.Gamerules
 {
     public class C_CommunityChestTests
     {
-        C_CommunityChest communityChestRef = new C_CommunityChest();
-        WindowContent contentTest = new WindowContent();
+        C_CommunityChest communityChestRef;
+        WindowContent contentTest;
         PlayerViewModel testPlayer;
 
         public C_CommunityChestTests()
         {
-            testPlayer = new PlayerViewModel(contentTest) { Player = new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 7 } };
+            contentTest = new WindowContent();
+            communityChestRef = contentTest.CommunityChest;
+            testPlayer = new PlayerViewModel(contentTest, new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 7 }) ;
+            contentTest.ManagingPlayer.AddPlayer(testPlayer);
+            contentTest.ManagingPlayer.SetAllPlayerCollection();
         }
 
         [Fact]
         public void GoToSeeStr_ShouldSetPlayerToID11()
         {
             //Arrange
-            testPlayer.Player.CurrentPosition = 0;
-            contentTest.GameViewViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            testPlayer.CurrentPosition = 0;
+            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 11;
             //Act
             communityChestRef.GoToSeeStr(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.CurrentPosition);
+            Assert.Equal(expected, testPlayer.CurrentPosition);
         }
         [Fact]
         public void KreuzwortGewonnen_ShouldAdd100Cash()
@@ -42,7 +46,7 @@ namespace MonopolyLibrary.Tests.Gamerules
             //Act
             communityChestRef.KreuzwortGewonnen(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.PlayerCash);
+            Assert.Equal(expected, testPlayer.PlayerCash);
         }
 
         [Fact]
@@ -53,7 +57,7 @@ namespace MonopolyLibrary.Tests.Gamerules
             //Act
             communityChestRef.GetRent(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.PlayerCash);
+            Assert.Equal(expected, testPlayer.PlayerCash);
         }
 
         //TODO Add GetOutOfJail Unit test.
@@ -72,65 +76,65 @@ namespace MonopolyLibrary.Tests.Gamerules
         public void GoToGo_ShouldSetPlayerToID0AndAdd200Cash()
         {
             //Arrange
-            testPlayer.Player.CurrentPosition = 10;
-            contentTest.GameViewViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
+            testPlayer.CurrentPosition = 10;
+            contentTest.GameBoardViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
             int expected = 0;
             int expectedTwo = 2200;
             //Act
             communityChestRef.GoToGo(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.CurrentPosition);
-            Assert.Equal(expectedTwo, testPlayer.Player.PlayerCash);
+            Assert.Equal(expected, testPlayer.CurrentPosition);
+            Assert.Equal(expectedTwo, testPlayer.PlayerCash);
         }
 
         [Fact]
-        public void GetDic_ShouldAdd50Cash()
+        public void GetDiv_ShouldAdd50Cash()
         {
             //Arrange
             int expected = 2050;
             //Act
             communityChestRef.GetDiv(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.PlayerCash);
+            Assert.Equal(expected, testPlayer.PlayerCash);
         }
 
         [Fact]
         public void GoToSchlossAllee_ShouldSetPlayerToID39()
         {
             //Arrange
-            testPlayer.Player.CurrentPosition = 0;
-            contentTest.GameViewViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            testPlayer.CurrentPosition = 0;
+            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 39;
             //Act
             communityChestRef.GoToSchlossAllee(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.CurrentPosition);
+            Assert.Equal(expected, testPlayer.CurrentPosition);
         }
 
         [Fact]
         public void GoToOpernPlatz_ShouldSetPlayerToID24()
         {
             //Arrange
-            testPlayer.Player.CurrentPosition = 0;
-            contentTest.GameViewViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            testPlayer.CurrentPosition = 0;
+            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 24;
             //Act
             communityChestRef.GoToOpernplatz(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.CurrentPosition);
+            Assert.Equal(expected, testPlayer.CurrentPosition);
         }
 
         [Fact]
         public void MoveBackThree_ShouldSetPlayerToIDBackBy3()
         {
             //Arrange
-            testPlayer.Player.CurrentPosition = 10;
-            contentTest.GameViewViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
+            testPlayer.CurrentPosition = 10;
+            contentTest.GameBoardViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
             int expected = 7;
             //Act
             communityChestRef.MoveBackThree(testPlayer);
             //Assert
-            Assert.Equal(expected, testPlayer.Player.CurrentPosition);
+            Assert.Equal(expected, testPlayer.CurrentPosition);
         }
     }
 }

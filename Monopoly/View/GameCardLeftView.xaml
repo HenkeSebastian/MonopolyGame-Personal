@@ -1,5 +1,6 @@
-﻿<!--A game card that is rotated by 90° for visual representation on the ingame board.-->
-    <UserControl x:Class="Monopoly.View.GameCardLeftView"
+﻿<!--DEPRECATED! Not longer needed.-->
+    <!--A game card that is rotated by 90° for visual representation on the ingame board.-->
+<UserControl x:Class="Monopoly.View.GameCardLeftView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,10 +8,10 @@
              xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Monopoly.View"
-             mc:Ignorable="d" 
-             
-             Width="{Binding GameCard.CardHeight, Mode=TwoWay}" Height="{Binding GameCard.CardWidth, Mode=TwoWay}">
-        
+             mc:Ignorable="d" >
+
+    <!-- Width="{Binding GameCard.CardHeight, Mode=TwoWay}" Height="{Binding GameCard.CardWidth, Mode=TwoWay}">-->
+
         <!--Interaction trigger for the detailed game card by mouse hover event.-->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter">
@@ -18,6 +19,10 @@
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave">
                 <i:InvokeCommandAction Command="{Binding Content.ButtonBindings.Com_ClearMouseOverGameCard}"/>
+            </i:EventTrigger>
+        <!--Interaction trigger for the street interaction menu (non functional atm / just testing!)-->
+            <i:EventTrigger EventName="MouseLeftButtonUp">
+                <i:InvokeCommandAction Command="{Binding Content.ButtonBindings.Com_OpenStreetInteraction}" CommandParameter="{Binding}"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
 
@@ -40,11 +45,11 @@
                 <Rectangle Fill="Transparent" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"/>
                 
                 <!--The colored top row.-->
-                <Rectangle Fill="{Binding GameCard.StreetColor}" Grid.Column="5" Grid.Row="0" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto"/>
+                <Rectangle Fill="{Binding StreetColor}" Grid.Column="5" Grid.Row="0" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto"/>
                 
                 <!--The text for the street name.-->
                 <Label TextBlock.TextAlignment="Center" FontFamily="Roboto" FontSize="10" Grid.Column="3" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0" Height="auto" Width="auto">
-                    <AccessText TextWrapping="WrapWithOverflow" Text="{Binding GameCard.StreetName}">
+                    <AccessText TextWrapping="WrapWithOverflow" Text="{Binding StreetName}">
                         <AccessText.RenderTransformOrigin>
                             <Point X="0.5" Y="0.5"/>
                         </AccessText.RenderTransformOrigin>
@@ -56,7 +61,7 @@
 
                 <!--An items control for the visual representation of all the players currently on this street.
                     Here every avatar image of the players standing on this street will be shown.-->
-                <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding GameCard.PlayerOnGameCard}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding PlayerOnGameCard}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                     <ItemsControl.LayoutTransform>
                         <RotateTransform Angle="90"/>
                     </ItemsControl.LayoutTransform>
@@ -68,14 +73,14 @@
 
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Image Width="24" Height="24" Source="{Binding Player.PlayerAvatar}"/>
+                            <Image Width="24" Height="24" Source="{Binding PlayerAvatar}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
 
                 <!--The text for the price of the street-->
                 <Label FontFamily="Roboto" FontSize="7" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="auto" Height="auto" RenderTransformOrigin="0.5,0.5">
-                    <AccessText TextWrapping="WrapWithOverflow" Text="{Binding GameCard.StreetPriceText}" RenderTransformOrigin="0.5,0.5">
+                    <AccessText TextWrapping="WrapWithOverflow" Text="{Binding StreetPriceText}" RenderTransformOrigin="0.5,0.5">
                         <AccessText.LayoutTransform>
                             <RotateTransform Angle="90"/>
                         </AccessText.LayoutTransform>

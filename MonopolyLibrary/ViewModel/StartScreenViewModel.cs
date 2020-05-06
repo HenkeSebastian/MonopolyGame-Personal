@@ -17,14 +17,6 @@ namespace MonopolyLibrary.ViewModel
             get { return Windows.StartScreen; }
         }
 
-        private WindowContent content;
-
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
         public StartScreenViewModel(WindowContent passedWindowContent)
         {
             Content = passedWindowContent;

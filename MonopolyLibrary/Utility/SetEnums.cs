@@ -10,7 +10,7 @@ using MonopolyLibrary.ViewModel;
 
 namespace MonopolyLibrary.Utility
 {
-    class SetEnums
+    public class SetEnums
     {
         public SetEnums()
         {
@@ -30,6 +30,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Big,
                         CardWidth = SetGameCardSize(GameCardSizes.Big)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
@@ -41,6 +42,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -50,12 +52,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 50,
                         Mortgage = new int[2]{30,33},
                         StreetColor = SetStreetColors(StreetColors.Purple),
-                        OwnerArrayID = 0
+                        OwnerArrayID = 0,
+                        MonopoliesID = 0
                     };
                 case StreetName.Gemeinschaftsfeld:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -67,6 +71,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -76,12 +81,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 50,
                         Mortgage = new int[2] {30,33},
                         StreetColor = SetStreetColors(StreetColors.Purple),
-                        OwnerArrayID = 1
+                        OwnerArrayID = 1,
+                        MonopoliesID = 0
                     };
                 case StreetName.Einkommenssteuer:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -93,19 +100,22 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Südbahnhof",
                         StreetPrice = 200,
-                        Mortgage = new int[2] {100,110},
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        RentPrices = new int[4] { 25, 50, 100, 200 },
+                        Mortgage = new int[2] { 100, 110 },
+                        StreetColor = new SolidColorBrush(Colors.Black),
                         OwnerArrayID = 22
                     };
                 case StreetName.Chausseestraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -115,12 +125,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 50,
                         Mortgage = new int[2] {50,55},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
-                        OwnerArrayID = 2
+                        OwnerArrayID = 2,
+                        MonopoliesID = 1
                     };
                 case StreetName.Ereignisfeld:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -132,6 +144,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -141,12 +154,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 50,
                         Mortgage = new int[2] {50,55},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
-                        OwnerArrayID = 3
+                        OwnerArrayID = 3,
+                        MonopoliesID = 1
                     };
                 case StreetName.Poststraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -156,12 +171,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 50,
                         Mortgage = new int[2] {60,66},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
-                        OwnerArrayID = 4
+                        OwnerArrayID = 4,
+                        MonopoliesID = 1
                     };
                 case StreetName.Gefängnis:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Big,
                         CardWidth = SetGameCardSize(GameCardSizes.Big)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
@@ -173,6 +190,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -182,24 +200,27 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] {70,77},
                         StreetColor = SetStreetColors(StreetColors.Orchid),
-                        OwnerArrayID = 5
+                        OwnerArrayID = 5,
+                        MonopoliesID = 2
                     };
                 case StreetName.EWerk:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Elektrizitätswerk",
                         StreetPrice = 150,
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        StreetColor = SetStreetColors(StreetColors.Yellow),
                         OwnerArrayID = 26
                     };
                 case StreetName.Hafenstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -209,12 +230,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] { 70, 77 },
                         StreetColor = SetStreetColors(StreetColors.Orchid),
-                        OwnerArrayID = 6
+                        OwnerArrayID = 6,
+                        MonopoliesID = 2
                     };
                 case StreetName.NeueStraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -224,25 +247,29 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] { 80, 88 },
                         StreetColor = SetStreetColors(StreetColors.Orchid),
-                        OwnerArrayID = 7
+                        OwnerArrayID = 7,
+                        MonopoliesID = 2
                     };
 
                 case StreetName.Westbahnhof:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Westbahnhof",
                         StreetPrice = 200,
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        RentPrices = new int[4] { 25, 50, 100, 200 },
+                        StreetColor = new SolidColorBrush(Colors.Black),
                         OwnerArrayID = 23
                     };
                 case StreetName.MünchnerStraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -252,12 +279,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] { 90, 99 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
-                        OwnerArrayID = 8
+                        OwnerArrayID = 8,
+                        MonopoliesID = 3
                     };
                 case StreetName.WienerStraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -267,12 +296,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] { 90, 99 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
-                        OwnerArrayID = 9
+                        OwnerArrayID = 9,
+                        MonopoliesID = 3
                     };
                 case StreetName.BerlinerStraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -282,12 +313,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 100,
                         Mortgage = new int[2] { 100, 110 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
-                        OwnerArrayID = 10
+                        OwnerArrayID = 10,
+                        MonopoliesID = 3
                     };
                 case StreetName.FreiParken:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Big,
                         CardWidth = SetGameCardSize(GameCardSizes.Big)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
@@ -299,6 +332,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -308,12 +342,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 110, 121 },
                         StreetColor = SetStreetColors(StreetColors.Red),
-                        OwnerArrayID = 11
+                        OwnerArrayID = 11,
+                        MonopoliesID = 4
                     };
                 case StreetName.Museumstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -323,12 +359,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 110, 121 },
                         StreetColor = SetStreetColors(StreetColors.Red),
-                        OwnerArrayID = 12
+                        OwnerArrayID = 12,
+                        MonopoliesID = 4
                     };
                 case StreetName.Opernplatz:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -338,24 +376,28 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 120, 132 },
                         StreetColor = SetStreetColors(StreetColors.Red),
-                        OwnerArrayID = 13
+                        OwnerArrayID = 13,
+                        MonopoliesID = 4
                     };
                 case StreetName.NordBahnhof:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Nordbahnhof",
                         StreetPrice = 200,
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        RentPrices = new int[4] { 25, 50, 100, 200 },
+                        StreetColor = new SolidColorBrush(Colors.Black),
                         OwnerArrayID = 24
                     };
                 case StreetName.Lessingstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -365,12 +407,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 130, 143 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
-                        OwnerArrayID = 14
+                        OwnerArrayID = 14,
+                        MonopoliesID = 5
                     };
                 case StreetName.Schillerstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -380,24 +424,27 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 130, 143 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
-                        OwnerArrayID = 15
+                        OwnerArrayID = 15,
+                        MonopoliesID = 5
                     };
                 case StreetName.Wasserwerk:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Wasserwerk",
                         StreetPrice = 150,
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        StreetColor = SetStreetColors(StreetColors.RoyalBlue),
                         OwnerArrayID = 27
                     };
                 case StreetName.Goethestraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -407,12 +454,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 150,
                         Mortgage = new int[2] { 140, 154 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
-                        OwnerArrayID = 16
+                        OwnerArrayID = 16,
+                        MonopoliesID = 5
                     };
                 case StreetName.InDasGefängnis:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Big,
                         CardWidth = SetGameCardSize(GameCardSizes.Big)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
@@ -424,6 +473,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -433,12 +483,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 200,
                         Mortgage = new int[2] { 150, 165 },
                         StreetColor = SetStreetColors(StreetColors.Green),
-                        OwnerArrayID = 17
+                        OwnerArrayID = 17,
+                        MonopoliesID = 6
                     };
                 case StreetName.Hauptstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -448,12 +500,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 200,
                         Mortgage = new int[2] { 150, 165 },
                         StreetColor = SetStreetColors(StreetColors.Green),
-                        OwnerArrayID = 18
+                        OwnerArrayID = 18,
+                        MonopoliesID = 6
                     };
                 case StreetName.Bahnhofstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -463,24 +517,28 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 200,
                         Mortgage = new int[2] { 160, 176 },
                         StreetColor = SetStreetColors(StreetColors.Green),
-                        OwnerArrayID = 19
+                        OwnerArrayID = 19,
+                        MonopoliesID = 6
                     };
                 case StreetName.Hauptbahnhof:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Hauptbahnhof",
                         StreetPrice = 200,
-                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        RentPrices = new int[4] { 25, 50, 100, 200 },
+                        StreetColor = new SolidColorBrush(Colors.Black),
                         OwnerArrayID = 25
                     };
                 case StreetName.Parkstraße:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -490,12 +548,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 200,
                         Mortgage = new int[2] { 175, 193 },
                         StreetColor = SetStreetColors(StreetColors.RoyalBlue),
-                        OwnerArrayID = 20
+                        OwnerArrayID = 20,
+                        MonopoliesID = 7
                     };
                 case StreetName.Zusatzsteuer:
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = false,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -507,6 +567,7 @@ namespace MonopolyLibrary.Utility
                     return new GameCardModel
                     {
                         StreetState = streetName,
+                        CardInteractable = true,
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
@@ -516,12 +577,14 @@ namespace MonopolyLibrary.Utility
                         HousePrice = 200,
                         Mortgage = new int[2] { 200, 220 },
                         StreetColor = SetStreetColors(StreetColors.RoyalBlue),
-                        OwnerArrayID = 21
+                        OwnerArrayID = 21,
+                        MonopoliesID = 7
                     };
             }
             return new GameCardModel
             {
                 StreetState = streetName,
+                CardInteractable = false,
                 CardSize = GameCardSizes.Small,
                 CardWidth = 0,
                 CardHeight = 0,

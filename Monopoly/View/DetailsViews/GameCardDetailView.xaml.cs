@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Monopoly.View
+namespace Monopoly.View.DetailsViews
 {
     /// <summary>
-    /// Interaction logic for StreetBuyingView.xaml
+    /// Interaction logic for GameCardDetailView.xaml
     /// </summary>
-    public partial class StreetBuyingView : UserControl
+    public partial class GameCardDetailView : UserControl
     {
-        public StreetBuyingView()
+        public GameCardDetailView()
         {
             InitializeComponent();
         }

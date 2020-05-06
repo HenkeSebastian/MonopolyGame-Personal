@@ -48,8 +48,8 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="window"></param>
         public void RollDice(Windows window)
         {
-            int[] roll = Dice.RollDice();
-            Dice.SetDiceImages(Content.DiceViewModel.DiceModel, roll[0], roll[1]);
+            Dice.RollDice(Content.DiceViewModel);
+            Dice.SetDiceImages(Content.DiceViewModel, Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
 
             switch (window)
             {
@@ -66,7 +66,7 @@ namespace MonopolyLibrary.Utility.Commands
                 case Windows.ClosingScreen:
                     break;
                 case Windows.StartingRoll:
-                    Dice.SetFirstThrow(Content.ManagingPlayer.AllPlayers, roll[0], roll[1]);
+                    Dice.SetFirstThrow(Content.ManagingPlayer.AllPlayers, Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
                     break;
                 default:
                     break;
@@ -81,9 +81,9 @@ namespace MonopolyLibrary.Utility.Commands
         public void FirstRoll()
         {
             //DiceLogic.Roll();
-            int[] roll = Dice.RollDice();
-            Dice.SetDiceImages(Content.DiceViewModel.DiceModel, roll[0], roll[1]);
-            Content.StartingRollViewModel.C_FirstRollRules.SetScore(roll[0], roll[1]);
+            Dice.RollDice(Content.DiceViewModel);
+            Dice.SetDiceImages(Content.DiceViewModel, Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
+            Content.StartingRollViewModel.C_FirstRollRules.SetScore(Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
             Content.StartingRollViewModel.C_FirstRollRules.NextPlayer();
         }
 
@@ -93,19 +93,44 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void MainGameRoll()
         {
-            int[] roll = Dice.RollDice();
-            Dice.SetDiceImages(Content.DiceViewModel.DiceModel, roll[0], roll[1]);
+            if (Content.ManagingPlayer.GetActivePlayer().PlayerCheckInPrison())
+            {
+                PrisonRoll();
+                return;
+            }
+            Dice.RollDice(Content.DiceViewModel);
+            Dice.SetDiceImages(Content.DiceViewModel, Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
             //Find Active Player on current Game Card and Delete it
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].DeletePlayerOnCard(Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]));
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].DeletePlayerOnCard(Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.GetActivePlayer()));
             //Add rolled values to current Position
             //Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition = Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition + (diceRoll[0] + diceRoll[1]);
-            Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].MovePlayer(roll[0] + roll[1]);
+            Content.ManagingPlayer.GetActivePlayer().MovePlayer(Content.DiceViewModel.DieOne + Content.DiceViewModel.DieTwo);
             //Add Player to the new Game Card
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
-
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].CardAction(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.GetActivePlayer());
+            Content.GameBoardViewModel.SetDoneButton(true);
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].CardAction(Content.ManagingPlayer.GetActivePlayer());
             //Disable Dice
-            Content.DiceViewModel.DisableDice();
+            Content.DiceViewModel.Dice.DisableDice(Content.DiceViewModel);
+        }
+
+        /// <summary>
+        /// Dice roll if the active player is currently in prison.
+        /// Work in progress!
+        /// </summary>
+        public void PrisonRoll()
+        {
+            Dice.RollDice(Content.DiceViewModel);
+            Dice.SetDiceImages(Content.DiceViewModel, Content.DiceViewModel.DieOne, Content.DiceViewModel.DieTwo);
+            if (Dice.getDoublets(Content.DiceViewModel))
+            {
+                Content.ManagingPlayer.GetActivePlayer().PlayerGetsOutOfPrison();
+                return;
+            }
+            Content.ManagingPlayer.GetActivePlayer().DiceRoll++;
+            if (Content.ManagingPlayer.GetActivePlayer().DiceRoll == 3)
+            {
+                Content.ManagingPlayer.GetActivePlayer().PlayerGetsOutOfPrison();
+            }
         }
 
 
@@ -114,10 +139,16 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void EndTurn()
         {
+            Content.GameBoardViewModel.SetDoneButton(false);
             //Activate the next player.
             Content.ManagingPlayer.NextPlayer();
+
+            if(Content.SelectedDetailsViewModel != Content.IdleDetailsViewModel)
+            {
+                Content.SelectedDetailsViewModel = Content.IdleDetailsViewModel;
+            }
             //Enable the dice for the next player.
-            Content.DiceViewModel.EnableDice();
+            Content.DiceViewModel.Dice.EnableDice(Content.DiceViewModel);
         }
 
 
@@ -127,42 +158,47 @@ namespace MonopolyLibrary.Utility.Commands
         public void OneStep()
         {
             //Find Active Player on current Game Card and Delete it
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].DeletePlayerOnCard(Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]));
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].CurrentPosition].DeletePlayerOnCard(Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]));
             //Add rolled values to current Position
-            //Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition = Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition + (diceRoll[0] + diceRoll[1]);
+            //Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].CurrentPosition = Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition + (diceRoll[0] + diceRoll[1]);
             Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].MovePlayer(1);
             //Add Player to the new Game Card
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
 
-            Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].CardAction(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].CurrentPosition].CardAction(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
             Content.ManagingPlayer.NextPlayer();
         }
-        /*
+  
+        /// <summary>
+        /// Method for testing purposes. Not in use!
+        /// </summary>
         public void MainGameRollSteps()
         {
-            int[] diceRoll = DiceLogic.Roll();
+            Content.DiceViewModel.Dice.DisableDice(Content.DiceViewModel);
+            Dice.RollDice(Content.DiceViewModel);
             var thread = new Thread(
-                () => baa(diceRoll));
+                () => MainSteps());
             thread.Start();
 
             Content.ManagingPlayer.NextPlayer();
         }
 
-
-
-        public void baa(int[] diceRoll)
+        public void MainSteps()
         {
-            for (int i = 0; i < diceRoll[0] + diceRoll[1]; i++)
+            //Dice.RollDice(Content.DiceViewModel);
+            for (int i = 0; i < Content.DiceViewModel.DieOne + Content.DiceViewModel.DieTwo; i++)
             {
                 //Find Active Player on current Game Card and Delete it
-                Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].DeletePlayerOnCard(Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]));
+                Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].DeletePlayerOnCard(Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].FindPlayerViewModelOnCard(Content.ManagingPlayer.GetActivePlayer()));
                 //Add rolled values to current Position
-                Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition = Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition + (1);
+                Content.ManagingPlayer.GetActivePlayer().CurrentPosition = Content.ManagingPlayer.GetActivePlayer().CurrentPosition + (1);
                 //Add Player to the new Game Card
-                Content.GameViewViewModel.GameCards[Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex]);
+                Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].AddPlayerOnCard(Content.ManagingPlayer.GetActivePlayer());
 
                 Thread.Sleep(500);
             }
-        }*/
+            Content.GameBoardViewModel.GameCards[Content.ManagingPlayer.GetActivePlayer().CurrentPosition].CardAction(Content.ManagingPlayer.GetActivePlayer());
+            Content.GameBoardViewModel.SetDoneButton(true);
+        }
     }
 }

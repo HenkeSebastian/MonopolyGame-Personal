@@ -13,27 +13,14 @@ using System.Windows.Input;
 
 namespace MonopolyLibrary.ViewModel
 {
-    public class DiceViewModel
+    public class DiceViewModel: BaseViewModel
     {
-        private WindowContent content;
-
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
-
 
         private DiceModel diceModel;
 
         public DiceModel DiceModel
         {
             get { return diceModel; }
-            set
-            {
-                diceModel = value;
-            }
         }
 
         private C_Dice dice;
@@ -44,31 +31,67 @@ namespace MonopolyLibrary.ViewModel
             set { dice = value; }
         }
 
+        public int DieOne
+        {
+            get { return DiceModel.DieOne; }
+            set
+            {
+                DiceModel.DieOne = value;
+                OnPropertyChanged("DieOne");
+            }
+        }
+
+        public int DieTwo
+        {
+            get { return DiceModel.DieTwo; }
+            set
+            {
+                DiceModel.DieTwo = value;
+                OnPropertyChanged("DieTwo");
+            }
+        }
+
+        public string DieOneImageSource
+        {
+            get { return DiceModel.DieOneImageSource; }
+            set
+            {
+                DiceModel.DieOneImageSource = value;
+                OnPropertyChanged("DieOneImageSource");
+            }
+        }
+
+        public string DieTwoImageSource
+        {
+            get { return DiceModel.DieTwoImageSource; }
+            set
+            {
+                DiceModel.DieTwoImageSource = value;
+                OnPropertyChanged("DieTwoImageSource");
+            }
+        }
+
+        public bool ButtonEnabled
+        {
+            get { return DiceModel.ButtonEnabled; }
+            set
+            {
+                DiceModel.ButtonEnabled = value;
+                OnPropertyChanged("ButtonEnabled");
+            }
+        }
+
 
 
 
         public DiceViewModel(WindowContent content)
         {
             Content = content;
-            DiceModel = new DiceModel() { ButtonEnabled = true } ;
+            this.diceModel = new DiceModel();
+            ButtonEnabled = true;
             Dice = new C_Dice();
-            Dice.SetDiceImages(DiceModel, 1, 1);
+            Dice.SetDiceImages(this, 1, 1);
         }
 
-        /// <summary>
-        /// Enables the DiceButton.
-        /// </summary>
-        public void EnableDice()
-        {
-            DiceModel.ButtonEnabled = true;
-        }
-
-        /// <summary>
-        /// Disables the DiceButton.
-        /// </summary>
-        public void DisableDice()
-        {
-            DiceModel.ButtonEnabled = false;
-        }
     }
 }

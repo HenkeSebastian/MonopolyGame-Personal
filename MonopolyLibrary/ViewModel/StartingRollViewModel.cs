@@ -10,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace MonopolyLibrary.ViewModel
 {
-    public class StartingRollViewModel:BaseViewModel, INotifyPropertyChanged
+    public class StartingRollViewModel:BaseViewModel
     {
         public Windows Window
         {
             get { return Windows.StartingRoll; }
         }
 
-        private WindowContent content;
-
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
 
         private C_FirstRollRules c_firstRollRules;
 
@@ -40,11 +33,5 @@ namespace MonopolyLibrary.ViewModel
             C_FirstRollRules = new C_FirstRollRules(Content);
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

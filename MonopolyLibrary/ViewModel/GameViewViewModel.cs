@@ -13,16 +13,11 @@ using MonopolyLibrary.Utility;
 
 namespace MonopolyLibrary.ViewModel
 {
+    /// <summary>
+    /// DEPRECATED! ViewModel for the no longer used  GameView.xaml View.
+    /// </summary>
     public class GameViewViewModel:BaseViewModel, INotifyPropertyChanged
     {
-        private WindowContent content;
-
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
 
         public Windows Window
         {
@@ -114,46 +109,46 @@ namespace MonopolyLibrary.ViewModel
         {
             GameCards = new GameCardViewModel[]
             {
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.LOS) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Badstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Turmstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Einkommenssteuer) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Südbahnhof) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Chausseestraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Elisenstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Poststraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Gefängnis) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Seestraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.EWerk) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Hafenstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.NeueStraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Westbahnhof) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.MünchnerStraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.WienerStraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.BerlinerStraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.FreiParken) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.TheaterStraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Museumstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Opernplatz) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.NordBahnhof) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Lessingstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Schillerstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Wasserwerk) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Goethestraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.InDasGefängnis) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Rathausplatz) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Hauptstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Bahnhofstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Hauptbahnhof) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Parkstraße) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Zusatzsteuer) },
-                new GameCardViewModel(){Content = Content, GameCard = SetEnums.SetGameCard(Utility.StreetName.Schlossallee) }
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.LOS)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Badstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Turmstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Einkommenssteuer)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Südbahnhof)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Chausseestraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Elisenstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Poststraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Gefängnis)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Seestraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.EWerk)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Hafenstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.NeueStraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Westbahnhof)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.MünchnerStraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.WienerStraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.BerlinerStraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.FreiParken)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.TheaterStraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Museumstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Opernplatz)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.NordBahnhof)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Lessingstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Schillerstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Wasserwerk)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Goethestraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.InDasGefängnis)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Rathausplatz)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Hauptstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Gemeinschaftsfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Bahnhofstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Hauptbahnhof)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Ereignisfeld)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Parkstraße)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Zusatzsteuer)),
+                new GameCardViewModel(Content, SetEnums.SetGameCard(Utility.StreetName.Schlossallee))
             };
             GameCards1 = new ObservableCollection<GameCardViewModel>();
             GameCards2 = new ObservableCollection<GameCardViewModel>();
@@ -217,13 +212,8 @@ namespace MonopolyLibrary.ViewModel
         /// <returns>Returns the game card object that the given player is standing on.</returns>
         public GameCardViewModel GetPlayerGameCard(PlayerViewModel selectPlayer)
         {
-            return GameCards[selectPlayer.Player.CurrentPosition];
+            return GameCards[selectPlayer.CurrentPosition];
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

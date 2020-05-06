@@ -12,7 +12,7 @@ using MonopolyLibrary.ViewModel;
 
 namespace MonopolyLibrary.Model
 {
-    public class GameCardModel: BaseModel
+    public class GameCardModel
     {
 
         /// <summary>
@@ -26,9 +26,20 @@ namespace MonopolyLibrary.Model
             set
             {
                 streetState = value;
-                OnPropertyChanged("StreetState");
             }
         }
+
+        private bool cardInteractable;
+
+        public bool CardInteractable
+        {
+            get { return cardInteractable; }
+            set
+            {
+                cardInteractable = value;
+            }
+        }
+
 
         /// <summary>
         /// Saves the card size.
@@ -41,7 +52,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 cardSize = value;
-                OnPropertyChanged("CardSize");
             }
         }
 
@@ -65,7 +75,6 @@ namespace MonopolyLibrary.Model
                     cardWidth = 100;
                 }
                 cardWidth = value;
-                OnPropertyChanged("CardWidth");
             }
         }
 
@@ -84,7 +93,6 @@ namespace MonopolyLibrary.Model
                     cardHeight = 100;
                 }
                 cardHeight = value;
-                OnPropertyChanged("CardHeight");
             }
         }
 
@@ -99,7 +107,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 streetName = value;
-
             }
         }
 
@@ -114,7 +121,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 streetPrice = value;
-                OnPropertyChanged("StreetPrice");
                 StreetPriceText = value.ToString();
             }
         }
@@ -131,12 +137,10 @@ namespace MonopolyLibrary.Model
                 if (value != "0")
                 {
                     streetPriceText = value;
-                    OnPropertyChanged("StreetPriceText");
                 }
                 else
                 {
                     streetPriceText = "";
-                    OnPropertyChanged("StreetPriceText");
                 }
             }
         }
@@ -152,7 +156,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 rentPrices = value;
-                OnPropertyChanged("RentPrices");
             }
         }
 
@@ -164,7 +167,10 @@ namespace MonopolyLibrary.Model
         public int HousePrice
         {
             get { return housePrice; }
-            set { housePrice = value; }
+            set
+            {
+                housePrice = value;
+            }
         }
 
         /// <summary>
@@ -175,7 +181,10 @@ namespace MonopolyLibrary.Model
         public int[] Mortgage
         {
             get { return mortgage; }
-            set { mortgage = value; }
+            set
+            {
+                mortgage = value;
+            }
         }
 
 
@@ -190,7 +199,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 streetColor = value;
-                OnPropertyChanged("StreetColor");
             }
         }
 
@@ -202,8 +210,20 @@ namespace MonopolyLibrary.Model
         public int NrOfHouses
         {
             get { return nrOfHouses; }
-            set { nrOfHouses = value; }
+            set
+            {
+                nrOfHouses = value;
+            }
         }
+
+        private ObservableCollection<HouseViewModel> houses;
+
+        public ObservableCollection<HouseViewModel> Houses
+        {
+            get { return houses; }
+            set { houses = value; }
+        }
+
 
         /// <summary>
         /// Flag if the card currently holds a hotel.
@@ -227,7 +247,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 owningPlayer = value;
-                OnPropertyChanged();
             }
         }
 
@@ -253,6 +272,18 @@ namespace MonopolyLibrary.Model
             set { ownerArrayID = value; }
         }
 
+        private int monopoliesID;
+
+        public int MonopoliesID
+        {
+            get { return monopoliesID; }
+            set
+            {
+                monopoliesID = value;
+            }
+        }
+
+
 
 
         public GameCardModel()
@@ -260,9 +291,13 @@ namespace MonopolyLibrary.Model
             InitializeCollection();
         }
 
+        /// <summary>
+        /// Initializes all Collections in this Model.
+        /// </summary>
         void InitializeCollection()
         {
             PlayerOnGameCard = new ObservableCollection<PlayerViewModel>();
+            Houses = new ObservableCollection<HouseViewModel>();
         }
     }
 }

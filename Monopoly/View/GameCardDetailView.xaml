@@ -1,4 +1,5 @@
-﻿<!-- A user control that represents a detailed view of a street / game card.
+﻿<!--DEPRECATED! Exchanged with Views/DetailsViews/GameCardDetailView.xaml-->
+    <!-- A user control that represents a detailed view of a street / game card.
      Here the player is given more information about the street that he hovers his cursor above. -->
     <UserControl x:Class="Monopoly.View.GameCardDetailView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

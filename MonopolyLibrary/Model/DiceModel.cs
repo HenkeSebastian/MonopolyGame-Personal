@@ -8,8 +8,25 @@ using System.Threading.Tasks;
 
 namespace MonopolyLibrary.Model
 {
-    public class DiceModel: BaseModel
+    public class DiceModel
     {
+        private int dieOne;
+
+        public int DieOne
+        {
+            get { return dieOne; }
+            set { dieOne = value; }
+        }
+
+        private int dieTwo;
+
+        public int DieTwo
+        {
+            get { return dieTwo; }
+            set { dieTwo = value; }
+        }
+
+
         /// <summary>
         /// Source string for the first die.
         /// </summary>
@@ -21,7 +38,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 dieOneImageSource = value;
-                OnPropertyChanged("DieOneImageSource");
             }
         }
 
@@ -36,7 +52,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 dieTwoImageSource = value;
-                OnPropertyChanged("DieTwoImageSource");
             }
         }
 
@@ -51,7 +66,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 buttonEnabled = value;
-                OnPropertyChanged();
             }
         }
 

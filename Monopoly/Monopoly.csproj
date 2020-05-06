@@ -65,11 +65,29 @@
     <Compile Include="View\CloseGame.xaml.cs">
       <DependentUpon>CloseGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DetailsViews\AuctionDetailsView.xaml.cs">
+      <DependentUpon>AuctionDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailsViews\CommunityDetailsView.xaml.cs">
+      <DependentUpon>CommunityDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailsViews\GameCardDetailView.xaml.cs">
+      <DependentUpon>GameCardDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailsViews\IdleDetailsView.xaml.cs">
+      <DependentUpon>IdleDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DetailsViews\StreetInteractionDetailsView.xaml.cs">
+      <DependentUpon>StreetInteractionDetailsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DiceView.xaml.cs">
       <DependentUpon>DiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ElectricCompany.xaml.cs">
       <DependentUpon>ElectricCompany.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GameBoardView.xaml.cs">
+      <DependentUpon>GameBoardView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\GameCardDetailView.xaml.cs">
       <DependentUpon>GameCardDetailView.xaml</DependentUpon>
@@ -88,6 +106,9 @@
     </Compile>
     <Compile Include="View\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Houses\HouseView.xaml.cs">
+      <DependentUpon>HouseView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MonopolyMainWindow.xaml.cs">
       <DependentUpon>MonopolyMainWindow.xaml</DependentUpon>
@@ -110,7 +131,7 @@
     <Compile Include="View\StartScreen.xaml.cs">
       <DependentUpon>StartScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StreetBuyingView.xaml.cs">
+    <Compile Include="View\DetailsViews\StreetBuyingView.xaml.cs">
       <DependentUpon>StreetBuyingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StreetInteractionView.xaml.cs">
@@ -161,6 +182,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\DetailsViews\AuctionDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailsViews\CommunityDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailsViews\GameCardDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DetailsViews\IdleDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DetailsViews\StreetInteractionDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DiceView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -168,6 +209,10 @@
     <Page Include="View\ElectricCompany.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\GameBoardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\GameCardDetailView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -192,6 +237,10 @@
     <Page Include="View\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Houses\HouseView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MonopolyMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -221,7 +270,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\StreetBuyingView.xaml">
+    <Page Include="View\DetailsViews\StreetBuyingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

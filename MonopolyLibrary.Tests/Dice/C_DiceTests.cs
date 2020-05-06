@@ -5,13 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using MonopolyLibrary;
 using MonopolyLibrary.Dice;
+using MonopolyLibrary.ViewModel;
+using MonopolyLibrary.Utility;
+using MonopolyLibrary.Model;
 using Xunit;
 
 namespace MonopolyLibrary.Tests.Dice
 {
     public class C_DiceTests
     {
-        C_Dice refDice = new C_Dice();
+        WindowContent testContent;
+        C_Dice refDice;
+        DiceViewModel diceVM;
+
+        public C_DiceTests()
+        {
+            refDice = new C_Dice();
+            testContent = new WindowContent();
+            diceVM = new DiceViewModel(testContent);
+        }
 
         [Theory]
         [InlineData(1)]
@@ -22,19 +34,24 @@ namespace MonopolyLibrary.Tests.Dice
         public void SetDiceImage_ShouldReturnSourceString(int value)
         {
             //Arrange
-            string expected = $@"..\Resources\Die\{value}.png";
+            string expected = $"pack://application:,,,/MonopolyLibrary;Component/Resources/Die/{value}.png";
             //Act
-            //string actual = refDice.SetDiceImage(value);
+            string actual = refDice.SetDieImage(value);
             //Assert
-            //Assert.Equal(expected, actual);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
         public void DiceRoll_ShouldReturnRandomNumbers()
         {
-            int[] actual = refDice.RollDice();
+            //Arrange
 
-            Assert.InRange(actual[0], 1, 6);
+            //Act
+            refDice.RollDice(diceVM);
+
+            //Assert
+            Assert.InRange(diceVM.DieOne, 1, 6);
+            Assert.InRange(diceVM.DieTwo, 1, 6);
         }
     }
 }

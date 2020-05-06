@@ -8,11 +8,11 @@
              xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
              mc:Ignorable="d" 
              Height="auto" Width="auto" d:DesignWidth="200" d:DesignHeight="100">
-    <Button IsEnabled="{Binding DiceModel.ButtonEnabled}" Command="{Binding CommandTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding WindowsParam, RelativeSource={RelativeSource AncestorType=UserControl}}">
-        <Viewbox Stretch="Fill">
+    <Button IsEnabled="{Binding ButtonEnabled}" Command="{Binding CommandTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding WindowsParam, RelativeSource={RelativeSource AncestorType=UserControl}}">
+        <Viewbox Stretch="Uniform">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding DiceModel.DieOneImageSource}" Margin="5" Width="50" Height="50"/>
-                <Image Source="{Binding DiceModel.DieTwoImageSource}" Margin="5" Width="50" Height="50"/>
+                <Image Source="{Binding DieOneImageSource}" Margin="5" Width="50" Height="50"/>
+                <Image Source="{Binding DieTwoImageSource}" Margin="5" Width="50" Height="50"/>
             </StackPanel>
         </Viewbox>
     </Button>

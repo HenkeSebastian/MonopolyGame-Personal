@@ -28,7 +28,7 @@ namespace MonopolyLibrary.Utility.Commands
         public void GoToGameView()
         {
             Content.ManagingPlayer.SetPlayerIDActive(0);
-            Content.SetWindowContent(Windows.GameWindow);
+            Content.SetWindowContent(Windows.GameBoardScreen);
         }
     }
 }

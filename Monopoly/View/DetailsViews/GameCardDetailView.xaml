@@ -1,0 +1,273 @@
+﻿<!-- A user control that represents a detailed view of a street / game card.
+     Here the player is given more information about the street that he hovers his cursor above. -->
+<UserControl x:Class="Monopoly.View.DetailsViews.GameCardDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Monopoly.View.DetailsViews"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             MinWidth="300">
+    <!--Based on wich card the player highlights, a different kind of view will be shown in the center of the Gameboard-->
+    <UserControl.Resources>
+        <DataTemplate x:Key="BasicStreet">
+            <Border BorderBrush="Green" BorderThickness="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height=".3*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height=".4*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height=".2*"/>
+                    </Grid.RowDefinitions>
+                    <!--StreetColor-->
+                    <Rectangle Fill="{Binding StreetColor}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>
+                    <Label Content="{Binding StreetName}"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" FontSize="30" FontWeight="Black"/>
+                    <!--Rent Prices-->
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Miete:" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                        <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
+                            <Label Content="Unbebaut:"/>
+                            <Label Content="1 Haus:"/>
+                            <Label Content="2 Häuser:"/>
+                            <Label Content="3 Häuser:"/>
+                            <Label Content="4 Häuser:"/>
+                            <Label Content="Hotel:"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
+                            <Label Content="{Binding RentPrices[0]}" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding RentPrices[1]}" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding RentPrices[2]}" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding RentPrices[3]}" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding RentPrices[4]}" HorizontalContentAlignment="Center"/>
+                            <Label Content="{Binding RentPrices[5]}" HorizontalContentAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+                    <!--HousePrice-->
+                    <Label Content="Hauskosten:" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="4" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="{Binding HousePrice}" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="4" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+
+                    <!--Mortgages-->
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"  Content="Hypothek:" Padding="0" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="Aufnehmen:"/>
+                            <Label Content="Zurückzahlen:"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Label Content="{Binding Mortgage[0]}"/>
+                            <Label Content="{Binding Mortgage[1]}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!--Street Owner-->
+                    <Label Content="Besitzer:" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="8" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="{Binding OwningPlayer.PlayerName, FallbackValue= Frei}" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="8" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="UtilityStreet">
+            <Border BorderBrush="Green" BorderThickness="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height=".5*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <!--StreetColor-->
+                    <Rectangle Fill="{Binding StreetColor}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>
+                    <Label Content="{Binding StreetName}"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" FontSize="30" FontWeight="Black"/>
+
+                    <Label Content="Beschreibung" FontFamily="Roboto" FontSize="20" FontWeight="Thin"  Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Label Content="Lorem Ipsum" FontFamily="Roboto" FontSize="20" FontWeight="Thin"  Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    <!--Street Owner-->
+                    <Label Content="Besitzer:" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="8" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="{Binding OwningPlayer.PlayerName, FallbackValue= Frei}" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="8" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Grid>
+            </Border>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="TrainStation">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height=".5*"/>
+                    <RowDefinition Height=".5"/>
+                </Grid.RowDefinitions>
+                <!--StreetColor-->
+                <!--<Rectangle Fill="{Binding StreetColor}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"/>-->
+                <Label Content="{Binding StreetName}"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" FontSize="30" FontWeight="Black"/>
+
+                <Label Content="Miete" FontFamily="Roboto" FontSize="20" FontWeight="Thin"  Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="1 Bahnhof im Besitz" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                    <Label Content="2 Bahnhöfe im Besitz" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1"/>
+                    <Label Content="3 Bahnhöfe im Besitz" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="2"/>
+                    <Label Content="4 Bahnhöfe im Besitz" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="3"/>
+
+                    <Label Content="{Binding RentPrices[0]}" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0"/>
+                    <Label Content="{Binding RentPrices[1]}" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+                    <Label Content="{Binding RentPrices[2]}" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+                    <Label Content="{Binding RentPrices[3]}" FontFamily="Roboto" FontSize="15" FontWeight="Thin" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3"/>
+
+                </Grid>
+
+
+
+                <!--Street Owner-->
+                <Label Content="Besitzer:" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="4" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="{Binding OwningPlayer.PlayerName, FallbackValue= Frei}" Grid.Column="1" Grid.ColumnSpan="1" Grid.Row="4" FontFamily="Roboto" FontSize="20" FontWeight="Thin" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+
+        </DataTemplate>
+
+        <DataTemplate x:Key="FieldModifier">
+            <Border BorderBrush="Green" BorderThickness="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="{Binding StreetState}" FontFamily="Roboto" FontSize="20" FontWeight="Thin"  Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AdditionalSpaces">
+            <Border BorderBrush="Green" BorderThickness="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="{Binding StreetState}" FontFamily="Roboto" FontSize="20" FontWeight="Thin"  Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <!--Each view that differs from the basic card view is being triggered by the "StreetState" variable of the GameCardViewModel-->
+    <ContentControl Content="{Binding }">
+        <ContentControl.Style>
+            <Style TargetType="ContentControl">
+                <Setter Property="ContentTemplate" Value="{StaticResource BasicStreet}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding StreetState}" Value="EWerk">
+                        <Setter Property="ContentTemplate" Value="{StaticResource UtilityStreet}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="WasserWerk">
+                        <Setter Property="ContentTemplate" Value="{StaticResource UtilityStreet}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Südbahnhof">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TrainStation}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Westbahnhof">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TrainStation}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Nordbahnhof">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TrainStation}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Hauptbahnhof">
+                        <Setter Property="ContentTemplate" Value="{StaticResource TrainStation}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Ereignisfeld">
+                        <Setter Property="ContentTemplate" Value="{StaticResource FieldModifier}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Gemeinschaftsfeld">
+                        <Setter Property="ContentTemplate" Value="{StaticResource FieldModifier}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Zusatzsteuer">
+                        <Setter Property="ContentTemplate" Value="{StaticResource FieldModifier}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Einkommenssteuer">
+                        <Setter Property="ContentTemplate" Value="{StaticResource FieldModifier}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="LOS">
+                        <Setter Property="ContentTemplate" Value="{StaticResource AdditionalSpaces}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Gefängnis">
+                        <Setter Property="ContentTemplate" Value="{StaticResource AdditionalSpaces}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="FreiParken">
+                        <Setter Property="ContentTemplate" Value="{StaticResource AdditionalSpaces}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="InDasGefängnis">
+                        <Setter Property="ContentTemplate" Value="{StaticResource AdditionalSpaces}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ContentControl.Style>
+    </ContentControl>
+</UserControl>

@@ -104,7 +104,7 @@ namespace MonopolyLibrary.PlayerHandling
         {
             if (AmountOfPlayers < 6)
             {
-                newPlayer.Player.PlayerID = AmountOfPlayers;
+                newPlayer.PlayerID = AmountOfPlayers;
                 ActivePlayer.Add(newPlayer);
                 AmountOfPlayers++;
             }
@@ -143,25 +143,25 @@ namespace MonopolyLibrary.PlayerHandling
         {
             foreach(PlayerViewModel player in ActivePlayer)
             {
-                if (player.Player.PlayerID == ActivePlayerIndex)
+                if (player.PlayerID == ActivePlayerIndex)
                 {
-                    player.Player.IsActive = true;
+                    player.IsActive = true;
                 }
                 else
                 {
-                    player.Player.IsActive = false;
+                    player.IsActive = false;
                 }
             }
 
             foreach (PlayerViewModel player in NPCPlayer)
             {
-                if (player.Player.PlayerID == ActivePlayerIndex)
+                if (player.PlayerID == ActivePlayerIndex)
                 {
-                    player.Player.IsActive = true;
+                    player.IsActive = true;
                 }
                 else
                 {
-                    player.Player.IsActive = false;
+                    player.IsActive = false;
                 }
             }
         }
@@ -183,14 +183,15 @@ namespace MonopolyLibrary.PlayerHandling
         {
             foreach (PlayerViewModel player in ActivePlayer)
             {
-                player.Player.IsActive = false;
+                player.IsActive = false;
             }
 
             foreach (PlayerViewModel player in NPCPlayer)
             {
-                player.Player.IsActive = false;
+                player.IsActive = false;
             }
         }
+
 
         /// <summary>
         /// Adds all active and npc player to a combined Array.
@@ -215,8 +216,8 @@ namespace MonopolyLibrary.PlayerHandling
         {
             foreach (PlayerViewModel player in AllPlayers)
             {
-                player.Player.CurrentPosition = 0;
-                Content.GameViewViewModel.GameCards[positionID].AddPlayerOnCard(player);
+                player.CurrentPosition = 0;
+                Content.GameBoardViewModel.GameCards[positionID].AddPlayerOnCard(player);
             }
         }
 
@@ -228,76 +229,10 @@ namespace MonopolyLibrary.PlayerHandling
         {
             foreach (PlayerViewModel player in AllPlayers)
             {
-                player.Player.PlayerCash = amount;
+                player.PlayerAddMoney(amount);
             }
         }
 
-        /// <summary>
-        /// Gives a certain player money.
-        /// </summary>
-        /// <param name="player">The receiving player</param>
-        /// <param name="amount">The amount of money</param>
-        public void GivePlayerMoney(PlayerViewModel player, int amount)
-        {
-            player.Player.PlayerCash += amount;
-        }
-
-        /// <summary>
-        /// Removes money from a player.
-        /// </summary>
-        /// <param name="player">The player who loses money</param>
-        /// <param name="amount">The amount of money.</param>
-        public void RemovePlayerMoney(PlayerViewModel player, int amount)
-        {
-            player.Player.PlayerCash -= amount;
-        }
-
-        /// <summary>
-        /// A player pays another player
-        /// </summary>
-        /// <param name="receivingPlayer">The player who receives money</param>
-        /// <param name="givingPlayer">The player who gives money</param>
-        /// <param name="amount">The amount of money</param>
-        public void PlayerGivesPlayerMoney(PlayerViewModel receivingPlayer, PlayerViewModel givingPlayer, int amount)
-        {
-            RemovePlayerMoney(givingPlayer, amount);
-            GivePlayerMoney(receivingPlayer, amount);
-        }
-
-        /// <summary>
-        /// A player receives a street card.
-        /// </summary>
-        /// <param name="player">The receiving player</param>
-        /// <param name="gameCard">The street card</param>
-        public void GivePlayerGameCard(PlayerViewModel player, GameCardViewModel gameCard)
-        {
-            player.Player.OwnedStreets[gameCard.GameCard.OwnerArrayID] = gameCard;
-            gameCard.GameCard.OwningPlayer = player;
-        }
-
-        /// <summary>
-        /// A player loses a street card.
-        /// </summary>
-        /// <param name="player">The losing player</param>
-        /// <param name="gameCard">The street card</param>
-        public void RemovePlayerGameCard(PlayerViewModel player, GameCardViewModel gameCard)
-        {
-            player.Player.OwnedStreets[gameCard.GameCard.OwnerArrayID] = null;
-            gameCard.GameCard.OwningPlayer = null;
-        }
-
-        /// <summary>
-        /// A street card is being moved from one player to another.
-        /// </summary>
-        /// <param name="receivingPlayer">The receiving player</param>
-        /// <param name="givingPlayer">The giving player</param>
-        /// <param name="gameCard">The street card</param>
-        public void MoveGameCardToAnotherPlayer(PlayerViewModel receivingPlayer, PlayerViewModel givingPlayer, GameCardViewModel gameCard)
-        {
-            receivingPlayer.Player.OwnedStreets[gameCard.GameCard.OwnerArrayID] = gameCard;
-            gameCard.GameCard.OwningPlayer = receivingPlayer;
-            givingPlayer.Player.OwnedStreets[gameCard.GameCard.OwnerArrayID] = null;
-        }
 
         /// <summary>
         /// Sorts an array by the first throw of all players.
@@ -306,7 +241,7 @@ namespace MonopolyLibrary.PlayerHandling
         /// <returns></returns>
         public ObservableCollection<PlayerViewModel> SortPlayersDescending(ObservableCollection<PlayerViewModel> inputCollection)
         {
-            IEnumerable<PlayerViewModel> query = inputCollection.OrderByDescending(players => players.Player.FirstThrow);
+            IEnumerable<PlayerViewModel> query = inputCollection.OrderByDescending(players => players.FirstThrow);
             return new ObservableCollection<PlayerViewModel>(query);
         }
 
@@ -317,7 +252,7 @@ namespace MonopolyLibrary.PlayerHandling
         {
             foreach (PlayerViewModel item in AllPlayers)
             {
-                item.Player.PlayerID = AllPlayers.IndexOf(item);
+                item.PlayerID = AllPlayers.IndexOf(item);
             }
         }
 

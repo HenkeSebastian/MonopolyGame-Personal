@@ -62,6 +62,15 @@ namespace MonopolyLibrary.Utility
             set { streetBuyingCommands = value; }
         }
 
+        private StreetInteractionCommands streetInteractionCommands;
+
+        public StreetInteractionCommands StreetInteractionCommands
+        {
+            get { return streetInteractionCommands; }
+            set { streetInteractionCommands = value; }
+        }
+
+
 
 
 
@@ -80,6 +89,7 @@ namespace MonopolyLibrary.Utility
             GameCardCommands = new GameCardCommands(Content);
             StartingRollCommands = new StartingRollCommands(Content);
             StreetBuyingCommands = new StreetBuyingCommands(Content);
+            StreetInteractionCommands = new StreetInteractionCommands(content);
         }
 
 

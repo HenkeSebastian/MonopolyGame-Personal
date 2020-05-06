@@ -1,4 +1,5 @@
-﻿<!--The ingame view for the main game.-->
+﻿<!--DEPRECATED! No longer needed. An old version of the Gameboard with a different / worse approach to the UI-->
+<!--The ingame view for the main game.-->
     <UserControl x:Class="Monopoly.View.GameView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

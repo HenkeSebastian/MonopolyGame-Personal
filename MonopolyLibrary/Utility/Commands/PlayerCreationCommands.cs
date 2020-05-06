@@ -139,7 +139,7 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void AddPlayer()
         {
-            Content.ManagingPlayer.AddPlayer(new PlayerViewModel(Content) { Player = new PlayerModel(Content.PlayerCreationViewModel.CreatedPlayer) });
+            Content.ManagingPlayer.AddPlayer(Content.PlayerCreationViewModel.CreatedPlayer);
         }
     }
 }

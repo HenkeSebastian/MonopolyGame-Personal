@@ -69,7 +69,7 @@ namespace MonopolyLibrary.Gamerules
         /// <param name="scoreTwo">Score of the second die</param>
         public void SetScore(int scoreOne, int scoreTwo)
         {
-            Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].Player.FirstThrow = scoreOne + scoreTwo;
+            Content.ManagingPlayer.AllPlayers[Content.ManagingPlayer.ActivePlayerIndex].FirstThrow = scoreOne + scoreTwo;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace MonopolyLibrary.Gamerules
         /// </summary>
         public void FirstRollDone()
         {
-            Content.DiceViewModel.DisableDice();
+            Content.DiceViewModel.Dice.DisableDice(Content.DiceViewModel);
             FirstThrowDone = true;
         }
 

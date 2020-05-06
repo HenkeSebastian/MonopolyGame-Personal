@@ -51,9 +51,11 @@
     <Compile Include="Gamerules\C_CommunityChest.cs" />
     <Compile Include="Gamerules\C_FirstRollRules.cs" />
     <Compile Include="Gamerules\C_MainGameRules.cs" />
+    <Compile Include="Gamerules\GamePool.cs" />
+    <Compile Include="Model\CommunityModel.cs" />
     <Compile Include="Model\DiceModel.cs" />
-    <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\GameCardModel.cs" />
+    <Compile Include="Model\HouseModel.cs" />
     <Compile Include="Model\PlayerModel.cs" />
     <Compile Include="PlayerHandling\ManagingPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="Utility\Commands\StartingRollCommands.cs" />
     <Compile Include="Utility\Commands\StartWindowCommands.cs" />
     <Compile Include="Utility\Commands\StreetBuyingCommands.cs" />
+    <Compile Include="Utility\Commands\StreetInteractionCommands.cs" />
     <Compile Include="Utility\C_ButtonBindings.cs" />
     <Compile Include="Utility\C_ButtonCommands.cs" />
     <Compile Include="Utility\Enums.cs" />
@@ -79,9 +82,13 @@
     <Compile Include="Utility\WindowContent.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\CloseGameViewModel.cs" />
+    <Compile Include="ViewModel\CommunityDetailsViewModel.cs" />
     <Compile Include="ViewModel\DiceViewModel.cs" />
+    <Compile Include="ViewModel\GameBoardViewModel.cs" />
     <Compile Include="ViewModel\GameCardViewModel.cs" />
     <Compile Include="ViewModel\GameViewViewModel.cs" />
+    <Compile Include="ViewModel\HouseViewModel.cs" />
+    <Compile Include="ViewModel\IdleDetailsViewModel.cs" />
     <Compile Include="ViewModel\MonopolyMainWindowViewModel.cs" />
     <Compile Include="ViewModel\PlayerCreationViewModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />

@@ -2,29 +2,82 @@
 using MonopolyLibrary.Utility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MonopolyLibrary.ViewModel
 {
-    public class StreetInteractionViewModel
+    public class StreetInteractionViewModel: BaseViewModel, INotifyPropertyChanged
     {
-        private WindowContent content;
+        public Windows Window { get => Windows.StreetInteractionDetails; }
 
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
 
-        private GameCardModel gameCard;
+        private GameCardViewModel gameCard;
 
-        public GameCardModel GameCard
+        public GameCardViewModel GameCard
         {
             get { return gameCard; }
-            set { gameCard = value; }
+            set
+            {
+                gameCard = value;
+                OnPropertyChanged("GameCard");
+            }
         }
+
+        private int cashAfterBuying;
+
+        public int CashAfterBuying
+        {
+            get { return cashAfterBuying; }
+            set
+            {
+                cashAfterBuying = value;
+                OnPropertyChanged("CashAfterBuying");
+            }
+        }
+
+        private int cashAfterSelling;
+
+        public int CashAfterSelling
+        {
+            get { return cashAfterSelling; }
+            set
+            {
+                cashAfterSelling = value;
+                OnPropertyChanged("CashAfterSelling");
+            }
+        }
+
+
+        private bool enableBuying;
+
+        public bool EnableBuying
+        {
+            get { return enableBuying; }
+            set
+            {
+                enableBuying = value;
+                OnPropertyChanged("EnableBuying");
+            }
+        }
+
+        private bool enableSelling;
+
+        public bool EnableSelling
+        {
+            get { return enableSelling; }
+            set
+            {
+                enableSelling = value;
+                OnPropertyChanged("EnableSelling");
+            }
+        }
+
+
+
 
 
         public StreetInteractionViewModel(WindowContent content)

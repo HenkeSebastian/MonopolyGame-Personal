@@ -1,4 +1,5 @@
 ﻿using MonopolyLibrary.PlayerHandling;
+using MonopolyLibrary.Model;
 using MonopolyLibrary.ViewModel;
 using System.Windows.Input;
 
@@ -46,7 +47,7 @@ namespace MonopolyLibrary.Utility
             //Game Card
             Com_ClearMouseOverGameCard = new NonGenericRelayCommand(p => ButtonCommands.GameCardCommands.ClearMouseOverGameCard());
             Com_SetMouseOverGameCard = new RelayCommand<GameCardViewModel>(ButtonCommands.GameCardCommands.SetMouseOverGameCard);
-            //Com_OpenStreetInteraction = new NonGenericRelayCommand(p => ButtonCommands.GameCardCommands.OpenStreetInteraction());
+            Com_OpenStreetInteraction = new RelayCommand<GameCardViewModel>(ButtonCommands.GameCardCommands.OpenStreetInteraction);
 
             //Dice
             Com_DiceCommand = new RelayCommand<Windows>(ButtonCommands.DiceCommands.RollDice);
@@ -57,6 +58,12 @@ namespace MonopolyLibrary.Utility
 
             //Buying Streets
             Com_BuyStreet = new NonGenericRelayCommand(p => ButtonCommands.StreetBuyingCommands.BuyStreet());
+
+            //Street Interaction
+            Com_TakeMortgage = new RelayCommand<GameCardViewModel>(ButtonCommands.StreetInteractionCommands.TakeMortgage);
+            Com_PayMortgage = new RelayCommand<GameCardViewModel>(ButtonCommands.StreetInteractionCommands.PayMortgage);
+            Com_BuildHouse = new RelayCommand<GameCardViewModel>(ButtonCommands.StreetInteractionCommands.BuyHouse);
+            Com_SellHouse = new RelayCommand<GameCardViewModel>(ButtonCommands.StreetInteractionCommands.SellHouse);
         }
 
 
@@ -89,5 +96,11 @@ namespace MonopolyLibrary.Utility
         //Buying Streets
         public ICommand Com_BuyStreet { get; set; }
         public ICommand Com_AuctionStreet { get; set; }
+
+        //Street interaction
+        public ICommand Com_PayMortgage { get; set; }
+        public ICommand Com_TakeMortgage { get; set; }
+        public ICommand Com_BuildHouse { get; set; }
+        public ICommand Com_SellHouse { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Resources;
 using MonopolyLibrary.Utility;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -33,17 +34,9 @@ namespace MonopolyLibrary.ViewModel
         }
 
 
-        private WindowContent content;
+        private PlayerViewModel createdPlayer;
 
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
-        private PlayerModel createdPlayer;
-
-        public PlayerModel CreatedPlayer
+        public PlayerViewModel CreatedPlayer
         {
             get { return createdPlayer; }
             set { createdPlayer = value; }
@@ -82,8 +75,8 @@ namespace MonopolyLibrary.ViewModel
         /// </summary>
         public void SetReferences()
         {
-            CreatedPlayer = new PlayerModel();
-            //AvatarIndex = new int();
+            CreatedPlayer = new PlayerViewModel(Content, new PlayerModel());
+
         }
 
 

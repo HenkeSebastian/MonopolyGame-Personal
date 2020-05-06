@@ -8,7 +8,7 @@ using MonopolyLibrary.ViewModel;
 
 namespace MonopolyLibrary.Model
 {
-    public class PlayerModel:BaseModel
+    public class PlayerModel
     {
 
         /// <summary>
@@ -22,7 +22,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 isActive = value;
-                OnPropertyChanged("IsActive");
             }
         }
 
@@ -37,7 +36,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 isNPC = value;
-                OnPropertyChanged("IsNPC");
             }
         }
 
@@ -52,7 +50,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 playerID = value;
-                OnPropertyChanged("PlayerID");
             }
         }
 
@@ -67,7 +64,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 playerName = value;
-                OnPropertyChanged("PlayerName");
             }
         }
 
@@ -82,7 +78,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 playerAvatar = value;
-                OnPropertyChanged("PlayerAvatar");
             }
         }
 
@@ -97,24 +92,34 @@ namespace MonopolyLibrary.Model
             set
             {
                 playerCash = value;
-                OnPropertyChanged("PlayerCash");
             }
         }
 
         /// <summary>
         /// An array of IDs that correlate to each street in the game that the player owns.
         /// </summary>
-        private int[] ownedStreetIDs;
+        private bool[] ownedStreetIDs;
 
-        public int[] OwnedStreetIDs
+        public bool[] OwnedStreetIDs
         {
             get { return ownedStreetIDs; }
             set
             {
                 ownedStreetIDs = value;
-                OnPropertyChanged("OwnedStreetIDs");
             }
         }
+
+        private bool[] monopolies;
+
+        public bool[] Monopolies
+        {
+            get { return monopolies; }
+            set
+            {
+                monopolies = value;
+            }
+        }
+
 
 
         /// <summary>
@@ -128,7 +133,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 ownedSteets = value;
-                OnPropertyChanged();
             }
         }
 
@@ -168,7 +172,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 playPulseAnimation = value;
-                OnPropertyChanged("PlayPulseAnimation");
             }
         }
 
@@ -184,7 +187,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 firstThrow = value;
-                OnPropertyChanged("FirstThrow");
             }
         }
 
@@ -215,7 +217,6 @@ namespace MonopolyLibrary.Model
             set
             {
                 inPrison = value;
-                OnPropertyChanged();
             }
         }
 
@@ -230,10 +231,9 @@ namespace MonopolyLibrary.Model
             get { return diceRoll; }
             set
             {
-                if (diceRoll < 3)
+                if (diceRoll <= 3)
                 {
                 diceRoll = value;
-                    OnPropertyChanged();
                 }
             }
         }
@@ -243,7 +243,13 @@ namespace MonopolyLibrary.Model
 
         public PlayerModel()
         {
-
+            OwnedStreets = new ObservableCollection<GameCardViewModel>();
+            for (int i = 0; i < 27; i++)
+            {
+                OwnedStreets.Add(null);
+            }
+            OwnedStreetIDs = new bool[28];
+            Monopolies = new bool[8];
         }
 
         public PlayerModel(PlayerModel passed)
@@ -255,6 +261,7 @@ namespace MonopolyLibrary.Model
             PlayerAvatar = passed.PlayerAvatar;
             PlayerCash = passed.PlayerCash;
             OwnedStreetIDs = passed.OwnedStreetIDs;
+            Monopolies = passed.Monopolies;
             PlayPulseAnimation = passed.PlayPulseAnimation;
             FirstThrow = passed.FirstThrow;
             InPrison = passed.InPrison;
@@ -263,10 +270,12 @@ namespace MonopolyLibrary.Model
             AmountHouses = passed.AmountHouses;
             CurrentPosition = 0;
             OwnedStreets = new ObservableCollection<GameCardViewModel>();
-            for (int i = 0; i < 27; i++)
+            for (int i = 0; i < 28; i++)
             {
                 OwnedStreets.Add(null);
             }
+            OwnedStreetIDs = new bool[28];
+            Monopolies = new bool[8];
         }
     }
 }

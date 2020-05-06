@@ -12,29 +12,35 @@ namespace MonopolyLibrary.ViewModel
 {
     public class StreetBuyingViewModel: BaseViewModel, INotifyPropertyChanged
     {
-        private Windows window;
-
         public Windows Window
         {
-            get { return window; }
-            set { window = value; }
+            get { return Windows.StreetBuyingDetails; }
         }
 
-        private WindowContent content;
+        private GameCardViewModel gameCard;
 
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
-
-        private GameCardModel gameCard;
-
-        public GameCardModel GameCard
+        public GameCardViewModel GameCard
         {
             get { return gameCard; }
-            set { gameCard = value; }
+            set
+            {
+                gameCard = value;
+                OnPropertyChanged("GameCard");
+            }
         }
+
+        private int cashAfterBuying;
+
+        public int CashAfterBuying
+        {
+            get { return cashAfterBuying; }
+            set
+            {
+                cashAfterBuying = value;
+                OnPropertyChanged("CashAfterBuying");
+            }
+        }
+
 
         private bool enableBuying;
 
@@ -55,11 +61,5 @@ namespace MonopolyLibrary.ViewModel
             Content = content;
         }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

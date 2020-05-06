@@ -6,30 +6,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Monopoly.View"
+        xmlns:dv="clr-namespace:Monopoly.View.DetailsViews"
         xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
         mc:Ignorable="d"
         Title="MonopolyMainWindow"
         x:Name="MonopolyMainWindowControl"
-        Margin="0" Padding="0" Width="{Binding WindowContent.WindowWidth, Mode=TwoWay}" Height="{Binding WindowContent.WindowHeight, Mode = TwoWay}">
+        Margin="0" Padding="0" Width="{Binding WindowContent.WindowWidth, Mode=TwoWay}" Height="{Binding WindowContent.WindowHeight, Mode = TwoWay}" MinHeight="{Binding WindowContent.MinWindowHeight}" MinWidth="{Binding WindowContent.MinWindowWidth}">
 
-        <!--The resources of the different user control views and their respective view models.-->
-        <Window.Resources>
-            <DataTemplate DataType="{x:Type vm:StartScreenViewModel}">
-                <local:StartScreen/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:PlayerCreationViewModel}">
-                <local:PlayerCreationView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:GameViewViewModel}">
-                <local:GameView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:CloseGameViewModel}">
-                <local:CloseGame/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:StartingRollViewModel}">
-                <local:StartingRollView/>
-            </DataTemplate>
-        </Window.Resources>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:StartScreenViewModel}">
+            <local:StartScreen/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PlayerCreationViewModel}">
+            <local:PlayerCreationView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:GameViewViewModel}">
+            <local:GameView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CloseGameViewModel}">
+            <local:CloseGame/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:StartingRollViewModel}">
+            <local:StartingRollView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:GameBoardViewModel}">
+            <local:GameBoardView/>
+        </DataTemplate>
+    </Window.Resources>
+        
         <!--The Content control that holds the user controls.-->
         <ContentControl x:Name="navigation" Content="{Binding WindowContent.SelectedViewModel}"/>
     </Window>

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace MonopolyLibrary.Gamerules
 {
+    /// <summary>
+    /// Main Game Rules Class placeholder. Work in Progress!
+    /// </summary>
     public class C_MainGameRules
     {
         private WindowContent content;

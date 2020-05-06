@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MonopolyLibrary.ViewModel;
 using MonopolyLibrary.PlayerHandling;
+using MonopolyLibrary.Gamerules;
 using System.Windows;
 
 namespace MonopolyLibrary.Utility
@@ -46,6 +47,32 @@ namespace MonopolyLibrary.Utility
                 OnPropertyChanged("WindowHeight");
             }
         }
+
+        private int minWindowWidth;
+
+        public int MinWindowWidth
+        {
+            get { return minWindowWidth; }
+            set
+            {
+                minWindowWidth = value;
+                OnPropertyChanged("MinWindowWidth");
+            }
+        }
+
+
+        private int minWindowHeight;
+
+        public int MinWindowHeight
+        {
+            get { return minWindowHeight; }
+            set
+            {
+                minWindowHeight = value;
+                OnPropertyChanged("MinWindowHeight");
+            }
+        }
+
 
 
         /// <summary>
@@ -87,6 +114,16 @@ namespace MonopolyLibrary.Utility
         }
 
 
+        private GameBoardViewModel gameBoardViewModel;
+
+        public GameBoardViewModel GameBoardViewModel
+        {
+            get { return gameBoardViewModel; }
+            private set { gameBoardViewModel = value; }
+        }
+
+
+
         /// <summary>
         /// ViewModel of the Close Game View.
         /// </summary>
@@ -122,6 +159,15 @@ namespace MonopolyLibrary.Utility
             set { startingRollViewModel = value; }
         }
 
+        private IdleDetailsViewModel idleDetailsViewModel;
+
+        public IdleDetailsViewModel IdleDetailsViewModel
+        {
+            get { return idleDetailsViewModel; }
+            set { idleDetailsViewModel = value; }
+        }
+
+
 
         /// <summary>
         /// The Property used for binding the content of the main window.
@@ -138,6 +184,19 @@ namespace MonopolyLibrary.Utility
             }
         }
 
+        private BaseViewModel selectedDetailsViewModel;
+
+        public BaseViewModel SelectedDetailsViewModel
+        {
+            get { return selectedDetailsViewModel; }
+            set
+            {
+                selectedDetailsViewModel = value;
+                OnPropertyChanged("SelectedDetailsViewModel");
+            }
+        }
+
+
 
         /// <summary>
         /// Property for the instance of the button bindings class.
@@ -150,6 +209,15 @@ namespace MonopolyLibrary.Utility
             set { buttonBindings = value; }
         }
 
+        private C_CommunityChest communityChest;
+
+        public C_CommunityChest CommunityChest
+        {
+            get { return communityChest; }
+            set { communityChest = value; }
+        }
+
+
 
         /// <summary>
         /// Property for the instance of the managing player class.
@@ -161,6 +229,15 @@ namespace MonopolyLibrary.Utility
             get { return managingPlayer; }
             set { managingPlayer = value; }
         }
+
+        private GamePool gamePool;
+
+        public GamePool GamePool
+        {
+            get { return gamePool; }
+            set { gamePool = value; }
+        }
+
 
 
         /// <summary>
@@ -186,14 +263,24 @@ namespace MonopolyLibrary.Utility
             set { streetBuyingViewModel = value; }
         }
 
+        private CommunityDetailsViewModel communityDetailsViewModel;
+
+        public CommunityDetailsViewModel CommunityDetailsViewModel
+        {
+            get { return communityDetailsViewModel; }
+            set { communityDetailsViewModel = value; }
+        }
+
+
+
 
 
 
         public WindowContent()
         {
             InitialWindowSetup();
-            InitializeViewmModels();
             InitializeReferences();
+            InitializeViewModels();
         }
 
 
@@ -213,15 +300,16 @@ namespace MonopolyLibrary.Utility
         private void InitializeReferences()
         {
             ButtonBindings = new C_ButtonBindings(this);
-            //SecondaryWindow.WindowStyle = WindowStyle.None;
             ManagingPlayer = new ManagingPlayer(this);
+            CommunityChest = new C_CommunityChest(this);
+            GamePool = new GamePool(this);
         }
 
 
         /// <summary>
         /// Instances all the needed view models and passes a reference to this class for persistance.
         /// </summary>
-        private void InitializeViewmModels()
+        private void InitializeViewModels()
         {
             StartScreenViewModel = new StartScreenViewModel(this);
             PlayerCreationViewModel = new PlayerCreationViewModel(this);
@@ -231,6 +319,10 @@ namespace MonopolyLibrary.Utility
             StartingRollViewModel = new StartingRollViewModel(this);
             StreetInteractionViewModel = new StreetInteractionViewModel(this);
             StreetBuyingViewModel = new StreetBuyingViewModel(this);
+            GameBoardViewModel = new GameBoardViewModel(this);
+
+            IdleDetailsViewModel = new IdleDetailsViewModel(this);
+            CommunityDetailsViewModel = new CommunityDetailsViewModel(this);
         }
 
 
@@ -240,6 +332,7 @@ namespace MonopolyLibrary.Utility
         public void SetInitialContent()
         {
             SelectedViewModel = startScreenViewModel;
+            SelectedDetailsViewModel = IdleDetailsViewModel;
             WindowWidth = 800;
             WindowHeight = 500;
             //SelectedViewModel = gameViewViewModel;
@@ -267,6 +360,17 @@ namespace MonopolyLibrary.Utility
             WindowHeight = y;
         }
 
+        /// <summary>
+        /// Sets the current minimum window size.
+        /// </summary>
+        /// <param name="x">The minimum window width.</param>
+        /// <param name="y">The minimum window height.</param>
+        public void SetMinWindowSize(int x, int y)
+        {
+            MinWindowWidth = x;
+            MinWindowHeight = y;
+        }
+
 
         /// <summary>
         /// Sets the window properties for each window to open. Executes initial needed functions.
@@ -286,9 +390,9 @@ namespace MonopolyLibrary.Utility
                     SelectedViewModel = GameViewViewModel;
                     ManagingPlayer.SetPlayerIDActive(0);
                     ManagingPlayer.SetAllPlayerInitialPosition(0);
-                    ManagingPlayer.SetAllPlayerMoney(2000);
+                    ManagingPlayer.SetAllPlayerMoney(10000);
                     SetWindowSize(1200, 850);
-                    DiceViewModel.EnableDice();
+                    DiceViewModel.Dice.EnableDice(DiceViewModel);
                     break;
                 case Windows.GameOver:
                     break;
@@ -302,11 +406,67 @@ namespace MonopolyLibrary.Utility
                     ManagingPlayer.SetAllPlayerCollection();
                     SetWindowSize(800, 800);
                     break;
+                case Windows.GameBoardScreen:
+                    SelectedViewModel = GameBoardViewModel;
+                    ManagingPlayer.SetPlayerIDActive(0);
+                    ManagingPlayer.SetAllPlayerInitialPosition(0);
+                    ManagingPlayer.SetAllPlayerMoney(10000);
+                    DiceViewModel.Dice.EnableDice(DiceViewModel);
+                    SetWindowSize(1400, 1080);
+                    break;
                 default:
                     break;
             }
         }
 
+        /// <summary>
+        /// Changes the Details View in the center of the Gameboard.
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <param name="changeFromInteraction"></param>
+        public void ChangeDetailsView(Windows viewModel, bool changeFromInteraction = false)
+        {
+            BaseViewModel selectedViewModel;
+
+            if (changeFromInteraction == false && SelectedDetailsViewModel != StreetBuyingViewModel)
+            {
+                switch (viewModel)
+                {
+                    case Windows.IdleDetails:
+                        selectedViewModel = IdleDetailsViewModel;
+                        break;
+                    case Windows.GameCardDetails:
+                        selectedViewModel = GameBoardViewModel.MouseOverGameCard;
+                        break;
+                    case Windows.StreetInteractionDetails:
+                        selectedViewModel = StreetInteractionViewModel;
+                        break;
+                    case Windows.StreetBuyingDetails:
+                        selectedViewModel = StreetBuyingViewModel;
+                        break;
+                    case Windows.CommunityDetails:
+                        selectedViewModel = CommunityDetailsViewModel;
+                        break;
+                    default:
+                        selectedViewModel = null;
+                        break;
+                }
+                SelectedDetailsViewModel = selectedViewModel;
+            }
+            else
+            {
+                SelectedDetailsViewModel = IdleDetailsViewModel;
+            }
+        }
+
+        /// <summary>
+        /// Message Box for player infromation. Might get exchanged with a nicer implementation.
+        /// </summary>
+        /// <param name="message"></param>
+        public void OpenMessageBox(string message)
+        {
+            MessageBox.Show(message);
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string propertyName = null)
