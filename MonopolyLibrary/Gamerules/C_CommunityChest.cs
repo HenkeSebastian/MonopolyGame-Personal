@@ -204,7 +204,7 @@ namespace MonopolyLibrary.Gamerules
         {
             if (playerToMove.CurrentPosition == 2)
             {
-                playerToMove.PlayerMoveToPosition(Content.GameBoardViewModel.GameCards.Length , false);
+                playerToMove.PlayerMoveToPosition(Content.GameBoardViewModel.GameCards.Length - 1 , false);
             }
             playerToMove.PlayerMoveToPosition(playerToMove.CurrentPosition - 3, false);
             Content.CommunityDetailsViewModel.IconSource = "";

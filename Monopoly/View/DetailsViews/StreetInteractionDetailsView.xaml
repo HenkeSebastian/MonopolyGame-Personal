@@ -69,12 +69,72 @@
                     <RowDefinition Height="*"/>
                     
                 </Grid.RowDefinitions>
-                <Label Content="Unbebaut" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-                <Label Content="1 Haus" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
-                <Label Content="2 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
-                <Label Content="3 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3"/>
-                <Label Content="4 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4"/>
-                <Label Content="Hotel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5"/>
+                <Label Content="Unbebaut" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="1 Haus" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="2 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="3 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="4 Häuser" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="Hotel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
             </Grid>
 
 
@@ -90,12 +150,72 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Label Content="{Binding GameCard.RentPrices[0]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0"/>
-                <Label Content="{Binding GameCard.RentPrices[1]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
-                <Label Content="{Binding GameCard.RentPrices[2]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
-                <Label Content="{Binding GameCard.RentPrices[3]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3"/>
-                <Label Content="{Binding GameCard.RentPrices[4]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4"/>
-                <Label Content="{Binding GameCard.RentPrices[5]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5"/>
+                <Label Content="{Binding GameCard.RentPrices[0]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="{Binding GameCard.RentPrices[1]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="{Binding GameCard.RentPrices[2]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="{Binding GameCard.RentPrices[3]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="{Binding GameCard.RentPrices[4]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
+                <Label Content="{Binding GameCard.RentPrices[5]}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="5">
+                    <Label.Style>
+                        <Style TargetType="Label">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Label.Style>
+                </Label>
             </Grid>
 
             <!--Label changes driven by Datatriggers on the amount of houses on this card-->
@@ -103,21 +223,10 @@
             <Label Grid.Row="3" FontFamily="Roboto" FontSize="15" FontWeight="Thin"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="Häuserpreis"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                                 <Setter Property="Content" Value="Preis der Hypotheksauflösung"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
-                                <Setter Property="Content" Value="Häuserpreis"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="Häuserpreis"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="Häuserpreis"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="Häuserpreis"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
                                 <Setter Property="Content" Value="Hotelpreis"/>
@@ -134,24 +243,10 @@
             <Label Grid.Row="3" Grid.Column="1" FontFamily="Roboto" FontSize="15" FontWeight="Bold"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
-                            <Setter Property="Content" Value="{Binding GameCard.Mortgage[1]}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
-                                <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
-                                <Setter Property="Content" Value="{Binding GameCard.HousePrice}" />
+                                <Setter Property="Content" Value="{Binding GameCard.Mortgage[1]}"/>
                             </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
                                 <Setter Property="Visibility" Value="Hidden" />
@@ -164,21 +259,10 @@
             <Label Grid.Row="4" FontFamily="Roboto" FontSize="15" FontWeight="Thin"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="Geld nach dem Hausbau" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                                 <Setter Property="Content" Value="Geld nach bezahlen der Hypothek"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
-                                <Setter Property="Content" Value="Geld nach dem Hausbau" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="Geld nach dem Hausbau" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="Geld nach dem Hausbau" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="Geld nach dem Hausbau" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
                                 <Setter Property="Content" Value="Geld nach dem Hotelbau" />
@@ -194,25 +278,8 @@
             <Label Grid.Row="4" Grid.Column="1" FontFamily="Roboto" FontSize="15" FontWeight="Thin"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="{Binding CashAfterBuying}" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
-                                <Setter Property="Content" Value="{Binding CashAfterBuying}" />
-                            </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
                                 <Setter Property="Content" Value="" />
                                 <Setter Property="Visibility" Value="Hidden"/>
@@ -226,6 +293,7 @@
             <Label x:Name="LabelSelling" Grid.Row="5" FontFamily="Roboto" FontSize="15" FontWeight="Thin"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="Geld nach dem Hausverkauf" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                                 <Setter Property="Content" Value=""/>
@@ -233,18 +301,6 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
                                 <Setter Property="Content" Value="Geld nach der Hypothekenaufnahme"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="Geld nach dem Hausverkauf" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="Geld nach dem Hausverkauf" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="Geld nach dem Hausverkauf" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
-                                <Setter Property="Content" Value="Geld nach dem Hausverkauf" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
                                 <Setter Property="Content" Value="Geld nach dem Hotelverkauf" />
@@ -257,27 +313,10 @@
             <Label x:Name="LabelSellingVar" Grid.Row="5" Grid.Column="1" FontFamily="Roboto" FontSize="15" FontWeight="Thin"  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label.Style>
                     <Style TargetType="Label">
+                        <Setter Property="Content" Value="{Binding CashAfterSelling}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                                 <Setter Property="Visibility" Value="Hidden"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
-                                <Setter Property="Content" Value="{Binding CashAfterSelling}" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -289,6 +328,10 @@
         <Button x:Name="Sell" IsEnabled="{Binding EnableSelling}" Margin="0" Padding="5" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Roboto" FontSize="15" FontWeight="Thin">
             <Button.Style>
                 <Style TargetType="Button">
+                    <Setter Property="Content" Value="Verkaufen"/>
+                    <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
+                    <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
+                    <Setter Property="IsEnabled" Value="True"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                             <Setter Property="IsEnabled" Value="False"/>
@@ -297,30 +340,6 @@
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
                             <Setter Property="Content" Value="Hypothek"/>
                             <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_TakeMortgage}"/>
-                            <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
-                            <Setter Property="IsEnabled" Value="True"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="1">
-                            <Setter Property="Content" Value="Verkaufen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
-                            <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
-                            <Setter Property="IsEnabled" Value="True"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="2">
-                            <Setter Property="Content" Value="Verkaufen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
-                            <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
-                            <Setter Property="IsEnabled" Value="True"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="3">
-                            <Setter Property="Content" Value="Verkaufen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
-                            <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
-                            <Setter Property="IsEnabled" Value="True"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
-                            <Setter Property="Content" Value="Verkaufen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
                             <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                             <Setter Property="IsEnabled" Value="True"/>
                         </DataTrigger>

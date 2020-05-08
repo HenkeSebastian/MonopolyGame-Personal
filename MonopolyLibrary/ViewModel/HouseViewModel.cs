@@ -17,9 +17,9 @@ namespace MonopolyLibrary.ViewModel
             get { return house; }
         }
 
-        public int HouseID
+        public int UniqueID
         {
-            get => House.HouseID;
+            get => House.UniqueID;
         }
 
         public bool InUse {

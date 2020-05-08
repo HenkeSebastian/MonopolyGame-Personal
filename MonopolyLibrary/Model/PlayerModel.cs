@@ -244,7 +244,7 @@ namespace MonopolyLibrary.Model
         public PlayerModel()
         {
             OwnedStreets = new ObservableCollection<GameCardViewModel>();
-            for (int i = 0; i < 27; i++)
+            for (int i = 0; i < 28; i++)
             {
                 OwnedStreets.Add(null);
             }

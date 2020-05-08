@@ -37,6 +37,7 @@ namespace MonopolyLibrary.Utility
                         StreetName = "LOS",
                         StreetPrice = 0,
                         StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Badstraße:
                     return new GameCardModel
@@ -48,12 +49,14 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Badstraße",
                         StreetPrice = 60,
-                        RentPrices = new int[6]{2,10,30,90,160,250},
+                        RentPrices = new int[6] { 2, 10, 30, 90, 160, 250 },
                         HousePrice = 50,
-                        Mortgage = new int[2]{30,33},
+                        Mortgage = new int[2] { 30, 33 },
                         StreetColor = SetStreetColors(StreetColors.Purple),
                         OwnerArrayID = 0,
-                        MonopoliesID = 0
+                        MonopoliesID = 0,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Gemeinschaftsfeld:
                     return new GameCardModel
@@ -63,9 +66,10 @@ namespace MonopolyLibrary.Utility
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
-                        StreetName = "Gemeinschafts\nfeld",
+                        StreetName = "Gemeinschafts-\nfeld",
                         StreetPrice = 0,
                         StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Turmstraße:
                     return new GameCardModel
@@ -82,7 +86,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] {30,33},
                         StreetColor = SetStreetColors(StreetColors.Purple),
                         OwnerArrayID = 1,
-                        MonopoliesID = 0
+                        MonopoliesID = 0,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Einkommenssteuer:
                     return new GameCardModel
@@ -92,9 +98,10 @@ namespace MonopolyLibrary.Utility
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
-                        StreetName = "Einkommens\nsteuer",
+                        StreetName = "Einkommens-\nsteuer",
                         StreetPrice = 0,
                         StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Südbahnhof:
                     return new GameCardModel
@@ -109,7 +116,8 @@ namespace MonopolyLibrary.Utility
                         RentPrices = new int[4] { 25, 50, 100, 200 },
                         Mortgage = new int[2] { 100, 110 },
                         StreetColor = new SolidColorBrush(Colors.Black),
-                        OwnerArrayID = 22
+                        OwnerArrayID = 22,
+                        MonopoliesID = -1
                     };
                 case StreetName.Chausseestraße:
                     return new GameCardModel
@@ -126,7 +134,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] {50,55},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
                         OwnerArrayID = 2,
-                        MonopoliesID = 1
+                        MonopoliesID = 1,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Ereignisfeld:
                     return new GameCardModel
@@ -138,7 +148,8 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Ereignisfeld",
                         StreetPrice = 0,
-                        StreetColor = SetStreetColors(StreetColors.Transparent)
+                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Elisenstraße:
                     return new GameCardModel
@@ -155,7 +166,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] {50,55},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
                         OwnerArrayID = 3,
-                        MonopoliesID = 1
+                        MonopoliesID = 1,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Poststraße:
                     return new GameCardModel
@@ -172,7 +185,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] {60,66},
                         StreetColor = SetStreetColors(StreetColors.LightBlue),
                         OwnerArrayID = 4,
-                        MonopoliesID = 1
+                        MonopoliesID = 1,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Gefängnis:
                     return new GameCardModel
@@ -184,7 +199,8 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
                         StreetName = "Im Gefängnis /\n Nur zu Besuch",
                         StreetPrice = 0,
-                        StreetColor = SetStreetColors(StreetColors.Transparent)
+                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Seestraße:
                     return new GameCardModel
@@ -201,7 +217,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] {70,77},
                         StreetColor = SetStreetColors(StreetColors.Orchid),
                         OwnerArrayID = 5,
-                        MonopoliesID = 2
+                        MonopoliesID = 2,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.EWerk:
                     return new GameCardModel
@@ -214,7 +232,8 @@ namespace MonopolyLibrary.Utility
                         StreetName = "Elektrizitätswerk",
                         StreetPrice = 150,
                         StreetColor = SetStreetColors(StreetColors.Yellow),
-                        OwnerArrayID = 26
+                        OwnerArrayID = 26,
+                        MonopoliesID = -1
                     };
                 case StreetName.Hafenstraße:
                     return new GameCardModel
@@ -231,7 +250,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 70, 77 },
                         StreetColor = SetStreetColors(StreetColors.Orchid),
                         OwnerArrayID = 6,
-                        MonopoliesID = 2
+                        MonopoliesID = 2,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.NeueStraße:
                     return new GameCardModel
@@ -248,7 +269,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 80, 88 },
                         StreetColor = SetStreetColors(StreetColors.Orchid),
                         OwnerArrayID = 7,
-                        MonopoliesID = 2
+                        MonopoliesID = 2,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
 
                 case StreetName.Westbahnhof:
@@ -263,7 +286,8 @@ namespace MonopolyLibrary.Utility
                         StreetPrice = 200,
                         RentPrices = new int[4] { 25, 50, 100, 200 },
                         StreetColor = new SolidColorBrush(Colors.Black),
-                        OwnerArrayID = 23
+                        OwnerArrayID = 23,
+                        MonopoliesID = -1
                     };
                 case StreetName.MünchnerStraße:
                     return new GameCardModel
@@ -273,14 +297,16 @@ namespace MonopolyLibrary.Utility
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
-                        StreetName = "Münchner\nStraße",
+                        StreetName = "Münchner\n Straße",
                         StreetPrice = 180,
                         RentPrices = new int[6] { 14, 70, 200, 550, 750, 950 },
                         HousePrice = 100,
                         Mortgage = new int[2] { 90, 99 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
                         OwnerArrayID = 8,
-                        MonopoliesID = 3
+                        MonopoliesID = 3,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.WienerStraße:
                     return new GameCardModel
@@ -297,7 +323,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 90, 99 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
                         OwnerArrayID = 9,
-                        MonopoliesID = 3
+                        MonopoliesID = 3,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.BerlinerStraße:
                     return new GameCardModel
@@ -314,7 +342,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 100, 110 },
                         StreetColor = SetStreetColors(StreetColors.Orange),
                         OwnerArrayID = 10,
-                        MonopoliesID = 3
+                        MonopoliesID = 3,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.FreiParken:
                     return new GameCardModel
@@ -326,7 +356,8 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
                         StreetName = "Frei Parken",
                         StreetPrice = 0,
-                        StreetColor = SetStreetColors(StreetColors.Transparent)
+                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.TheaterStraße:
                     return new GameCardModel
@@ -336,14 +367,16 @@ namespace MonopolyLibrary.Utility
                         CardSize = GameCardSizes.Small,
                         CardWidth = SetGameCardSize(GameCardSizes.Small)[0],
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
-                        StreetName = "TheaterStraße",
+                        StreetName = "Theaterstraße",
                         StreetPrice = 220,
                         RentPrices = new int[6] { 18, 90, 250, 700, 875, 1050 },
                         HousePrice = 150,
                         Mortgage = new int[2] { 110, 121 },
                         StreetColor = SetStreetColors(StreetColors.Red),
                         OwnerArrayID = 11,
-                        MonopoliesID = 4
+                        MonopoliesID = 4,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Museumstraße:
                     return new GameCardModel
@@ -360,7 +393,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 110, 121 },
                         StreetColor = SetStreetColors(StreetColors.Red),
                         OwnerArrayID = 12,
-                        MonopoliesID = 4
+                        MonopoliesID = 4,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Opernplatz:
                     return new GameCardModel
@@ -377,7 +412,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 120, 132 },
                         StreetColor = SetStreetColors(StreetColors.Red),
                         OwnerArrayID = 13,
-                        MonopoliesID = 4
+                        MonopoliesID = 4,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.NordBahnhof:
                     return new GameCardModel
@@ -391,7 +428,8 @@ namespace MonopolyLibrary.Utility
                         StreetPrice = 200,
                         RentPrices = new int[4] { 25, 50, 100, 200 },
                         StreetColor = new SolidColorBrush(Colors.Black),
-                        OwnerArrayID = 24
+                        OwnerArrayID = 24,
+                        MonopoliesID = -1
                     };
                 case StreetName.Lessingstraße:
                     return new GameCardModel
@@ -408,7 +446,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 130, 143 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
                         OwnerArrayID = 14,
-                        MonopoliesID = 5
+                        MonopoliesID = 5,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Schillerstraße:
                     return new GameCardModel
@@ -425,7 +465,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 130, 143 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
                         OwnerArrayID = 15,
-                        MonopoliesID = 5
+                        MonopoliesID = 5,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Wasserwerk:
                     return new GameCardModel
@@ -455,7 +497,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 140, 154 },
                         StreetColor = SetStreetColors(StreetColors.Yellow),
                         OwnerArrayID = 16,
-                        MonopoliesID = 5
+                        MonopoliesID = 5,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.InDasGefängnis:
                     return new GameCardModel
@@ -467,7 +511,8 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Big)[1],
                         StreetName = "Gehen Sie in \n das Gefängnis",
                         StreetPrice = 0,
-                        StreetColor = SetStreetColors(StreetColors.Transparent)
+                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Rathausplatz:
                     return new GameCardModel
@@ -484,7 +529,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 150, 165 },
                         StreetColor = SetStreetColors(StreetColors.Green),
                         OwnerArrayID = 17,
-                        MonopoliesID = 6
+                        MonopoliesID = 6,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Hauptstraße:
                     return new GameCardModel
@@ -501,7 +548,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 150, 165 },
                         StreetColor = SetStreetColors(StreetColors.Green),
                         OwnerArrayID = 18,
-                        MonopoliesID = 6
+                        MonopoliesID = 6,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Bahnhofstraße:
                     return new GameCardModel
@@ -518,7 +567,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 160, 176 },
                         StreetColor = SetStreetColors(StreetColors.Green),
                         OwnerArrayID = 19,
-                        MonopoliesID = 6
+                        MonopoliesID = 6,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Hauptbahnhof:
                     return new GameCardModel
@@ -532,7 +583,8 @@ namespace MonopolyLibrary.Utility
                         StreetPrice = 200,
                         RentPrices = new int[4] { 25, 50, 100, 200 },
                         StreetColor = new SolidColorBrush(Colors.Black),
-                        OwnerArrayID = 25
+                        OwnerArrayID = 25,
+                        MonopoliesID = -1
                     };
                 case StreetName.Parkstraße:
                     return new GameCardModel
@@ -549,7 +601,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 175, 193 },
                         StreetColor = SetStreetColors(StreetColors.RoyalBlue),
                         OwnerArrayID = 20,
-                        MonopoliesID = 7
+                        MonopoliesID = 7,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
                 case StreetName.Zusatzsteuer:
                     return new GameCardModel
@@ -561,7 +615,8 @@ namespace MonopolyLibrary.Utility
                         CardHeight = SetGameCardSize(GameCardSizes.Small)[1],
                         StreetName = "Zusatzsteuer",
                         StreetPrice = 100,
-                        StreetColor = SetStreetColors(StreetColors.Transparent)
+                        StreetColor = SetStreetColors(StreetColors.Transparent),
+                        MonopoliesID = -1
                     };
                 case StreetName.Schlossallee:
                     return new GameCardModel
@@ -578,7 +633,9 @@ namespace MonopolyLibrary.Utility
                         Mortgage = new int[2] { 200, 220 },
                         StreetColor = SetStreetColors(StreetColors.RoyalBlue),
                         OwnerArrayID = 21,
-                        MonopoliesID = 7
+                        MonopoliesID = 7,
+                        MaxMonopolyHouses = 0,
+                        MinMonopolyHouses = 0
                     };
             }
             return new GameCardModel

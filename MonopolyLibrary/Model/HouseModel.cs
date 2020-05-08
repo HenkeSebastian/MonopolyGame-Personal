@@ -10,15 +10,18 @@ namespace MonopolyLibrary.Model
 {
     public class HouseModel
     {
+        private static int houseID;
+
         /// <summary>
         /// ID of this House.
         /// </summary>
-        private int houseID;
+        private int uniqueID;
 
-        public int HouseID
+        public int UniqueID
         {
-            get { return houseID; }
+            get { return uniqueID; }
         }
+
 
         /// <summary>
         /// Boolean if the Street is currently in use or in the pool.
@@ -45,6 +48,7 @@ namespace MonopolyLibrary.Model
 
         public HouseModel()
         {
+            uniqueID = houseID;
             houseID++;
         }
     }

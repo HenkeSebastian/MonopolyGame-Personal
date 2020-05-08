@@ -214,6 +214,26 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
+        public int MaxMonopolyHouses
+        {
+            get => GameCard.MaxMonopolyHouses;
+            set
+            {
+                GameCard.MaxMonopolyHouses = value;
+                OnPropertyChanged("MaxMonopolyHouses");
+            }
+        }
+
+        public int MinMonopolyHouses
+        {
+            get => GameCard.MinMonopolyHouses;
+            set
+            {
+                GameCard.MinMonopolyHouses = value;
+                OnPropertyChanged("MinMonopolyHouses");
+            }
+        }
+
 
 
         /// <summary>
@@ -319,8 +339,24 @@ namespace MonopolyLibrary.ViewModel
         /// </summary>
         public void SellHouse()
         {
-            Content.GamePool.AddHouseToPool(Houses[Houses.Count]);
-            Houses.RemoveAt(Houses.Count);
+            Content.GamePool.AddHouseToPool(Houses[Houses.Count - 1]);
+            Houses.RemoveAt(Houses.Count - 1);
+        }
+
+        public void SetMaxMonopolyHouses(GameCardViewModel passedStreet)
+        {
+            foreach (GameCardViewModel street in Content.GamePool.GameCards)
+            {
+                if (street.MonopoliesID == passedStreet.MonopoliesID)
+                {
+                    if (street.NrOfHouses != NrOfHouses)
+                    {
+
+                        return;
+                    }
+                    street.MaxMonopolyHouses += 1;
+                }
+            }
         }
 
 

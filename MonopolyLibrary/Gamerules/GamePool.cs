@@ -29,6 +29,15 @@ namespace MonopolyLibrary.Gamerules
             set { houses = value; }
         }
 
+        private HouseViewModel[] unavailableHouses;
+
+        public HouseViewModel[] UnavailableHouses
+        {
+            get { return unavailableHouses; }
+            set { unavailableHouses = value; }
+        }
+
+
         private GameCardViewModel[] gameCards;
 
         public GameCardViewModel[] GameCards
@@ -43,6 +52,7 @@ namespace MonopolyLibrary.Gamerules
         {
             Content = content;
             InitializeHouses();
+            InitializeUnavailableHouses();
             InitializeStreets();
         }
 
@@ -55,6 +65,19 @@ namespace MonopolyLibrary.Gamerules
             for (int i = 0; i < 24; i++)
             {
                 Houses[i] = new HouseViewModel(Content);
+            }
+        }
+
+
+        /// <summary>
+        /// Initializes an array for unavailable houses in the game.
+        /// </summary>
+        public void InitializeUnavailableHouses()
+        {
+            UnavailableHouses = new HouseViewModel[24];
+            for (int i = 0; i < 24; i++)
+            {
+                UnavailableHouses[i] = null;
             }
         }
 
@@ -135,13 +158,14 @@ namespace MonopolyLibrary.Gamerules
         {
             foreach (HouseViewModel house in Houses)
             {
-                if (house.InUse == false)
+                if (house != null && house.InUse == false)
                 {
+                    UnavailableHouses[house.UniqueID] = house;
+                    Houses[house.UniqueID] = null;
                     house.BuiltStreet = street;
                     house.InUse = true;
                     return house;
                 }
-                return null;
             }
             Content.OpenMessageBox("Keine Häuser mehr verfügbar!");
             return null;
@@ -154,6 +178,8 @@ namespace MonopolyLibrary.Gamerules
         /// <param name="house"></param>
         public void AddHouseToPool(HouseViewModel house)
         {
+            UnavailableHouses[house.UniqueID] = null;
+            Houses[house.UniqueID] = house;
             house.InUse = false;
             house.BuiltStreet = null;
         }

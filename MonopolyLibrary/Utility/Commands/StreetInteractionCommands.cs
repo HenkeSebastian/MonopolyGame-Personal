@@ -59,9 +59,18 @@ namespace MonopolyLibrary.Utility.Commands
             {
                 if (Content.ManagingPlayer.GetActivePlayer().Monopolies[gameCard.MonopoliesID] == true)
                 {
-                    gameCard.NrOfHouses += 1;
-                    gameCard.OwningPlayer.PlayerRemoveMoney(gameCard.HousePrice);
-                    gameCard.BuildHouse();
+                    gameCard.SetMaxMonopolyHouses(gameCard);
+                    if (gameCard.NrOfHouses < gameCard.MaxMonopolyHouses)
+                    {
+                        gameCard.NrOfHouses += 1;
+                        gameCard.OwningPlayer.PlayerRemoveMoney(gameCard.HousePrice);
+                        gameCard.BuildHouse();
+
+                    }
+                    else
+                    {
+                        Content.OpenMessageBox("Bauen nicht möglich! Bauen Sie zunächst gleichmäßig viele Häuser auf diesem Monopol!");
+                    }
                 }
             }
         }

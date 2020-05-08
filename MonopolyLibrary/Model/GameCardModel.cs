@@ -283,6 +283,23 @@ namespace MonopolyLibrary.Model
             }
         }
 
+        private int maxMonopolyHouses;
+
+        public int MaxMonopolyHouses
+        {
+            get { return maxMonopolyHouses; }
+            set { maxMonopolyHouses = value; }
+        }
+
+        private int minMonopolyHouses;
+
+        public int MinMonopolyHouses
+        {
+            get { return minMonopolyHouses; }
+            set { minMonopolyHouses = value; }
+        }
+
+
 
 
 
