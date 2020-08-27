@@ -5,14 +5,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Monopoly.View"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" MinWidth="800" MinHeight="450" Background="DimGray">
     <!--Verification controls-->
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <Label Content="Are you sure you want to quit the game?" FontFamily="Roboto" FontSize="15" HorizontalAlignment="Center"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <Button Content="Yes" Command="{Binding C_CloseGame}" CommandParameter="" Margin="10" Padding="50,10"/>
-            <Button Content="Cancel" Command="{Binding C_Revert}" Margin="10" Padding="50,10"/>
+            <Button Content="Yes" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_ExitGame}" CommandParameter="" Margin="10" Padding="50,10"/>
+            <Button Content="Cancel" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_Revert}" Margin="10" Padding="50,10"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

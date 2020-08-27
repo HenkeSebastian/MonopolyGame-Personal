@@ -8,6 +8,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ph="clr-namespace:MonopolyLibrary.PlayerHandling;assembly=MonopolyLibrary"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
              xmlns:local="clr-namespace:Monopoly.View.DetailsViews"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="800">
@@ -15,18 +16,18 @@
     <!--Main Grid-->
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="0"/>
             <RowDefinition Height=".5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="0"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="0"/>
         </Grid.ColumnDefinitions>
 
         <!--Headline-->
@@ -329,7 +330,7 @@
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Content" Value="Verkaufen"/>
-                    <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
+                    <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_SellHouse}"/>
                     <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                     <Setter Property="IsEnabled" Value="True"/>
                     <Style.Triggers>
@@ -339,13 +340,13 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="0">
                             <Setter Property="Content" Value="Hypothek"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_TakeMortgage}"/>
+                            <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_TakeMortgage}"/>
                             <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                             <Setter Property="IsEnabled" Value="True"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">
                             <Setter Property="Content" Value="Verkaufen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_SellHouse}"/>
+                            <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_SellHotel}"/>
                             <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                             <Setter Property="IsEnabled" Value="True"/>
                         </DataTrigger>
@@ -359,18 +360,18 @@
             <Button.Style>
                 <Style TargetType="Button">
                     <Setter Property="Content" Value="Haus bauen"/>
-                    <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_BuildHouse}"/>
+                    <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_BuildHouse}"/>
                     <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="-1">
                             <Setter Property="Content" Value="Hypothek auflösen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_PayMortgage}"/>
+                            <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_PayMortgage}"/>
                             <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="4">
                             <Setter Property="Content" Value="Hotel bauen"/>
-                            <Setter Property="Command" Value="{Binding Content.ButtonBindings.Com_BuildHotel}"/>
+                            <Setter Property="Command" Value="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_BuildHotel}"/>
                             <Setter Property="CommandParameter" Value="{Binding GameCard}"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding GameCard.NrOfHouses}" Value="5">

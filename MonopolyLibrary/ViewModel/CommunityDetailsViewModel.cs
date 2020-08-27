@@ -10,7 +10,6 @@ namespace MonopolyLibrary.ViewModel
 {
     public class CommunityDetailsViewModel: BaseViewModel
     {
-
         public Windows Window { get => Windows.CommunityDetails; }
 
         private CommunityModel community;
@@ -41,9 +40,8 @@ namespace MonopolyLibrary.ViewModel
         }
 
 
-        public CommunityDetailsViewModel(WindowContent content)
+        public CommunityDetailsViewModel()
         {
-            Content = content;
             this.community = new CommunityModel();
         }
     }

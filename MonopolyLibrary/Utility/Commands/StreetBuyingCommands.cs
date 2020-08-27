@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Utility;
+using MonopolyLibrary.ViewModel;
 
 namespace MonopolyLibrary.Utility.Commands
 {
     public class StreetBuyingCommands
     {
-        private WindowContent content;
+        private GamePool gamePool = new GamePool();
 
-        public WindowContent Content
+        public static WindowContent Content { get => WindowContent.GetWindowContent(); }
+        private ManagingPlayer ManagingPlayer
         {
-            get { return content; }
-            set { content = value; }
+            get => Content.GetManagingPlayer();
         }
 
-        public StreetBuyingCommands(WindowContent content)
+        public StreetBuyingCommands()
         {
-            Content = content;
-        }
 
+        }
 
         /// <summary>
         /// The currently active player buys a street. The money will be taken from the players cash pile and the ownership of the card will be registered.
@@ -29,10 +32,10 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void BuyStreet()
         {
-            Content.ManagingPlayer.GetActivePlayer().PlayerAddGameCard(Content.GameBoardViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()));
-            Content.ManagingPlayer.GetActivePlayer().PlayerRemoveMoney(Content.GameBoardViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()).StreetPrice);
-            Content.GameBoardViewModel.SetDoneButton(true);
-            Content.ChangeDetailsView(Windows.IdleDetails);
+            ManagingPlayer.GetActivePlayer().PlayerAddGameCard(gamePool.GetPlayerGameCard(ManagingPlayer.GetActivePlayer()));
+            ManagingPlayer.GetActivePlayer().PlayerRemoveMoney(gamePool.GetPlayerGameCard(ManagingPlayer.GetActivePlayer()).StreetPrice);
+            WindowContent.GetWindowContent().GetAdditionalViewModel<DoneButtonViewModel>().SetDoneButton(true);
+            Content.SetDetailsViewModelActive<IdleDetailsViewModel>();
         }
     }
 }

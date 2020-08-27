@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using MonopolyLibrary;
 using MonopolyLibrary.ViewModel;
 
@@ -11,6 +12,7 @@ namespace MonopolyLibrary.Model
     public class HouseModel
     {
         private static int houseID;
+        private static int hotelID;
 
         /// <summary>
         /// ID of this House.
@@ -20,6 +22,13 @@ namespace MonopolyLibrary.Model
         public int UniqueID
         {
             get { return uniqueID; }
+        }
+
+        private int uniqueHotelID;
+
+        public int UniqueHotelID
+        {
+            get { return uniqueHotelID; }
         }
 
 
@@ -34,6 +43,15 @@ namespace MonopolyLibrary.Model
             set { inUse = value; }
         }
 
+        private SolidColorBrush houseColor;
+
+        public SolidColorBrush HouseColor
+        {
+            get { return houseColor; }
+            set { houseColor = value; }
+        }
+
+
 
         /// <summary>
         /// Reference to the Street that uses this House
@@ -46,10 +64,19 @@ namespace MonopolyLibrary.Model
             set { builtStreet = value; }
         }
 
-        public HouseModel()
+        public HouseModel(bool hotel = false)
         {
-            uniqueID = houseID;
-            houseID++;
+            if (hotel)
+            {
+                uniqueHotelID = hotelID;
+                hotelID++;
+            }
+            else
+            {
+                uniqueID = houseID;
+                houseID++;
+            }
+
         }
     }
 }

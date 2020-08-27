@@ -46,14 +46,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dice\C_Dice.cs" />
-    <Compile Include="Gamerules\C_Chance.cs" />
-    <Compile Include="Gamerules\C_CommunityChest.cs" />
-    <Compile Include="Gamerules\C_FirstRollRules.cs" />
-    <Compile Include="Gamerules\C_MainGameRules.cs" />
+    <Compile Include="Gamerules\Chance.cs" />
+    <Compile Include="Gamerules\CommunityChest.cs" />
+    <Compile Include="Gamerules\FirstRollRules.cs" />
+    <Compile Include="Gamerules\MainGameRules.cs" />
     <Compile Include="Gamerules\GamePool.cs" />
     <Compile Include="Model\CommunityModel.cs" />
     <Compile Include="Model\DiceModel.cs" />
+    <Compile Include="Model\DoneButtonModel.cs" />
     <Compile Include="Model\GameCardModel.cs" />
     <Compile Include="Model\HouseModel.cs" />
     <Compile Include="Model\PlayerModel.cs" />
@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Resources\Avatars.cs" />
     <Compile Include="Resources\Names.cs" />
+    <Compile Include="Utility\Commands\CloseGameCommands.cs" />
     <Compile Include="Utility\Commands\DiceCommands.cs" />
     <Compile Include="Utility\Commands\GameCardCommands.cs" />
     <Compile Include="Utility\Commands\PlayerCreationCommands.cs" />
@@ -73,9 +74,9 @@
     <Compile Include="Utility\Commands\StartWindowCommands.cs" />
     <Compile Include="Utility\Commands\StreetBuyingCommands.cs" />
     <Compile Include="Utility\Commands\StreetInteractionCommands.cs" />
-    <Compile Include="Utility\C_ButtonBindings.cs" />
-    <Compile Include="Utility\C_ButtonCommands.cs" />
+    <Compile Include="Utility\ButtonBindings.cs" />
     <Compile Include="Utility\Enums.cs" />
+    <Compile Include="Utility\MathAdvanced.cs" />
     <Compile Include="Utility\NonGenericRelayCommand.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\SetEnums.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="ViewModel\CloseGameViewModel.cs" />
     <Compile Include="ViewModel\CommunityDetailsViewModel.cs" />
     <Compile Include="ViewModel\DiceViewModel.cs" />
+    <Compile Include="ViewModel\DoneButtonViewModel.cs" />
     <Compile Include="ViewModel\GameBoardViewModel.cs" />
     <Compile Include="ViewModel\GameCardViewModel.cs" />
     <Compile Include="ViewModel\GameViewViewModel.cs" />
@@ -102,6 +104,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Resource Include="Resources\Die\2.png" />
     <Resource Include="Resources\Die\3.png" />

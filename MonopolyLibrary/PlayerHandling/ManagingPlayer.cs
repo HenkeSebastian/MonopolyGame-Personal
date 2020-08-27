@@ -1,4 +1,5 @@
-﻿using MonopolyLibrary.Utility;
+﻿using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.Utility;
 using MonopolyLibrary.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace MonopolyLibrary.PlayerHandling
             set { amountOfPlayers = value; }
         }
 
-        private int activePlayerIndex;
+        private static int activePlayerIndex;
 
         public int ActivePlayerIndex
         {
@@ -73,7 +74,10 @@ namespace MonopolyLibrary.PlayerHandling
         }
 
         #endregion
-
+        /*
+        private static readonly ManagingPlayer _instance = new ManagingPlayer();
+        public static ManagingPlayer Instance { get => _instance; }
+        */
         private WindowContent content;
 
         public WindowContent Content
@@ -82,10 +86,8 @@ namespace MonopolyLibrary.PlayerHandling
             set { content = value; }
         }
 
-        public ManagingPlayer(WindowContent content)
+        public ManagingPlayer()
         {
-            Content = content;
-            InitializeCollections();
             AmountOfPlayers = 0;
             ActivePlayerIndex = 0;
         }
@@ -133,7 +135,22 @@ namespace MonopolyLibrary.PlayerHandling
         /// <returns>The current active Player.</returns>
         public PlayerViewModel GetActivePlayer()
         {
-            return AllPlayers[ActivePlayerIndex];
+            return allPlayers[activePlayerIndex];
+        }
+
+        public ObservableCollection<PlayerViewModel> GetAllPlayers()
+        {
+            return AllPlayers;
+        }
+
+        public ObservableCollection<PlayerViewModel> GetActivePlayers()
+        {
+            return ActivePlayer;
+        }
+
+        public ObservableCollection<PlayerViewModel> GetNPCPlayers()
+        {
+            return NPCPlayer;
         }
 
         /// <summary>
@@ -166,14 +183,20 @@ namespace MonopolyLibrary.PlayerHandling
             }
         }
 
+       private void SetIDActive(int playerID)
+        {
+            ActivePlayer[playerID].IsActive = true;
+        }
+
         /// <summary>
         /// Sets a Player with a certain ID active.
         /// </summary>
         /// <param name="ID">The Player ID</param>
         public void SetPlayerIDActive(int ID)
         {
+            SetAllPlayerInactive();
             ActivePlayerIndex = ID;
-            SetActivePlayer();
+            SetIDActive(ID);
         }
 
         /// <summary>
@@ -217,7 +240,7 @@ namespace MonopolyLibrary.PlayerHandling
             foreach (PlayerViewModel player in AllPlayers)
             {
                 player.CurrentPosition = 0;
-                Content.GameBoardViewModel.GameCards[positionID].AddPlayerOnCard(player);
+                WindowContent.GetWindowContent().GetViewModel<GameBoardViewModel>().GamePool.GetGameCard(positionID).AddPlayerOnCard(player);
             }
         }
 

@@ -5,29 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MonopolyLibrary.Gamerules
 {
-    public class C_CommunityChest
+    public class CommunityChest
     {
         Random rand;
-
-        private WindowContent content;
-
         public WindowContent Content
         {
-            get { return content; }
-            set { content = value; }
+            get =>WindowContent.GetWindowContent();
         }
 
-        public C_CommunityChest(WindowContent content)
+        public CommunityDetailsViewModel CommunityDetails
         {
-            Content = content;
+            get => WindowContent.GetWindowContent().GetDetailsViewModel<CommunityDetailsViewModel>();
         }
 
-        public C_CommunityChest()
-        {
+        private GamePool gamePool = new GamePool();
 
+        public CommunityChest()
+        {
         }
 
         /// <summary>
@@ -105,9 +103,9 @@ namespace MonopolyLibrary.Gamerules
             {
                 playerToMove.PlayerMoveToPosition(11, true);
             }
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Rücke vor bis zur Seestraße. Wenn du über Los kommst, ziehe M200 ein.";
-            Content.GameBoardViewModel.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Rücke vor bis zur Seestraße. Wenn du über Los kommst, ziehe M200 ein.";
+            gamePool.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
         }
 
         /// <summary>
@@ -117,8 +115,8 @@ namespace MonopolyLibrary.Gamerules
         public void KreuzwortGewonnen(PlayerViewModel playerWhoWon)
         {
             playerWhoWon.PlayerAddMoney(100);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Du hast in einem Kreuzworträtselwettbewerb gewonnen. Ziehe M100 ein.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Du hast in einem Kreuzworträtselwettbewerb gewonnen. Ziehe M100 ein.";
         }
 
         /// <summary>
@@ -128,8 +126,8 @@ namespace MonopolyLibrary.Gamerules
         public void GetRent(PlayerViewModel playerToGetPayed)
         {
             playerToGetPayed.PlayerAddMoney(150);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Miete und Anleihezinsen werden fällig. Die Bank zahlt Dir M150.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Miete und Anleihezinsen werden fällig. Die Bank zahlt Dir M150.";
         }
 
         /// <summary>
@@ -139,8 +137,8 @@ namespace MonopolyLibrary.Gamerules
         public void GetOutOfJail(PlayerViewModel playerToGetOut)
         {
             ///TODO Implement Get Out OF Jail Free Card.
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Du kommst aus dem Gefängnis frei.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Du kommst aus dem Gefängnis frei.";
         }
 
         /// <summary>
@@ -150,8 +148,8 @@ namespace MonopolyLibrary.Gamerules
         public void GoToGo(PlayerViewModel playerToMove)
         {
             playerToMove.PlayerMoveToPosition(0, true);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Rücke bis auf Los vor.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Rücke bis auf Los vor.";
         }
 
         /// <summary>
@@ -161,8 +159,8 @@ namespace MonopolyLibrary.Gamerules
         public void GetDiv(PlayerViewModel playerToGetDiv)
         {
             playerToGetDiv.PlayerAddMoney(50);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Die Bank zahlt dir eine Dividende von M50.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Die Bank zahlt dir eine Dividende von M50.";
         }
 
         /// <summary>
@@ -172,9 +170,9 @@ namespace MonopolyLibrary.Gamerules
         public void GoToSchlossAllee(PlayerViewModel playerToMove)
         {
             playerToMove.PlayerMoveToPosition(39, false);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Rücke vor bis zu Schlossallee.";
-            Content.GameBoardViewModel.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Rücke vor bis zu Schlossallee.";
+            gamePool.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
         }
 
         /// <summary>
@@ -191,9 +189,9 @@ namespace MonopolyLibrary.Gamerules
             {
                 playerToMove.PlayerMoveToPosition(24, false);
             }
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Rücke vor bis zum Opernplatz. Wenn Du über Los kommst, ziehe M200 ein.";
-            Content.GameBoardViewModel.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Rücke vor bis zum Opernplatz. Wenn Du über Los kommst, ziehe M200 ein.";
+            gamePool.GameCards[playerToMove.CurrentPosition].CardAction(playerToMove);
         }
 
         /// <summary>
@@ -204,11 +202,11 @@ namespace MonopolyLibrary.Gamerules
         {
             if (playerToMove.CurrentPosition == 2)
             {
-                playerToMove.PlayerMoveToPosition(Content.GameBoardViewModel.GameCards.Length - 1 , false);
+                playerToMove.PlayerMoveToPosition(gamePool.GameCards.Length - 1 , false);
             }
             playerToMove.PlayerMoveToPosition(playerToMove.CurrentPosition - 3, false);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Gehe 3 Felder zurück.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Gehe 3 Felder zurück.";
         }
 
         /// <summary>
@@ -219,8 +217,8 @@ namespace MonopolyLibrary.Gamerules
         {
             playerToPay.PlayerRemoveMoney(playerToPay.AmountHouses * 25);
             playerToPay.PlayerRemoveMoney(playerToPay.AmountHotels * 100);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Lasse alle Deine Häuser renovieren. Zahle an die Bank für jedes Haus M25, für jedes Hotel M100.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Lasse alle Deine Häuser renovieren. Zahle an die Bank für jedes Haus M25, für jedes Hotel M100.";
         }
 
         /// <summary>
@@ -231,8 +229,8 @@ namespace MonopolyLibrary.Gamerules
         {
             playerToPay.PlayerRemoveMoney(playerToPay.AmountHouses * 40);
             playerToPay.PlayerRemoveMoney(playerToPay.AmountHotels * 115);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle für deine Häuser und Hotels. M40 je Haus. M115 je Hotel an die Bank.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Du wirst zu Strassenausbesserungsarbeiten herangezogen. Zahle für deine Häuser und Hotels. M40 je Haus. M115 je Hotel an die Bank.";
         }
 
         /// <summary>
@@ -242,8 +240,8 @@ namespace MonopolyLibrary.Gamerules
         public void Drunk(PlayerViewModel playerToPay)
         {
             playerToPay.PlayerRemoveMoney(20);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Betrunken im Dienst. Strafe M20.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Betrunken im Dienst. Strafe M20.";
         }
 
         /// <summary>
@@ -253,8 +251,8 @@ namespace MonopolyLibrary.Gamerules
         public void TooFast(PlayerViewModel playerToPay)
         {
             playerToPay.PlayerRemoveMoney(15);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Strafe für zu schnelles Fahren M15.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Strafe für zu schnelles Fahren M15.";
         }
 
         /// <summary>
@@ -264,8 +262,8 @@ namespace MonopolyLibrary.Gamerules
         public void GoToPrison(PlayerViewModel playerToGo)
         {
             playerToGo.PlayerGoToPrison();
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Gehe in das Gefängnis. Begib Dich direkt dorthin. Gehe nicht über Los. Ziehe nicht M200 ein.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Gehe in das Gefängnis. Begib Dich direkt dorthin. Gehe nicht über Los. Ziehe nicht M200 ein.";
         }
 
         /// <summary>
@@ -275,8 +273,8 @@ namespace MonopolyLibrary.Gamerules
         public void PaySchool(PlayerViewModel playerToPay)
         {
             playerToPay.PlayerRemoveMoney(150);
-            Content.CommunityDetailsViewModel.IconSource = "";
-            Content.CommunityDetailsViewModel.CommunityText = "Zahle Schulgeld.";
+            CommunityDetails.IconSource = "";
+            CommunityDetails.CommunityText = "Zahle Schulgeld.";
         }
     }
 }

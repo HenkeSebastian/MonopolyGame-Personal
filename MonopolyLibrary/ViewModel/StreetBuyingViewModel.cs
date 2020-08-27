@@ -7,10 +7,11 @@ using MonopolyLibrary.Utility;
 using MonopolyLibrary.Model;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using MonopolyLibrary.PlayerHandling;
 
 namespace MonopolyLibrary.ViewModel
 {
-    public class StreetBuyingViewModel: BaseViewModel, INotifyPropertyChanged
+    public class StreetBuyingViewModel: BaseViewModel
     {
         public Windows Window
         {
@@ -50,16 +51,36 @@ namespace MonopolyLibrary.ViewModel
             set
             {
                 enableBuying = value;
-                OnPropertyChanged();
+                OnPropertyChanged("EnableBuying");
             }
         }
 
-
-
-        public StreetBuyingViewModel(WindowContent content)
+        public StreetBuyingViewModel()
         {
-            Content = content;
         }
 
+        public void SetStreetBuyingGameCard(GameCardViewModel gameCard)
+        {
+            GameCard = gameCard;
+        }
+
+        public void SetEnableBuying(bool state)
+        {
+            EnableBuying = state;
+        }
+
+        public void SetCashAfterBuying(int cash)
+        {
+            CashAfterBuying = cash;
+        }
+
+        public void OpenStreetBuyingWindow(PlayerViewModel player, GameCardViewModel gameCard)
+        {
+            SetStreetBuyingGameCard(gameCard);
+            SetEnableBuying(player.PlayerCheckBalance(gameCard.StreetPrice));
+            SetCashAfterBuying(player.PlayerCashAfterBuying(gameCard));
+            WindowContent.GetWindowContent().GetAdditionalViewModel<DoneButtonViewModel>().SetDoneButton(false);
+            WindowContent.GetWindowContent().SetDetailsViewModelActive<StreetBuyingViewModel>();
+        }
     }
 }

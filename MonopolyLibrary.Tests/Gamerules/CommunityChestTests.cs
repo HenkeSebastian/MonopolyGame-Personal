@@ -4,26 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.Utility;
 using MonopolyLibrary.ViewModel;
 using MonopolyLibrary.Model;
-using MonopolyLibrary.Utility;
 using Xunit;
+using MonopolyLibrary.PlayerHandling;
 
 namespace MonopolyLibrary.Tests.Gamerules
 {
-    public class C_CommunityChestTests
+    public class CommunityChestTests
     {
-        C_CommunityChest communityChestRef;
+        CommunityChest communityChestRef;
         WindowContent contentTest;
         PlayerViewModel testPlayer;
 
-        public C_CommunityChestTests()
+        public CommunityChestTests()
         {
-            contentTest = new WindowContent();
-            communityChestRef = contentTest.CommunityChest;
-            testPlayer = new PlayerViewModel(contentTest, new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 7 }) ;
-            contentTest.ManagingPlayer.AddPlayer(testPlayer);
-            contentTest.ManagingPlayer.SetAllPlayerCollection();
+            contentTest = WindowContent.GetWindowContent();
+            communityChestRef = WindowContent.GetWindowContent().CommunityChest;
+            testPlayer = new PlayerViewModel(new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", PrisonRoll = 7 }) ;
+            WindowContent.GetWindowContent().ManagingPlayer.AddPlayer(testPlayer);
+            WindowContent.GetWindowContent().ManagingPlayer.SetAllPlayerCollection();
         }
 
         [Fact]
@@ -31,7 +32,7 @@ namespace MonopolyLibrary.Tests.Gamerules
         {
             //Arrange
             testPlayer.CurrentPosition = 0;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 11;
             //Act
             communityChestRef.GoToSeeStr(testPlayer);
@@ -77,7 +78,7 @@ namespace MonopolyLibrary.Tests.Gamerules
         {
             //Arrange
             testPlayer.CurrentPosition = 10;
-            contentTest.GameBoardViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[10].AddPlayerOnCard(testPlayer);
             int expected = 0;
             int expectedTwo = 2200;
             //Act
@@ -103,7 +104,7 @@ namespace MonopolyLibrary.Tests.Gamerules
         {
             //Arrange
             testPlayer.CurrentPosition = 0;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 39;
             //Act
             communityChestRef.GoToSchlossAllee(testPlayer);
@@ -116,7 +117,7 @@ namespace MonopolyLibrary.Tests.Gamerules
         {
             //Arrange
             testPlayer.CurrentPosition = 0;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
             int expected = 24;
             //Act
             communityChestRef.GoToOpernplatz(testPlayer);
@@ -129,7 +130,7 @@ namespace MonopolyLibrary.Tests.Gamerules
         {
             //Arrange
             testPlayer.CurrentPosition = 10;
-            contentTest.GameBoardViewModel.GameCards[10].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[10].AddPlayerOnCard(testPlayer);
             int expected = 7;
             //Act
             communityChestRef.MoveBackThree(testPlayer);

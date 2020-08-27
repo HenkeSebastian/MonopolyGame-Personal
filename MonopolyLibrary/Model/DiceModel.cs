@@ -10,7 +10,7 @@ namespace MonopolyLibrary.Model
 {
     public class DiceModel
     {
-        private int dieOne;
+        private static int dieOne;
 
         public int DieOne
         {
@@ -18,7 +18,7 @@ namespace MonopolyLibrary.Model
             set { dieOne = value; }
         }
 
-        private int dieTwo;
+        private static int dieTwo;
 
         public int DieTwo
         {
@@ -30,7 +30,7 @@ namespace MonopolyLibrary.Model
         /// <summary>
         /// Source string for the first die.
         /// </summary>
-        private string dieOneImageSource;
+        private static string dieOneImageSource;
 
         public string DieOneImageSource
         {
@@ -44,7 +44,7 @@ namespace MonopolyLibrary.Model
         /// <summary>
         /// Source string for the second die.
         /// </summary>
-        private string dieTwoImageSource;
+        private static string dieTwoImageSource;
 
         public string DieTwoImageSource
         {
@@ -58,7 +58,7 @@ namespace MonopolyLibrary.Model
         /// <summary>
         /// Flag to enable or disable the Button.
         /// </summary>
-        private bool buttonEnabled;
+        private static bool buttonEnabled;
 
         public bool ButtonEnabled
         {

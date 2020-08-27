@@ -134,9 +134,6 @@
     <Compile Include="View\DetailsViews\StreetBuyingView.xaml.cs">
       <DependentUpon>StreetBuyingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StreetInteractionView.xaml.cs">
-      <DependentUpon>StreetInteractionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ThreeCards.xaml.cs">
       <DependentUpon>ThreeCards.xaml</DependentUpon>
     </Compile>
@@ -271,10 +268,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\DetailsViews\StreetBuyingView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\StreetInteractionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

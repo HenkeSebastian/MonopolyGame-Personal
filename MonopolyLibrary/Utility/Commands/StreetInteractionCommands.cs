@@ -1,26 +1,24 @@
-﻿using MonopolyLibrary.Model;
+﻿using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.Model;
+using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MonopolyLibrary.Utility.Commands
 {
     public class StreetInteractionCommands
     {
-        private WindowContent content;
 
-        public WindowContent Content
-        {
-            get { return content; }
-            set { content = value; }
-        }
+        private GamePool gamePool = new GamePool();
 
-        public StreetInteractionCommands(WindowContent content)
+        public StreetInteractionCommands()
         {
-            Content = content;
+
         }
 
         /// <summary>
@@ -29,10 +27,10 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCard"></param>
         public void TakeMortgage(GameCardViewModel gameCard)
         {
-            if (gameCard.OwningPlayer == Content.ManagingPlayer.GetActivePlayer())
+            if (gameCard.IsActivePlayerOwningPlayer())
             {
-                gameCard.NrOfHouses -= 1;
-                gameCard.OwningPlayer.PlayerAddMoney(gameCard.Mortgage[0]);
+                gameCard.DecreaseHouseAmount();
+                gameCard.GetOwningPlayer().PlayerAddMoney(gameCard.Mortgage[0]);
             }
         }
 
@@ -42,10 +40,10 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCard"></param>
         public void PayMortgage(GameCardViewModel gameCard)
         {
-            if (gameCard.OwningPlayer == Content.ManagingPlayer.GetActivePlayer())
+            if (gameCard.IsActivePlayerOwningPlayer())
             {
-                gameCard.NrOfHouses += 1;
-                gameCard.OwningPlayer.PlayerRemoveMoney(gameCard.Mortgage[1]);
+                gameCard.IncreaseHouseAmount();
+                gameCard.GetOwningPlayer().PlayerRemoveMoney(gameCard.Mortgage[1]);
             }
         }
 
@@ -55,21 +53,49 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCard"></param>
         public void BuyHouse(GameCardViewModel gameCard)
         {
-            if (gameCard.OwningPlayer == Content.ManagingPlayer.GetActivePlayer())
+            if (gameCard.IsActivePlayerOwningPlayer())
             {
-                if (Content.ManagingPlayer.GetActivePlayer().Monopolies[gameCard.MonopoliesID] == true)
+                if (WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer().IsMonopolyComplete(gameCard))
                 {
                     gameCard.SetMaxMonopolyHouses(gameCard);
-                    if (gameCard.NrOfHouses < gameCard.MaxMonopolyHouses)
+                    if (gameCard.NrOfHousesLessThanMonopolyMax())
                     {
-                        gameCard.NrOfHouses += 1;
-                        gameCard.OwningPlayer.PlayerRemoveMoney(gameCard.HousePrice);
-                        gameCard.BuildHouse();
+                        gameCard.IncreaseHouseAmount();
+                        gameCard.GetOwningPlayer().PlayerRemoveMoney(gameCard.GetHousePrice());
+                        gamePool.BuildHouse(gameCard);
+                        gameCard.SetMinMonopolyHouses(gameCard);
 
                     }
                     else
                     {
-                        Content.OpenMessageBox("Bauen nicht möglich! Bauen Sie zunächst gleichmäßig viele Häuser auf diesem Monopol!");
+                        WindowContent.GetWindowContent().OpenMessageBox("Bauen nicht möglich! Bauen Sie zunächst gleichmäßig viele Häuser auf diesem Monopol!");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The player buys a hotel.
+        /// </summary>
+        /// <param name="gameCard"></param>
+        public void BuyHotel(GameCardViewModel gameCard)
+        {
+            if (gameCard.IsActivePlayerOwningPlayer())
+            {
+                if (WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer().IsMonopolyComplete(gameCard))
+                {
+                    gameCard.SetMaxMonopolyHouses(gameCard);
+                    if (gameCard.NrOfHousesLessThanMonopolyMax())
+                    {
+                        gameCard.DecreaseHouseAmount();
+                        gameCard.GetOwningPlayer().PlayerRemoveMoney(gameCard.GetHousePrice());
+                        gamePool.BuildHotel(gameCard);
+                        gameCard.SetMinMonopolyHouses(gameCard);
+
+                    }
+                    else
+                    {
+                        WindowContent.GetWindowContent().OpenMessageBox("Bauen nicht möglich! Bauen Sie zunächst gleichmäßig viele Häuser auf diesem Monopol!");
                     }
                 }
             }
@@ -81,15 +107,51 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCard"></param>
         public void SellHouse(GameCardViewModel gameCard)
         {
-            if (gameCard.OwningPlayer == Content.ManagingPlayer.GetActivePlayer())
+            if (gameCard.IsActivePlayerOwningPlayer())
             {
-                if (Content.ManagingPlayer.GetActivePlayer().Monopolies[gameCard.MonopoliesID] == true)
+                if (WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer().IsMonopolyComplete(gameCard))
                 {
-                    gameCard.NrOfHouses -= 1;
-                    gameCard.OwningPlayer.PlayerAddMoney(gameCard.HousePrice / 2);
-                    gameCard.SellHouse();
+                    gameCard.SetMinMonopolyHouses(gameCard);
+                    if (gameCard.NrOfHousesGreaterThanMonopolyMin())
+                    {
+                        gameCard.SetMaxMonopolyHouses(gameCard);
+                        gameCard.DecreaseHouseAmount();
+                        gameCard.GetOwningPlayer().PlayerAddMoney(gameCard.GetSellPrice());
+                        gamePool.SellHouse(gameCard);
+                    }
+                    else
+                    {
+                        WindowContent.GetWindowContent().OpenMessageBox("Verkaufen nicht möglich! Um auf dieser Straße ein weiteres Haus verkaufen zu können müssen zunächst auf allen Straßen des Monopols gleich viele Häuser stehen!");
+                    }
                 }
             }
         }
+
+        /// <summary>
+        /// The player buys a hotel.
+        /// </summary>
+        /// <param name="gameCard"></param>
+        public void SellHotel(GameCardViewModel gameCard)
+        {
+            if (gameCard.IsActivePlayerOwningPlayer())
+            {
+                if (WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer().IsMonopolyComplete(gameCard))
+                {
+                    gameCard.SetMinMonopolyHouses(gameCard);
+                    if (gameCard.NrOfHousesGreaterThanMonopolyMin())
+                    {
+                        gameCard.SetMaxMonopolyHouses(gameCard);
+                        gameCard.DecreaseHouseAmount();
+                        gameCard.GetOwningPlayer().PlayerAddMoney(gameCard.GetSellPrice());
+                        gamePool.SellHotel(gameCard);
+                    }
+                    else
+                    {
+                        WindowContent.GetWindowContent().OpenMessageBox("Verkaufen nicht möglich! Um auf dieser Straße ein weiteres Haus verkaufen zu können müssen zunächst auf allen Straßen des Monopols gleich viele Häuser stehen!");
+                    }
+                }
+            }
+        }
+
     }
 }

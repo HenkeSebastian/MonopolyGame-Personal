@@ -9,6 +9,9 @@ using MonopolyLibrary.ViewModel;
 using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Gamerules;
 using System.Windows;
+using MonopolyLibrary.Utility.Commands;
+using System.Collections.ObjectModel;
+using MonopolyLibrary.Model;
 
 namespace MonopolyLibrary.Utility
 {
@@ -17,6 +20,13 @@ namespace MonopolyLibrary.Utility
     /// </summary>
     public class WindowContent: INotifyPropertyChanged
     {
+        private static WindowContent _instance = new WindowContent();
+
+        public static WindowContent ViewModel
+        {
+            get { return _instance; }
+        }
+
         /// <summary>
         /// Width of the window.
         /// </summary>
@@ -73,100 +83,41 @@ namespace MonopolyLibrary.Utility
             }
         }
 
+        private ObservableCollection<BaseViewModel> viewModels;
 
-
-        /// <summary>
-        /// ViewModel of the Startscreen.
-        /// </summary>
-        private StartScreenViewModel startScreenViewModel;
-
-        public StartScreenViewModel StartScreenViewModel
+        public ObservableCollection<BaseViewModel> ViewModels
         {
-            get { return startScreenViewModel; }
-            private set
-            {
-                startScreenViewModel = value;
+            get { return viewModels; }
+            set 
+            { 
+                viewModels = value;
+                OnPropertyChanged("ViewModels");
             }
         }
 
+        private ObservableCollection<BaseViewModel> detailsViewModels;
 
-        /// <summary>
-        /// ViewModel of the Player Creation View.
-        /// </summary>
-        private PlayerCreationViewModel playerCreationViewModel;
-
-        public PlayerCreationViewModel PlayerCreationViewModel
+        public ObservableCollection<BaseViewModel> DetailsViewModels
         {
-            get { return playerCreationViewModel; }
-            private set { playerCreationViewModel = value; }
+            get { return detailsViewModels; }
+            set 
+            { 
+                detailsViewModels = value;
+                OnPropertyChanged("DetailsViewModel");
+            }
         }
 
+        private ObservableCollection<BaseViewModel> additionalViewModels;
 
-        /// <summary>
-        /// ViewModel of the Game View.
-        /// </summary>
-        private GameViewViewModel gameViewViewModel;
-
-        public GameViewViewModel GameViewViewModel
+        public ObservableCollection<BaseViewModel> AdditionalViewModels
         {
-            get { return gameViewViewModel; }
-            private set { gameViewViewModel = value; }
+            get { return additionalViewModels; }
+            set 
+            { 
+                additionalViewModels = value;
+                OnPropertyChanged("AdditionalViewModel");
+            }
         }
-
-
-        private GameBoardViewModel gameBoardViewModel;
-
-        public GameBoardViewModel GameBoardViewModel
-        {
-            get { return gameBoardViewModel; }
-            private set { gameBoardViewModel = value; }
-        }
-
-
-
-        /// <summary>
-        /// ViewModel of the Close Game View.
-        /// </summary>
-        private CloseGameViewModel closeGameViewModel;
-
-        public CloseGameViewModel CloseGameViewModel
-        {
-            get { return closeGameViewModel; }
-            private set { closeGameViewModel = value; }
-        }
-
-
-        /// <summary>
-        /// ViewModel of the Dice View.
-        /// </summary>
-        private DiceViewModel diceViewModel;
-
-        public DiceViewModel DiceViewModel
-        {
-            get { return diceViewModel; }
-            set { diceViewModel = value; }
-        }
-
-
-        /// <summary>
-        /// ViewModel of the Starting Roll View.
-        /// </summary>
-        private StartingRollViewModel startingRollViewModel;
-
-        public StartingRollViewModel StartingRollViewModel
-        {
-            get { return startingRollViewModel; }
-            set { startingRollViewModel = value; }
-        }
-
-        private IdleDetailsViewModel idleDetailsViewModel;
-
-        public IdleDetailsViewModel IdleDetailsViewModel
-        {
-            get { return idleDetailsViewModel; }
-            set { idleDetailsViewModel = value; }
-        }
-
 
 
         /// <summary>
@@ -197,21 +148,20 @@ namespace MonopolyLibrary.Utility
         }
 
 
-
         /// <summary>
         /// Property for the instance of the button bindings class.
         /// </summary>
-        private C_ButtonBindings buttonBindings;
+        private ButtonBindings buttonBindings;
 
-        public C_ButtonBindings ButtonBindings
+        public ButtonBindings ButtonBindings
         {
             get { return buttonBindings; }
             set { buttonBindings = value; }
         }
 
-        private C_CommunityChest communityChest;
+        private CommunityChest communityChest;
 
-        public C_CommunityChest CommunityChest
+        public CommunityChest CommunityChest
         {
             get { return communityChest; }
             set { communityChest = value; }
@@ -230,124 +180,49 @@ namespace MonopolyLibrary.Utility
             set { managingPlayer = value; }
         }
 
-        private GamePool gamePool;
 
-        public GamePool GamePool
-        {
-            get { return gamePool; }
-            set { gamePool = value; }
-        }
-
-
-
-        /// <summary>
-        /// Property for the instance of the street interaction view model.
-        /// </summary>
-        private StreetInteractionViewModel streetInteractionViewModel;
-
-        public StreetInteractionViewModel StreetInteractionViewModel
-        {
-            get { return streetInteractionViewModel; }
-            set { streetInteractionViewModel = value; }
-        }
+        private PlayerCreationCommands playerCreationCommands = new PlayerCreationCommands();
+        private StartingRollCommands startingRollCommands = new StartingRollCommands();
+        private StartWindowCommands startWindowCommands = new StartWindowCommands();
+        private CloseGameCommands closeGameCommands = new CloseGameCommands();
+        private GameCardCommands gameCardCommands = new GameCardCommands();
+        private DiceCommands diceCommands = new DiceCommands();
+        private StreetBuyingCommands streetBuyingCommands = new StreetBuyingCommands();
+        private StreetInteractionCommands streetInteractionCommands = new StreetInteractionCommands();
 
 
-        /// <summary>
-        /// Property for the instance of the street buying view model.
-        /// </summary>
-        private StreetBuyingViewModel streetBuyingViewModel;
-
-        public StreetBuyingViewModel StreetBuyingViewModel
-        {
-            get { return streetBuyingViewModel; }
-            set { streetBuyingViewModel = value; }
-        }
-
-        private CommunityDetailsViewModel communityDetailsViewModel;
-
-        public CommunityDetailsViewModel CommunityDetailsViewModel
-        {
-            get { return communityDetailsViewModel; }
-            set { communityDetailsViewModel = value; }
-        }
-
-
-
-
-
-
-        public WindowContent()
+        private WindowContent()
         {
             InitialWindowSetup();
+            InitializeCollections();
+            AddViewModelsToCollection();
             InitializeReferences();
-            InitializeViewModels();
+            AddDetailsViewModelsToCollection();
+            AddAdditionalViewModelsToCollection();
+            //OpenMessageBox(GetViewModel<GameBoardViewModel>().ToString());
         }
 
+        public static WindowContent GetWindowContent()
+        {
+            return _instance;
+        }
 
-        /// <summary>
-        /// REVIEW Delete.
-        /// </summary>
         private void InitialWindowSetup()
         {
             WindowHeight = new int();
             WindowWidth = new int();
         }
 
-
-        /// <summary>
-        /// Instances needed classes and passes a reference to each of the instances for persistance.
-        /// </summary>
-        private void InitializeReferences()
-        {
-            ButtonBindings = new C_ButtonBindings(this);
-            ManagingPlayer = new ManagingPlayer(this);
-            CommunityChest = new C_CommunityChest(this);
-            GamePool = new GamePool(this);
-        }
-
-
-        /// <summary>
-        /// Instances all the needed view models and passes a reference to this class for persistance.
-        /// </summary>
-        private void InitializeViewModels()
-        {
-            StartScreenViewModel = new StartScreenViewModel(this);
-            PlayerCreationViewModel = new PlayerCreationViewModel(this);
-            GameViewViewModel = new GameViewViewModel(this);
-            CloseGameViewModel = new CloseGameViewModel(this);
-            DiceViewModel = new DiceViewModel(this);
-            StartingRollViewModel = new StartingRollViewModel(this);
-            StreetInteractionViewModel = new StreetInteractionViewModel(this);
-            StreetBuyingViewModel = new StreetBuyingViewModel(this);
-            GameBoardViewModel = new GameBoardViewModel(this);
-
-            IdleDetailsViewModel = new IdleDetailsViewModel(this);
-            CommunityDetailsViewModel = new CommunityDetailsViewModel(this);
-        }
-
-
         /// <summary>
         /// Sets initial parameters for the main window.
         /// </summary>
         public void SetInitialContent()
         {
-            SelectedViewModel = startScreenViewModel;
-            SelectedDetailsViewModel = IdleDetailsViewModel;
+            SetViewModelActive(Windows.StartScreen);
+            SetDetailsViewModelActive<IdleDetailsViewModel>();
             WindowWidth = 800;
             WindowHeight = 500;
-            //SelectedViewModel = gameViewViewModel;
         }
-
-
-        /// <summary>
-        /// Sets the revert target for the Closing window "cancel" button.
-        /// </summary>
-        /// <param name="passedRevert">The Window to revert to.</param>
-        public void SetClosingWindowRevert(Windows passedRevert)
-        {
-            closeGameViewModel.SetCalledWindow(passedRevert);
-        }
-
 
         /// <summary>
         /// Sets the current window size.
@@ -360,104 +235,156 @@ namespace MonopolyLibrary.Utility
             WindowHeight = y;
         }
 
+
+
         /// <summary>
-        /// Sets the current minimum window size.
+        /// Instances needed classes and passes a reference to each of the instances for persistance.
         /// </summary>
-        /// <param name="x">The minimum window width.</param>
-        /// <param name="y">The minimum window height.</param>
-        public void SetMinWindowSize(int x, int y)
+        private void InitializeReferences()
         {
-            MinWindowWidth = x;
-            MinWindowHeight = y;
+            ManagingPlayer = new ManagingPlayer();
+            ManagingPlayer.InitializeCollections();
+            ButtonBindings = ButtonBindings.Instance;
+            CommunityChest = new CommunityChest();
+
         }
 
-
-        /// <summary>
-        /// Sets the window properties for each window to open. Executes initial needed functions.
-        /// </summary>
-        /// <param name="window">The window to open.</param>
-        public void SetWindowContent(Windows window)
+        private void InitializeCollections()
         {
-            switch (window)
+            ViewModels = new ObservableCollection<BaseViewModel>();
+            DetailsViewModels = new ObservableCollection<BaseViewModel>();
+            AdditionalViewModels = new ObservableCollection<BaseViewModel>();
+
+        }
+
+        private void AddViewModelsToCollection()
+        {
+            ViewModels.Add(new CloseGameViewModel());
+            ViewModels.Add(new DiceViewModel());
+            ViewModels.Add(new GameBoardViewModel());
+            ViewModels.Add(new PlayerCreationViewModel());
+            GetViewModel<PlayerCreationViewModel>().SetInitials();
+            ViewModels.Add(new StartingRollViewModel());
+            ViewModels.Add(new StartScreenViewModel());
+        }
+
+        private void AddDetailsViewModelsToCollection()
+        {
+            DetailsViewModels.Add(new GameCardViewModel(new GameCardModel()));
+            DetailsViewModels.Add(new CommunityDetailsViewModel());
+            DetailsViewModels.Add(new IdleDetailsViewModel());
+            DetailsViewModels.Add(new StreetBuyingViewModel());
+            DetailsViewModels.Add(new StreetInteractionViewModel());
+        }
+
+        private void AddAdditionalViewModelsToCollection()
+        {
+            AdditionalViewModels.Add(new DoneButtonViewModel());
+        }
+
+        #region MainViewModel
+        public T GetViewModel<T>()
+        {
+            foreach (BaseViewModel viewModel in ViewModels)
             {
-                case Windows.StartScreen:
-                    SelectedViewModel = StartScreenViewModel;
-                    break;
-                case Windows.PlayerCreation:
-                    SelectedViewModel = PlayerCreationViewModel;
-                    break;
-                case Windows.GameWindow:
-                    SelectedViewModel = GameViewViewModel;
-                    ManagingPlayer.SetPlayerIDActive(0);
-                    ManagingPlayer.SetAllPlayerInitialPosition(0);
-                    ManagingPlayer.SetAllPlayerMoney(10000);
-                    SetWindowSize(1200, 850);
-                    DiceViewModel.Dice.EnableDice(DiceViewModel);
-                    break;
-                case Windows.GameOver:
-                    break;
-                case Windows.EndScreen:
-                    break;
-                case Windows.ClosingScreen:
-                    SelectedViewModel = CloseGameViewModel;
-                    break;
-                case Windows.StartingRoll:
-                    SelectedViewModel = StartingRollViewModel;
-                    ManagingPlayer.SetAllPlayerCollection();
-                    SetWindowSize(800, 800);
-                    break;
-                case Windows.GameBoardScreen:
-                    SelectedViewModel = GameBoardViewModel;
-                    ManagingPlayer.SetPlayerIDActive(0);
-                    ManagingPlayer.SetAllPlayerInitialPosition(0);
-                    ManagingPlayer.SetAllPlayerMoney(10000);
-                    DiceViewModel.Dice.EnableDice(DiceViewModel);
-                    SetWindowSize(1400, 1080);
-                    break;
-                default:
-                    break;
+                if (viewModel is T)
+                {
+                    return (T)Convert.ChangeType(viewModel, typeof(T));
+                }
+            }
+
+            return default(T);
+        }
+
+        public void SetViewModelActive(Windows window)
+        {
+            foreach (BaseViewModel viewModel in ViewModels)
+            {
+                if (viewModel.ViewModelWindow == window)
+                {
+                    SetMainViewModel(viewModel);
+                    viewModel.ViewModelAction();
+                }
             }
         }
 
-        /// <summary>
-        /// Changes the Details View in the center of the Gameboard.
-        /// </summary>
-        /// <param name="viewModel"></param>
-        /// <param name="changeFromInteraction"></param>
-        public void ChangeDetailsView(Windows viewModel, bool changeFromInteraction = false)
+        private void SetMainViewModel(BaseViewModel viewModel)
         {
-            BaseViewModel selectedViewModel;
+            SelectedViewModel = viewModel;
+        }
 
-            if (changeFromInteraction == false && SelectedDetailsViewModel != StreetBuyingViewModel)
+        public BaseViewModel GetCurrentMainViewModel()
+        {
+            return SelectedViewModel;
+        }
+        #endregion
+
+        #region DetailsViewModel
+        public T GetDetailsViewModel<T>()
+        {
+            foreach (BaseViewModel viewModel in DetailsViewModels)
             {
-                switch (viewModel)
+                if (viewModel is T)
                 {
-                    case Windows.IdleDetails:
-                        selectedViewModel = IdleDetailsViewModel;
-                        break;
-                    case Windows.GameCardDetails:
-                        selectedViewModel = GameBoardViewModel.MouseOverGameCard;
-                        break;
-                    case Windows.StreetInteractionDetails:
-                        selectedViewModel = StreetInteractionViewModel;
-                        break;
-                    case Windows.StreetBuyingDetails:
-                        selectedViewModel = StreetBuyingViewModel;
-                        break;
-                    case Windows.CommunityDetails:
-                        selectedViewModel = CommunityDetailsViewModel;
-                        break;
-                    default:
-                        selectedViewModel = null;
-                        break;
+                    return (T)Convert.ChangeType(viewModel, typeof(T));
                 }
-                SelectedDetailsViewModel = selectedViewModel;
+            }
+
+            return default(T);
+        }
+
+        public void SetDetailsViewModelActive<T>(bool changeFromInteraction = false)
+        {
+            if (changeFromInteraction == false && SelectedDetailsViewModel != GetDetailsViewModel<StreetBuyingViewModel>())
+            {
+                SetDetailsViewModel(GetDetailsViewModel<T>());
             }
             else
             {
-                SelectedDetailsViewModel = IdleDetailsViewModel;
+                SetDetailsViewModel(GetDetailsViewModel<IdleDetailsViewModel>());
             }
         }
+
+        private void SetDetailsViewModel<T>(T viewModel)
+        {
+            SelectedDetailsViewModel = (BaseViewModel)Convert.ChangeType(viewModel, typeof(T));
+        }
+
+        public BaseViewModel GetCurrentDetailsViewModel()
+        {
+            return SelectedDetailsViewModel;
+        } 
+        #endregion
+
+        public T GetAdditionalViewModel<T>()
+        {
+            foreach (BaseViewModel viewModel in AdditionalViewModels)
+            {
+                if (viewModel is T)
+                {
+                    return (T)Convert.ChangeType(viewModel, typeof(T));
+                }
+            }
+
+            return default(T);
+        }
+
+        public ManagingPlayer GetManagingPlayer()
+        {
+            return ManagingPlayer;
+        }
+
+        #region MouseOver
+        public void SetMouseOverGameCard(GameCardViewModel gameCardViewModel)
+        {
+            DetailsViewModels[0] = gameCardViewModel;
+        }
+
+        public void ClearMouseOverGameCard()
+        {
+            DetailsViewModels[0] = null;
+        } 
+        #endregion
 
         /// <summary>
         /// Message Box for player infromation. Might get exchanged with a nicer implementation.

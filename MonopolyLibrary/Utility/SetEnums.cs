@@ -480,7 +480,8 @@ namespace MonopolyLibrary.Utility
                         StreetName = "Wasserwerk",
                         StreetPrice = 150,
                         StreetColor = SetStreetColors(StreetColors.RoyalBlue),
-                        OwnerArrayID = 27
+                        OwnerArrayID = 27,
+                        MonopoliesID = -1
                     };
                 case StreetName.Goethestraße:
                     return new GameCardModel

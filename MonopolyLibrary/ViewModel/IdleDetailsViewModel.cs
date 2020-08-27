@@ -10,14 +10,9 @@ namespace MonopolyLibrary.ViewModel
 {
     public class IdleDetailsViewModel: BaseViewModel
     {
-        public Windows Window
+        public IdleDetailsViewModel()
         {
-            get { return Windows.IdleDetails; }
-        }
-
-        public IdleDetailsViewModel(WindowContent content)
-        {
-            Content = content;
+            ViewModelWindow = Windows.IdleDetails;
         }
     }
 }

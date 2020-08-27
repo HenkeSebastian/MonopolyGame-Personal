@@ -8,10 +8,11 @@
         xmlns:local="clr-namespace:Monopoly.View"
         xmlns:dv="clr-namespace:Monopoly.View.DetailsViews"
         xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
+        xmlns:ut ="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
         mc:Ignorable="d"
         Title="MonopolyMainWindow"
         x:Name="MonopolyMainWindowControl"
-        Margin="0" Padding="0" Width="{Binding WindowContent.WindowWidth, Mode=TwoWay}" Height="{Binding WindowContent.WindowHeight, Mode = TwoWay}" MinHeight="{Binding WindowContent.MinWindowHeight}" MinWidth="{Binding WindowContent.MinWindowWidth}">
+        Margin="0" Padding="0" Width="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=WindowWidth, Mode=TwoWay}" Height="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=WindowHeight, Mode=TwoWay}" MinHeight="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=MinWindowHeight, Mode=TwoWay}" MinWidth="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=MinWindowWidth, Mode=TwoWay}">
 
 
     <Window.Resources>
@@ -36,5 +37,5 @@
     </Window.Resources>
         
         <!--The Content control that holds the user controls.-->
-        <ContentControl x:Name="navigation" Content="{Binding WindowContent.SelectedViewModel}"/>
+        <ContentControl x:Name="navigation" Content="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=SelectedViewModel}"/>
     </Window>

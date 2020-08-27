@@ -13,15 +13,15 @@ namespace MonopolyLibrary.Tests.ViewModel
 {
     public class PlayerViewModelTests
     {
-        WindowContent contentTest = new WindowContent();
+        WindowContent contentTest = WindowContent.GetWindowContent();
         PlayerViewModel testPlayer;
         GameCardViewModel testGameCard;
         public PlayerViewModelTests()
         {
-            testPlayer = new PlayerViewModel(contentTest, new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 3 });
+            testPlayer = new PlayerViewModel(new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", PrisonRoll = 3 });
             contentTest.ManagingPlayer.AddPlayer(testPlayer);
             contentTest.ManagingPlayer.SetAllPlayerCollection();
-            testGameCard = new GameCardViewModel(contentTest, SetEnums.SetGameCard(StreetName.Schlossallee));
+            testGameCard = new GameCardViewModel(SetEnums.SetGameCard(StreetName.Schlossallee));
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace MonopolyLibrary.Tests.ViewModel
         {
             //Arrange
             int expected = 20;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
 
             //Act
             testPlayer.MovePlayer(20);
@@ -44,7 +44,7 @@ namespace MonopolyLibrary.Tests.ViewModel
             //Arrange
             int expectedPosition = 1;
             int expectedCash = 2200;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
 
             //Act
             testPlayer.MovePlayer(41);
@@ -59,7 +59,7 @@ namespace MonopolyLibrary.Tests.ViewModel
         {
             //Arrange
             int expectedPosition = 22;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
 
             //Act
             testPlayer.PlayerMoveToPosition(22,false);
@@ -74,7 +74,7 @@ namespace MonopolyLibrary.Tests.ViewModel
             //Arrange
             int expectedPosition = 22;
             int expectedCash = 2200;
-            contentTest.GameBoardViewModel.GameCards[0].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[0].AddPlayerOnCard(testPlayer);
 
             //Act
             testPlayer.PlayerMoveToPosition(22, true);
@@ -101,12 +101,12 @@ namespace MonopolyLibrary.Tests.ViewModel
             //Arrange
             bool expectedInPrinson = true;
             int expectedDiceRoll = 0;
-            contentTest.GameBoardViewModel.GameCards[testPlayer.CurrentPosition].AddPlayerOnCard(testPlayer);
+            contentTest.GetViewModel<GameBoardViewModel>().GamePool.GameCards[testPlayer.CurrentPosition].AddPlayerOnCard(testPlayer);
             //Act
             testPlayer.PlayerGoToPrison();
             //Assert
             Assert.Equal(expectedInPrinson, testPlayer.InPrison);
-            Assert.Equal(expectedDiceRoll, testPlayer.DiceRoll);
+            Assert.Equal(expectedDiceRoll, testPlayer.PrisonRoll);
         }
 
         [Fact]
@@ -119,7 +119,7 @@ namespace MonopolyLibrary.Tests.ViewModel
             testPlayer.PlayerGetsOutOfPrison();
             //Assert
             Assert.Equal(expectedInPrinson, testPlayer.InPrison);
-            Assert.Equal(expectedDiceRoll, testPlayer.DiceRoll);
+            Assert.Equal(expectedDiceRoll, testPlayer.PrisonRoll);
         }
 
         [Fact]
@@ -150,7 +150,7 @@ namespace MonopolyLibrary.Tests.ViewModel
             //Arrange
             int expectedCashPlayerOne = 1000;
             int expectedCashPlayerTwo = 3000;
-            PlayerViewModel testPlayerTwo = new PlayerViewModel(contentTest, new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 3 });
+            PlayerViewModel testPlayerTwo = new PlayerViewModel(new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", PrisonRoll = 3 });
             //Act
             testPlayer.PlayerGivesPlayerMoney(testPlayerTwo, 1000);
             //Assert
@@ -189,7 +189,7 @@ namespace MonopolyLibrary.Tests.ViewModel
             //Arrange
             bool expectedPlayerOneCardOwnership = false;
             bool expectedPlayerTwoCardOwnership = true;
-            PlayerViewModel testPlayerTwo = new PlayerViewModel(contentTest, new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", DiceRoll = 3 });
+            PlayerViewModel testPlayerTwo = new PlayerViewModel(new PlayerModel() { CurrentPosition = 0, AmountHotels = 0, AmountHouses = 0, FirstThrow = 0, PlayerCash = 2000, PlayerID = 0, PlayerName = "Test", PrisonRoll = 3 });
             testPlayer.PlayerAddGameCard(testGameCard);
             //Act
             testPlayer.MoveGameCardToAnotherPlayer(testPlayerTwo, testPlayer.OwnedStreets[testGameCard.OwnerArrayID]);

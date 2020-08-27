@@ -1,28 +1,46 @@
-﻿using MonopolyLibrary.Model;
+﻿using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.Model;
+using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Utility;
+using MonopolyLibrary.Utility.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace MonopolyLibrary.ViewModel
 {
     public class GameCardViewModel: BaseViewModel
     {
-        public Windows Window
-        {
-            get { return Windows.GameCard; }
-        }
+        private GameCardCommands gameCardCommands = new GameCardCommands();
 
         private GameCardModel gameCard;
 
         public GameCardModel GameCard
         {
             get { return gameCard; }
+            set
+            {
+                gameCard = value;
+                OnPropertyChanged("GameCard");
+            }
         }
+
+        public int StreetBoardID
+        {
+            get => GameCard.StreetBoardID;
+            set
+            {
+                GameCard.StreetBoardID = value;
+                OnPropertyChanged("StreetBoardID");
+            }
+        }
+
 
         public StreetName StreetState
         {
@@ -34,6 +52,16 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
+        public string StreetName
+        {
+            get { return GameCard.StreetName; }
+            set
+            {
+                GameCard.StreetName = value;
+                OnPropertyChanged("StreetName");
+            }
+        }
+
         public bool CardInteractable
         {
             get { return GameCard.CardInteractable; }
@@ -41,6 +69,16 @@ namespace MonopolyLibrary.ViewModel
             {
                 GameCard.CardInteractable = value;
                 OnPropertyChanged("CardInteractable");
+            }
+        }
+
+        public bool InteractionActive
+        {
+            get => GameCard.InteractionActive;
+            set
+            {
+                GameCard.InteractionActive = value;
+                OnPropertyChanged("InteractionActive");
             }
         }
 
@@ -74,13 +112,13 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
-        public string StreetName
+        public SolidColorBrush StreetColor
         {
-            get { return GameCard.StreetName; }
+            get { return GameCard.StreetColor; }
             set
             {
-                GameCard.StreetName = value;
-                OnPropertyChanged("StreetName");
+                GameCard.StreetColor = value;
+                OnPropertyChanged("StreetColor");
             }
         }
 
@@ -134,15 +172,7 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
-        public SolidColorBrush StreetColor
-        {
-            get { return GameCard.StreetColor; }
-            set
-            {
-                GameCard.StreetColor = value;
-                OnPropertyChanged("StreetColor");
-            }
-        }
+
 
         public int NrOfHouses
         {
@@ -171,6 +201,26 @@ namespace MonopolyLibrary.ViewModel
             {
                 GameCard.Hotel = value;
                 OnPropertyChanged("Hotel");
+            }
+        }
+
+        public int MaxMonopolyHouses
+        {
+            get => GameCard.MaxMonopolyHouses;
+            set
+            {
+                GameCard.MaxMonopolyHouses = value;
+                OnPropertyChanged("MaxMonopolyHouses");
+            }
+        }
+
+        public int MinMonopolyHouses
+        {
+            get => GameCard.MinMonopolyHouses;
+            set
+            {
+                GameCard.MinMonopolyHouses = value;
+                OnPropertyChanged("MinMonopolyHouses");
             }
         }
 
@@ -213,35 +263,25 @@ namespace MonopolyLibrary.ViewModel
                 OnPropertyChanged("MonopoliesID");
             }
         }
-
-        public int MaxMonopolyHouses
+        public bool PlayPulseAnimation
         {
-            get => GameCard.MaxMonopolyHouses;
+            get { return GameCard.PlayPulseAnimation; }
             set
             {
-                GameCard.MaxMonopolyHouses = value;
-                OnPropertyChanged("MaxMonopolyHouses");
+                GameCard.PlayPulseAnimation = value;
+                OnPropertyChanged("PlayPulseAnimation");
             }
         }
 
-        public int MinMonopolyHouses
-        {
-            get => GameCard.MinMonopolyHouses;
-            set
-            {
-                GameCard.MinMonopolyHouses = value;
-                OnPropertyChanged("MinMonopolyHouses");
-            }
-        }
 
 
 
         /// <summary>
         /// Constructor for the Game Card View Model.
         /// </summary>
-        public GameCardViewModel(WindowContent content, GameCardModel passedGameCard)
+        public GameCardViewModel(GameCardModel passedGameCard)
         {
-            Content = content;
+            ViewModelWindow = Windows.GameCard;
             gameCard = passedGameCard;
         }
 
@@ -254,6 +294,38 @@ namespace MonopolyLibrary.ViewModel
             return OwningPlayer;
         }
 
+        public bool IsGameCardInteractable()
+        {
+            return CardInteractable;
+        }
+
+        public void SetInteractionActive(bool state)
+        {
+            InteractionActive = state;
+        }
+
+        public bool IsActivePlayerOwningPlayer()
+        {
+            if (GetOwningPlayer() == WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public void AddHouseToStreet(HouseViewModel house)
+        {
+            Houses.Add(house);
+        }
+
+        public void RemoveHouseAtID(int iD)
+        {
+            Houses.RemoveAt(iD);
+        }
+
         /// <summary>
         /// Returns the amount of Rent a player gets due to the amount of houses on it.
         /// </summary>
@@ -261,6 +333,16 @@ namespace MonopolyLibrary.ViewModel
         public int GetRentPrice()
         {
             return RentPrices[GameCard.NrOfHouses];
+        }
+
+        public int GetHousePrice()
+        {
+            return HousePrice;
+        }
+
+        public int GetSellPrice()
+        {
+            return HousePrice / 2;
         }
 
 
@@ -326,39 +408,179 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
-        /// <summary>
-        /// Creates a house on this street.
-        /// </summary>
-        public void BuildHouse()
+        public void IncreaseHouseAmount(int amount = 1)
         {
-            Houses.Add(Content.GamePool.BuildHouse(this));
+            NrOfHouses += amount;
         }
 
-        /// <summary>
-        /// Sells the last built house on this street.
-        /// </summary>
-        public void SellHouse()
+        public void DecreaseHouseAmount(int amount = 1)
         {
-            Content.GamePool.AddHouseToPool(Houses[Houses.Count - 1]);
-            Houses.RemoveAt(Houses.Count - 1);
+            NrOfHouses -= amount;
+        }
+
+
+        public List<GameCardViewModel> GetMonopolyGameCards(GameCardViewModel passedGameCard)
+        {
+            List<GameCardViewModel> foundStreets = new List<GameCardViewModel>();
+            foreach (GameCardViewModel street in GamePool.GetGameCards())
+            {
+                if (street.MonopoliesID == passedGameCard.MonopoliesID)
+                {
+                    foundStreets.Add(street);
+                }
+            }
+            return foundStreets;
+        }
+
+        public int FindMonopolyMaximumHouses(List<GameCardViewModel> inputStreets)
+        {
+            switch (inputStreets.Count)
+            {
+                case 2:
+                    return Math.Max(inputStreets[0].NrOfHouses, inputStreets[1].NrOfHouses);
+                case 3:
+                    return MathAdvanced.Max(inputStreets[0].NrOfHouses, inputStreets[1].NrOfHouses, inputStreets[2].NrOfHouses);
+                default:
+                    return 0;
+            }
+        }
+        public int FindMonopolyMinimumHouses(List<GameCardViewModel> inputStreets)
+        {
+            switch (inputStreets.Count)
+            {
+                case 2:
+                    return Math.Min(inputStreets[0].NrOfHouses, inputStreets[1].NrOfHouses);
+                case 3:
+                    return MathAdvanced.Min(inputStreets[0].NrOfHouses, inputStreets[1].NrOfHouses, inputStreets[2].NrOfHouses);
+                default:
+                    return 0;
+            }
         }
 
         public void SetMaxMonopolyHouses(GameCardViewModel passedStreet)
         {
-            foreach (GameCardViewModel street in Content.GamePool.GameCards)
+            List<GameCardViewModel> listOfStreetsInMonopoly = GetMonopolyGameCards(passedStreet);
+            int maximumOfHousesInMonopoly = FindMonopolyMaximumHouses(listOfStreetsInMonopoly);
+            switch (listOfStreetsInMonopoly.Count)
             {
-                if (street.MonopoliesID == passedStreet.MonopoliesID)
-                {
-                    if (street.NrOfHouses != NrOfHouses)
+                case 2:
+                    if (listOfStreetsInMonopoly[0].NrOfHouses == listOfStreetsInMonopoly[1].NrOfHouses)
                     {
-
-                        return;
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            if (street.MaxMonopolyHouses < 5)
+                            {
+                                street.MaxMonopolyHouses = maximumOfHousesInMonopoly + 1;
+                            }
+                        }
                     }
-                    street.MaxMonopolyHouses += 1;
-                }
+                    else
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            street.MaxMonopolyHouses = maximumOfHousesInMonopoly;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (listOfStreetsInMonopoly[0].NrOfHouses == listOfStreetsInMonopoly[1].NrOfHouses && listOfStreetsInMonopoly[1].NrOfHouses == listOfStreetsInMonopoly[2].NrOfHouses)
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            if (street.MaxMonopolyHouses < 5)
+                            {
+                            street.MaxMonopolyHouses = maximumOfHousesInMonopoly + 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            street.MaxMonopolyHouses = maximumOfHousesInMonopoly;
+                        }
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
+
+
+        public void SetMinMonopolyHouses(GameCardViewModel passedStreet)
+        {
+            List<GameCardViewModel> listOfStreetsInMonopoly = GetMonopolyGameCards(passedStreet);
+            int minimumOfHousesInMonopoly = FindMonopolyMinimumHouses(listOfStreetsInMonopoly);
+            switch (listOfStreetsInMonopoly.Count)
+            {
+                case 2:
+                    if (listOfStreetsInMonopoly[0].NrOfHouses == listOfStreetsInMonopoly[1].NrOfHouses)
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            if (street.MinMonopolyHouses > -1)
+                            {
+                                street.MinMonopolyHouses = minimumOfHousesInMonopoly - 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            street.MinMonopolyHouses = minimumOfHousesInMonopoly;
+                        }
+                    }
+                    break;
+                case 3:
+                    if (listOfStreetsInMonopoly[0].NrOfHouses == listOfStreetsInMonopoly[1].NrOfHouses && listOfStreetsInMonopoly[1].NrOfHouses == listOfStreetsInMonopoly[2].NrOfHouses)
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            if (street.MinMonopolyHouses > -1)
+                            {
+                                street.MinMonopolyHouses = minimumOfHousesInMonopoly - 1;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (GameCardViewModel street in listOfStreetsInMonopoly)
+                        {
+                            street.MinMonopolyHouses = minimumOfHousesInMonopoly;
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        public bool NrOfHousesGreaterThanMonopolyMin()
+        {
+            if (NrOfHouses > MinMonopolyHouses)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool NrOfHousesLessThanMonopolyMax()
+        {
+            if (NrOfHouses < MaxMonopolyHouses)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         /// Actions that will be triggered if a player is landing on said card.
@@ -372,9 +594,9 @@ namespace MonopolyLibrary.ViewModel
                     playerOnCard.PlayerAddMoney(200);
                     break;
                 case Utility.StreetName.Gemeinschaftsfeld:
-                    Content.CommunityChest.ExecuteCommunityChest(playerOnCard);
-                    Content.ChangeDetailsView(Windows.CommunityDetails);
-                    Content.GameBoardViewModel.SetDoneButton(true);
+                    WindowContent.GetWindowContent().CommunityChest.ExecuteCommunityChest(playerOnCard);
+                    WindowContent.GetWindowContent().SetDetailsViewModelActive<CommunityDetailsViewModel>();
+                    WindowContent.GetWindowContent().GetAdditionalViewModel<DoneButtonViewModel>().SetDoneButton(true);
                     break;
                 case Utility.StreetName.Einkommenssteuer:
                     playerOnCard.PlayerRemoveMoney(200);
@@ -394,15 +616,15 @@ namespace MonopolyLibrary.ViewModel
                 default:
                     if (GetOwningPlayer() != null)
                     {
-                        if (GetOwningPlayer() != Content.ManagingPlayer.GetActivePlayer())
+                        if ( ! IsActivePlayerOwningPlayer())
                         {
-                            Content.ManagingPlayer.GetActivePlayer().PlayerGivesPlayerMoney(GetOwningPlayer(), GetRentPrice());
-                            Content.GameBoardViewModel.SetDoneButton(true);
+                            WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer().PlayerGivesPlayerMoney(GetOwningPlayer(), GetRentPrice());
+                            WindowContent.GetWindowContent().GetAdditionalViewModel<DoneButtonViewModel>().SetDoneButton(true);
                         }
                     }
                     else
                     {
-                        Content.ButtonBindings.ButtonCommands.GameCardCommands.OpenStreetBuying(Content.ManagingPlayer.GetActivePlayer(), Content.GameBoardViewModel.GetPlayerGameCard(Content.ManagingPlayer.GetActivePlayer()));
+                        WindowContent.GetWindowContent().GetDetailsViewModel<StreetBuyingViewModel>().OpenStreetBuyingWindow(WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer(), WindowContent.GetWindowContent().GetViewModel<GameBoardViewModel>().GamePool.GetPlayerGameCard(WindowContent.GetWindowContent().GetManagingPlayer().GetActivePlayer()));
                     }
                     break;
             }

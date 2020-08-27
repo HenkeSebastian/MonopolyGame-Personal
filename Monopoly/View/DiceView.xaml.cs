@@ -23,7 +23,6 @@ namespace Monopoly.View
     public partial class DiceView : UserControl
     {
 
-
         public Windows WindowsParam
         {
             get { return (Windows)GetValue(WindowsParamProperty); }
@@ -36,7 +35,6 @@ namespace Monopoly.View
 
 
 
-
         public ICommand CommandTarget
         {
             get { return (ICommand)GetValue(CommandTargetProperty); }
@@ -46,6 +44,7 @@ namespace Monopoly.View
         // Using a DependencyProperty as the backing store for CommandTarget.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CommandTargetProperty =
             DependencyProperty.Register("CommandTarget", typeof(ICommand), typeof(DiceView));
+
 
 
 

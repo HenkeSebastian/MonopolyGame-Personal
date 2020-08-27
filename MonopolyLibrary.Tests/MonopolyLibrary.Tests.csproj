@@ -58,8 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dice\C_DiceTests.cs" />
-    <Compile Include="Gamerules\C_CommunityChestTests.cs" />
+    <Compile Include="Dice\DiceFunctionalityTests.cs" />
+    <Compile Include="Gamerules\CommunityChestTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\PlayerViewModelTests.cs" />
   </ItemGroup>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using MonopolyLibrary.Utility;
 
 namespace MonopolyLibrary.ViewModel
@@ -12,17 +14,13 @@ namespace MonopolyLibrary.ViewModel
     public class StartScreenViewModel: BaseViewModel
     {
 
-        public Windows Window
+        public StartScreenViewModel()
         {
-            get { return Windows.StartScreen; }
+            ViewModelWindow = Windows.StartScreen;
         }
 
-        public StartScreenViewModel(WindowContent passedWindowContent)
+        public override void ViewModelAction()
         {
-            Content = passedWindowContent;
         }
-
-
-        
     }
 }

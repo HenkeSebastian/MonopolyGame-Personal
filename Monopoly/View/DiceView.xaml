@@ -6,8 +6,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Monopoly.View"
              xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
              mc:Ignorable="d" 
-             Height="auto" Width="auto" d:DesignWidth="200" d:DesignHeight="100">
+             Height="auto" Width="auto" d:DesignWidth="200" d:DesignHeight="100"
+             DataContext="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=ViewModels[1]}">
     <Button IsEnabled="{Binding ButtonEnabled}" Command="{Binding CommandTarget, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding WindowsParam, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <Viewbox Stretch="Uniform">
             <StackPanel Orientation="Horizontal">

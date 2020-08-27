@@ -1,5 +1,4 @@
-﻿using MonopolyLibrary.Dice;
-using MonopolyLibrary.Model;
+﻿using MonopolyLibrary.Model;
 using MonopolyLibrary.Utility;
 using System;
 using System.Collections.Generic;
@@ -16,19 +15,12 @@ namespace MonopolyLibrary.ViewModel
     public class DiceViewModel: BaseViewModel
     {
 
-        private DiceModel diceModel;
+        Random rand = new Random();
 
-        public DiceModel DiceModel
+        private static DiceModel diceModel;
+        public static DiceModel DiceModel
         {
             get { return diceModel; }
-        }
-
-        private C_Dice dice;
-
-        public C_Dice Dice
-        {
-            get { return dice; }
-            set { dice = value; }
         }
 
         public int DieOne
@@ -83,14 +75,76 @@ namespace MonopolyLibrary.ViewModel
 
 
 
-
-        public DiceViewModel(WindowContent content)
+        public DiceViewModel()
         {
-            Content = content;
-            this.diceModel = new DiceModel();
+            ViewModelWindow = Windows.Dice;
+            diceModel = new DiceModel();
             ButtonEnabled = true;
-            Dice = new C_Dice();
-            Dice.SetDiceImages(this, 1, 1);
+            SetDiceImages(1, 1);
+        }
+
+
+
+        /// <summary>
+        /// Enables the Button for the Dice
+        /// </summary>
+        /// <param name="dice">The Dice Model</param>
+        public void EnableDice(bool diceState)
+        {
+            ButtonEnabled = diceState;
+        }
+
+
+        /// <summary>
+        /// Rolls the Dice and sets two random Numbers between 1 and 6.
+        /// </summary>
+        /// <returns>Returns the facenumbers of the Dice as an Array with the lenght of two.</returns>
+        public void RollDice()
+        {
+            SetDiceScore();
+            SetDiceImages(DieOne, DieTwo);
+        }
+
+        private void SetDiceScore()
+        {
+            DieOne = rand.Next(1, 7);
+            DieTwo = rand.Next(1, 7);
+        }
+
+        /// <summary>
+        /// Sets the Image for one of the Dice
+        /// </summary>
+        /// <param name="value">The facenumber as a value</param>
+        /// <returns></returns>
+        private string SetDieImage(int value)
+        {
+            return $"pack://application:,,,/MonopolyLibrary;Component/Resources/Die/{value}.png";
+        }
+
+        /// <summary>
+        /// Sets the images for the Dice View.
+        /// </summary>
+        /// <param name="dice">The Dice Model</param>
+        /// <param name="valueOne">The first value</param>
+        /// <param name="valueTwo">The second value</param>
+        private void SetDiceImages(int valueOne, int valueTwo)
+        {
+            DieOneImageSource = SetDieImage(valueOne);
+            DieTwoImageSource = SetDieImage(valueTwo);
+        }
+
+        /// <summary>
+        /// Returns true if the dice show doublets.
+        /// </summary>
+        /// <param name="dice"></param>
+        /// <returns></returns>
+        public bool getDoublets()
+        {
+            if (DieOne == DieTwo)
+            {
+                return true;
+            }
+            return false;
         }
 
     }

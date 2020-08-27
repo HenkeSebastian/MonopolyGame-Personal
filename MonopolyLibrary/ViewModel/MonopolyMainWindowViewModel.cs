@@ -1,26 +1,15 @@
 ﻿using MonopolyLibrary.Utility;
-
+using System.Dynamic;
+using System.Windows;
 
 namespace MonopolyLibrary.ViewModel
 {
-    public class MonopolyMainWindowViewModel
+    public class MonopolyMainWindowViewModel: BaseViewModel
     {
-        private WindowContent windowContent;
-
-        public WindowContent WindowContent
-        {
-            get { return windowContent; }
-            set
-            {
-                windowContent = value;
-            }
-        }
-
-
+        private WindowContent windowContent = WindowContent.GetWindowContent();
         public MonopolyMainWindowViewModel()
         {
-            WindowContent = new WindowContent();
-            WindowContent.SetInitialContent();
+            windowContent.SetInitialContent();
         }
 
     }

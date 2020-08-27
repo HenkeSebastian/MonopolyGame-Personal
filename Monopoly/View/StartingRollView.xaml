@@ -5,6 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Monopoly.View"
+             xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
+             xmlns:ph="clr-namespace:MonopolyLibrary.PlayerHandling;assembly=MonopolyLibrary"
+             xmlns:gr="clr-namespace:MonopolyLibrary.Gamerules;assembly=MonopolyLibrary"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="DimGray">
         <!--Main Grid-->
@@ -30,10 +34,10 @@
             <Label Grid.Row="1" Grid.Column="1" Content="Starting Roll" FontFamily="Roboto" FontSize="50" FontWeight="Black" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
             
             <!--Dice-->
-            <local:DiceView Grid.Column="1" Grid.Row="3" DataContext="{Binding Content.DiceViewModel}" WindowsParam="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.Window}" CommandTarget="{Binding Content.ButtonBindings.Com_FirstRoll}" Width="200" Height="100" VerticalAlignment="Center"/>
+        <local:DiceView Grid.Column="1" Grid.Row="3" WindowsParam="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=ViewModels[4].ViewModelWindow}" CommandTarget="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_DiceCommand}" Width="200" Height="100" VerticalAlignment="Center"/>
             
             <!--The Players in the game-->
-            <ItemsControl Grid.Column="1" Grid.Row="5" Padding="0" Margin="0" ItemsSource="{Binding Content.ManagingPlayer.AllPlayers}" VerticalAlignment="Center">
+        <ItemsControl Grid.Column="1" Grid.Row="5" Padding="0" Margin="0" ItemsSource="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=ManagingPlayer.AllPlayers}" VerticalAlignment="Center">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
@@ -44,7 +48,7 @@
                     <DataTemplate>
                         <StackPanel>
                             <local:PlayerView Margin="10"/>
-                            <Label Content="{Binding Player.FirstThrow}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Roboto" FontSize="20" FontWeight="Thin"/>
+                            <Label Content="{Binding FirstThrow}" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Roboto" FontSize="20" FontWeight="Thin"/>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -52,8 +56,8 @@
 
             <!--Navigation Buttons-->
             <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center">
-                <Button Content="Start Game" Margin="0,0,10,0" Width="100" Height="40" IsEnabled="{Binding C_FirstRollRules.FirstThrowDone}" Command="{Binding Content.ButtonBindings.Com_GoToGameView}"/>
-                <Button Content="Cancel" Margin="10,0,0,0" Width="100" Height="40" Command="{Binding Content.ButtonBindings.Com_CloseGame}" CommandParameter="{Binding Window}"/>
+                <Button Content="Start Game" Margin="0,0,10,0" Width="100" Height="40" IsEnabled="{Binding Source={x:Static ut:WindowContent.ViewModel},Path=StartingRollViewModel.FirstThrowDone}" Command="{Binding Source={x:Static ut:ButtonBindings.Instance},Path=Com_GoToGameView}"/>
+                <Button Content="Cancel" Margin="10,0,0,0" Width="100" Height="40" Command="{Binding Source={x:Static ut:ButtonBindings.Instance},Path=Com_CloseGame}" CommandParameter="{Binding ViewModelWindow}"/>
             </StackPanel>
         </Grid>
     </UserControl>

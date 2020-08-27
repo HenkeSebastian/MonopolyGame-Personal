@@ -20,9 +20,23 @@ namespace Monopoly.View
     /// </summary>
     public partial class GameCardView : UserControl
     {
+        public int BigGameCardTextRotation
+        {
+            get { return (int)GetValue(BigGameCardTextRotationProperty); }
+            set { SetValue(BigGameCardTextRotationProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BigGameCardTextRotation.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BigGameCardTextRotationProperty =
+            DependencyProperty.Register("BigGameCardTextRotation", typeof(int), typeof(GameCardView));
+
         public GameCardView()
         {
             InitializeComponent();
         }
+
+
+
+
     }
 }

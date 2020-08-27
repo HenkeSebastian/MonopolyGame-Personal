@@ -5,6 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Monopoly.View"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
+             xmlns:ph="clr-namespace:MonopolyLibrary.PlayerHandling;assembly=MonopolyLibrary"
+             xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" MinWidth="800" MinHeight="450" Background="DimGray">
         
@@ -42,14 +45,14 @@
                 <Viewbox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Stretch="Uniform" Margin="10,10" MaxHeight="75" >
                     <Image Source="{Binding CreatedPlayer.PlayerAvatar}"/>
                 </Viewbox>
-                <Button Content="Back" Command="{Binding Content.ButtonBindings.Com_PreviousPicture}" CommandParameter="{Binding}" Grid.Column="0" Grid.Row="2" Margin="10,15" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
-                <Button Content="Forward" Command="{Binding Content.ButtonBindings.Com_NextPicture}" CommandParameter="{Binding}" Grid.Column="1" Grid.Row="2" Margin="10,15"  FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
+            <Button Content="Back" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_PreviousPicture}" CommandParameter="{Binding}" Grid.Column="0" Grid.Row="2" Margin="10,15" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
+            <Button Content="Forward" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_NextPicture}" CommandParameter="{Binding}" Grid.Column="1" Grid.Row="2" Margin="10,15"  FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
                 <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Center" Margin="20">
                     <Label Content="Name:" FontFamily="Roboto" FontSize="13" FontWeight="Thin" Padding="0"/>
                     <TextBox Text="{Binding CreatedPlayer.PlayerName, Mode=TwoWay}" />
-                    <Button Content="Random" Command="{Binding Content.ButtonBindings.Com_RandomName}" CommandParameter="{Binding}" Margin="0,5,70,5"/>
+                <Button Content="Random" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_RandomName}" CommandParameter="{Binding}" Margin="0,5,70,5"/>
                 </StackPanel>
-                <Button Content="Add" Command="{Binding Content.ButtonBindings.Com_AddCharacter}" CommandParameter="{Binding}" Grid.Column="2" Grid.Row="2" Margin="20,15"/>
+            <Button Content="Add" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_AddCharacter}" CommandParameter="{Binding}" Grid.Column="2" Grid.Row="2" Margin="20,15"/>
             </Grid>
             
             <!--NPC Toggle-->
@@ -67,7 +70,7 @@
             <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
                 <Label Content="Active Player:" FontFamily="Roboto" FontSize="13" FontWeight="Thin" Padding="0" VerticalContentAlignment="Center" />
 
-                <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding Content.ManagingPlayer.ActivePlayer}" DockPanel.Dock="Bottom" HorizontalContentAlignment="Left">
+            <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding ManagingPlayer.ActivePlayer}" DockPanel.Dock="Bottom" HorizontalContentAlignment="Left">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"/>
@@ -104,7 +107,7 @@
             <StackPanel Grid.Row="2" Grid.Column="2" Margin="10">
                 <Label Content="NPCs:" FontFamily="Roboto" FontSize="13" FontWeight="Thin" Padding="0" />
 
-                <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding Content.ManagingPlayer.NPCPlayer}">
+                <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding ManagingPlayer.NPCPlayer}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Vertical"/>
@@ -137,8 +140,8 @@
             
             <!--Start and Cancel Buttons-->
             <StackPanel Grid.Column="2" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="Start Game" Command="{Binding Content.ButtonBindings.Com_GameStart}" CommandParameter="{Binding Players}" Margin="5" Padding="5" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
-                <Button Content="Cancel" Command="{Binding Content.ButtonBindings.Com_CloseGame}" CommandParameter="{Binding Window}" Margin="5" Padding="5" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
+            <Button Content="Start Game" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_GameStart}" Margin="5" Padding="5" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
+            <Button Content="Cancel" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_CloseGame}" CommandParameter="{Binding ViewModelWindow}" Margin="5" Padding="5" FontFamily="Roboto" FontSize="13" FontWeight="Thin" VerticalContentAlignment="Center"/>
             </StackPanel>
         </Grid>
     </UserControl>

@@ -90,7 +90,7 @@ namespace MonopolyLibrary.Utility
     {
         StartScreen,
         PlayerCreation,
-        GameWindow,
+        Dice,
         GameOver,
         EndScreen,
         ClosingScreen,

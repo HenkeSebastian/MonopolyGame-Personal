@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonopolyLibrary.PlayerHandling;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,13 @@ namespace MonopolyLibrary.Utility.Commands
 {
     public class StartingRollCommands
     {
-        private WindowContent content;
-
-        public WindowContent Content
+        ManagingPlayer managingPlayer
         {
-            get { return content; }
-            set { content = value; }
+            get => WindowContent.GetWindowContent().GetManagingPlayer();
         }
 
-        public StartingRollCommands(WindowContent content)
+        public StartingRollCommands()
         {
-            Content = content;
         }
 
 
@@ -27,8 +24,8 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void GoToGameView()
         {
-            Content.ManagingPlayer.SetPlayerIDActive(0);
-            Content.SetWindowContent(Windows.GameBoardScreen);
+            managingPlayer.SetPlayerIDActive(0);
+            WindowContent.GetWindowContent().SetViewModelActive(Windows.GameBoardScreen);
         }
     }
 }

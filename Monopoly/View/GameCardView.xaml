@@ -7,22 +7,11 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
              xmlns:hv="clr-namespace:Monopoly.View.Houses"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
              xmlns:local="clr-namespace:Monopoly.View"
              mc:Ignorable="d">
 
-    <!--Interaction trigger for the detailed game card by mouse hover event.-->
-        <i:Interaction.Triggers>
-            <i:EventTrigger EventName="MouseEnter">
-                <i:InvokeCommandAction Command="{Binding Content.ButtonBindings.Com_SetMouseOverGameCard}" CommandParameter="{Binding}"/>
-            </i:EventTrigger>
-            <i:EventTrigger EventName="MouseLeave">
-                <i:InvokeCommandAction Command="{Binding Content.ButtonBindings.Com_ClearMouseOverGameCard}"/>
-            </i:EventTrigger>
-        <!--Interaction trigger for the street interaction menu (non functional atm / just testing!)-->
-            <i:EventTrigger EventName="MouseLeftButtonUp">
-                <i:InvokeCommandAction Command="{Binding Content.ButtonBindings.Com_OpenStreetInteraction}" CommandParameter="{Binding}"/>
-            </i:EventTrigger>
-        </i:Interaction.Triggers>
+
 
     <UserControl.Resources>
 
@@ -63,20 +52,19 @@
 
                     <Border Grid.Row="0" Background="{Binding StreetColor}">
                     <!--An items control for the visual representation of all the houses currently on this street.-->
-                    <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding Houses}"  HorizontalAlignment="Center">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
+                        <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding Houses}"  HorizontalAlignment="Center">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
 
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <hv:HouseView HouseColor="Green"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                        
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <hv:HouseView HouseColor="{Binding HouseColor}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Border>
 
                     <!--The text for the street name.-->
@@ -95,13 +83,15 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Image Width="24" Height="24" Source="{Binding PlayerAvatar}"/>
+                                <local:PlayerView/>
+                                <!--<Image Width="24" Height="24" Source="{Binding PlayerAvatar}"/>-->
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
                     <!--The text for the price of the street-->
                     <Label Content="{Binding StreetPriceText}" FontFamily="Roboto" FontSize="7" Grid.Column="0" Grid.Row="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0"/>
+                    <Label Content="{Binding MaxMonopolyHouses}" FontFamily="Roboto" FontSize="7" Grid.Column="0" Grid.Row="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -181,13 +171,100 @@
             
         </DataTemplate>
         <DataTemplate x:Key="LargeGameCards">
-            
+            <!--The gamecard / street.-->
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Grid>
+                    <Grid.LayoutTransform>
+                        <RotateTransform Angle="{Binding BigGameCardTextRotation, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                    </Grid.LayoutTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height=".2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--The text for the street name.-->
+                    <Label TextBlock.TextAlignment="Center" FontFamily="Roboto" FontSize="10" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Margin="0">
+                        <AccessText TextWrapping="WrapWithOverflow" Text="{Binding StreetName}"/>
+                    </Label>
+
+                    <!--An items control for the visual representation of all the players currently on this street.
+                    Here every avatar image of the players standing on this street will be shown.-->
+                    <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding PlayerOnGameCard}" Grid.Row="4" HorizontalAlignment="Center">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel HorizontalAlignment="Stretch"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:PlayerView/>
+                                <!--<Image Width="24" Height="24" Source="{Binding PlayerAvatar}"/>-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
         </DataTemplate>
 
+        <Storyboard x:Key="ActivePulseAnimation" Duration="0:0:1" RepeatBehavior="Forever">
+            <DoubleAnimation Storyboard.TargetName="BorderPulse" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0" Duration="0:0:0.5" From="0.0" To="1.0" FillBehavior="Stop"/>
+            <DoubleAnimation Storyboard.TargetName="BorderPulse" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0.5" Duration="0:0:0.5" From="1.0" To="0.0" FillBehavior="Stop"/>
+        </Storyboard>
+        <SolidColorBrush x:Name="OverlayColor" x:Key="OverlayColor" Color="RoyalBlue" Opacity="0"/>
     </UserControl.Resources>
 
-<!--Different views are being triggered by Datatriggers based on a cards "StreetState" value-->
-    <ContentControl Content="{Binding }">
+
+
+
+
+
+
+    <!--Interaction trigger for the detailed game card by mouse hover event.-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseEnter">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_SetMouseOverGameCard}" CommandParameter="{Binding}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseLeave">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_ClearMouseOverGameCard}"/>
+        </i:EventTrigger>
+        <!--Interaction trigger for the street interaction menu (non functional atm / just testing!)-->
+        <i:EventTrigger EventName="MouseLeftButtonUp">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_OpenStreetInteraction}" CommandParameter="{Binding}"/>
+        </i:EventTrigger>
+
+        <!--Interaction triggers for the playback of the border animation.-->
+        <i:DataTrigger Binding="{Binding InteractionActive, Mode=OneWay}" Value="true">
+            <i:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Play"/>
+        </i:DataTrigger>
+        <i:DataTrigger Binding="{Binding InteractionActive, Mode=OneWay}" Value="false">
+            <i:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Stop"/>
+        </i:DataTrigger>
+    </i:Interaction.Triggers>
+
+
+
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="0" Grid.Row="0" Name="BorderPulse" Panel.ZIndex="1" BorderBrush="{StaticResource OverlayColor}" BorderThickness="10">
+        </Border>
+        <!--Different views are being triggered by Datatriggers based on a cards "StreetState" value-->
+        <ContentControl Content="{Binding }" Grid.Row="0" Grid.Column="0" Panel.ZIndex="0">
         <ContentControl.Style>
             <Style TargetType="ContentControl">
                 <Setter Property="ContentTemplate" Value="{StaticResource BasicGameCard}"/>
@@ -210,9 +287,22 @@
                     <DataTrigger Binding="{Binding StreetState}" Value="Wasserwerk">
                         <Setter Property="ContentTemplate" Value="{StaticResource SpecialGameCard}"/>
                     </DataTrigger>
-                </Style.Triggers>
+                    <DataTrigger Binding="{Binding StreetState}" Value="LOS">
+                        <Setter Property="ContentTemplate" Value="{StaticResource LargeGameCards}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="Gefängnis">
+                        <Setter Property="ContentTemplate" Value="{StaticResource LargeGameCards}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="FreiParken">
+                        <Setter Property="ContentTemplate" Value="{StaticResource LargeGameCards}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding StreetState}" Value="InDasGefängnis">
+                        <Setter Property="ContentTemplate" Value="{StaticResource LargeGameCards}"/>
+                    </DataTrigger>
+                    </Style.Triggers>
             </Style>
         </ContentControl.Style>
     </ContentControl>
+    </Grid>
 
 </UserControl>

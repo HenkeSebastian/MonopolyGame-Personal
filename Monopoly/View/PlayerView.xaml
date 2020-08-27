@@ -10,14 +10,11 @@
              d:DesignHeight="100" d:DesignWidth="100" Width="auto" Height="auto">
         <UserControl.Resources>
             <Storyboard x:Key="ActivePulseAnimation" Duration="0:0:1" RepeatBehavior="Forever">
-                <DoubleAnimation Storyboard.Target="{DynamicResource PlayerAvatar}" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0" Duration="0:0:0.5" From="0.0" To="1.0" FillBehavior="Stop"/>
-                <DoubleAnimation Storyboard.Target="{DynamicResource PlayerAvatar}" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0.5" Duration="0:0:0.5" From="1.0" To="0.0" FillBehavior="Stop"/>
+                <DoubleAnimation Storyboard.TargetName="BorderTest" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0" Duration="0:0:0.5" From="0.0" To="1.0" FillBehavior="Stop"/>
+                <DoubleAnimation Storyboard.TargetName="BorderTest" Storyboard.TargetProperty="BorderBrush.(SolidColorBrush.Opacity)" BeginTime="0:0:0.5" Duration="0:0:0.5" From="1.0" To="0.0" FillBehavior="Stop"/>
             </Storyboard>
-            <SolidColorBrush x:Name="OverlayColor" x:Key="OverlayColor" Color="RoyalBlue" Opacity="0"/>
-            <Border x:Key="PlayerAvatar" BorderBrush="{StaticResource OverlayColor}" BorderThickness="10">
-                <Image Source="{Binding PlayerAvatar}"/>
-            </Border>
-        </UserControl.Resources>
+        <SolidColorBrush x:Name="OverlayColor" x:Key="OverlayColor" Color="RoyalBlue" Opacity="0"/>
+    </UserControl.Resources>
 
         <!--Interaction triggers for the playback of the border animation.-->
         <b:Interaction.Triggers>
@@ -28,6 +25,17 @@
                 <b:ControlStoryboardAction Storyboard="{StaticResource ActivePulseAnimation}" ControlStoryboardOption="Stop"/>
             </b:DataTrigger>
         </b:Interaction.Triggers>
-
-        <StaticResource ResourceKey="PlayerAvatar"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--<StaticResource ResourceKey="PlayerAvatar"/>-->
+        <Border BorderBrush="{StaticResource OverlayColor}" BorderThickness="15" Name="BorderTest" Grid.Column="0" Grid.Row="0" Panel.ZIndex="1"/>
+        <Border BorderBrush="{StaticResource OverlayColor}" Grid.Column="0" Grid.Row="0" BorderThickness="0" Panel.ZIndex="0">
+            <Image Source="{Binding PlayerAvatar}"/>
+        </Border>
+    </Grid>
     </UserControl>

@@ -9,7 +9,7 @@ namespace MonopolyLibrary.Gamerules
     /// <summary>
     /// Class for the Chance modifier. Work in Progress!
     /// </summary>
-    class C_Chance
+    class Chance
     {
     }
 }

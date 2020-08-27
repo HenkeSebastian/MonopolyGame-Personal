@@ -1,4 +1,5 @@
 ﻿
+using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,16 @@ namespace MonopolyLibrary.Utility.Commands
 {
     public class GameCardCommands
     {
-        private WindowContent content;
 
-        public WindowContent Content
+        public static WindowContent Content { get => WindowContent.GetWindowContent(); }
+        private ManagingPlayer ManagingPlayer
         {
-            get { return content; }
-            set { content = value; }
+            get => Content.GetManagingPlayer();
         }
 
-        public GameCardCommands(WindowContent content)
+        public GameCardCommands()
         {
-            Content = content;
+
         }
 
 
@@ -32,10 +32,10 @@ namespace MonopolyLibrary.Utility.Commands
         public void SetMouseOverGameCard(GameCardViewModel gcvm)
         {
 
-            Content.GameBoardViewModel.MouseOverGameCard = gcvm;
-            if (Content.SelectedDetailsViewModel != Content.StreetBuyingViewModel && Content.SelectedDetailsViewModel != Content.StreetInteractionViewModel)
+            Content.SetMouseOverGameCard(gcvm);
+            if (Content.GetCurrentDetailsViewModel() != Content.GetDetailsViewModel<StreetBuyingViewModel>() && Content.GetCurrentDetailsViewModel() != Content.GetDetailsViewModel<StreetInteractionViewModel>())
             {
-            Content.ChangeDetailsView(Windows.GameCardDetails);
+                Content.SetDetailsViewModelActive<GameCardViewModel>();
             }
         }
 
@@ -44,10 +44,10 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void ClearMouseOverGameCard()
         {
-            Content.GameBoardViewModel.MouseOverGameCard = null;
-            if (Content.SelectedDetailsViewModel != Content.StreetBuyingViewModel && Content.SelectedDetailsViewModel != Content.StreetInteractionViewModel)
+            Content.ClearMouseOverGameCard();
+            if (Content.GetCurrentDetailsViewModel() != Content.GetDetailsViewModel<StreetBuyingViewModel>() && Content.GetCurrentDetailsViewModel() != Content.GetDetailsViewModel<StreetInteractionViewModel>())
             {
-            Content.ChangeDetailsView(Windows.IdleDetails);
+                Content.SetDetailsViewModelActive<IdleDetailsViewModel>();
             }
         }
 
@@ -58,11 +58,7 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCardViewModel">The game card that the active player is on.</param>
         public void OpenStreetBuying(PlayerViewModel activePlayer, GameCardViewModel gameCardViewModel)
         {
-            Content.StreetBuyingViewModel.GameCard = gameCardViewModel;
-            Content.StreetBuyingViewModel.EnableBuying = activePlayer.PlayerCheckBalance(gameCardViewModel.StreetPrice);
-            Content.StreetBuyingViewModel.CashAfterBuying = activePlayer.PlayerCashAfterBuying(gameCardViewModel);
-            Content.GameBoardViewModel.SetDoneButton(false);
-            Content.ChangeDetailsView(Windows.StreetBuyingDetails);
+            Content.GetViewModel<StreetBuyingViewModel>().OpenStreetBuyingWindow(activePlayer, gameCardViewModel);
         }
 
         /// <summary>
@@ -71,76 +67,80 @@ namespace MonopolyLibrary.Utility.Commands
         /// <param name="gameCardViewModel"></param>
         public void OpenStreetInteraction(GameCardViewModel gameCardViewModel)
         {
-            if (gameCardViewModel.CardInteractable == true)
+            if (gameCardViewModel.IsGameCardInteractable())
             {
-                PlayerViewModel activePlayer = Content.ManagingPlayer.GetActivePlayer();
-                if (Content.SelectedDetailsViewModel == Content.StreetInteractionViewModel && Content.StreetInteractionViewModel.GameCard == gameCardViewModel)
+                PlayerViewModel activePlayer = ManagingPlayer.GetActivePlayer();
+                if (Content.GetCurrentDetailsViewModel() == Content.GetDetailsViewModel<StreetInteractionViewModel>() && Content.GetDetailsViewModel<StreetInteractionViewModel>().GetInteractionGameCard() == gameCardViewModel)
                 {
-                    Content.StreetInteractionViewModel.GameCard = null;
-                    Content.ChangeDetailsView(Windows.IdleDetails, true);
+                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetGameCardInteraction(false);
+                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetInteractionGameCard(null);
+                    Content.SetDetailsViewModelActive<IdleDetailsViewModel>(true);
                     return;
                 }
-
-                Content.StreetInteractionViewModel.GameCard = gameCardViewModel;
-
-                if (gameCardViewModel.OwningPlayer == Content.ManagingPlayer.GetActivePlayer())
+                if (Content.GetCurrentDetailsViewModel() != Content.GetDetailsViewModel<StreetBuyingViewModel>())
                 {
-                    if (Content.ManagingPlayer.GetActivePlayer().Monopolies[gameCardViewModel.MonopoliesID] == true)
+                    if (Content.GetDetailsViewModel<StreetInteractionViewModel>().GameCard != null)
                     {
-                        switch (gameCardViewModel.NrOfHouses)
+                        Content.GetDetailsViewModel<StreetInteractionViewModel>().SetGameCardInteraction(false);
+                    }
+                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetInteractionGameCard(gameCardViewModel);
+                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetGameCardInteraction(true);
+
+                    if (gameCardViewModel.GetOwningPlayer() == ManagingPlayer.GetActivePlayer())
+                    {
+                        if (ManagingPlayer.GetActivePlayer().IsMonopolyComplete(gameCardViewModel))
                         {
-                            case -1:
-                                Content.StreetInteractionViewModel.EnableBuying = activePlayer.PlayerCheckBalance(gameCardViewModel.Mortgage[1]);
-                                Content.StreetInteractionViewModel.EnableSelling = false;
-                                Content.StreetInteractionViewModel.CashAfterBuying = activePlayer.PlayerCashAfterPayingMortgage(gameCardViewModel);
-                                break;
-                            case 0:
-                                Content.StreetInteractionViewModel.EnableBuying = activePlayer.PlayerCheckBalance(gameCardViewModel.Mortgage[1]);
-                                Content.StreetInteractionViewModel.CashAfterBuying = activePlayer.PlayerCashAfterBuildingHouse(gameCardViewModel);
-                                Content.StreetInteractionViewModel.EnableSelling = true;
-                                Content.StreetInteractionViewModel.CashAfterSelling = activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel);
-                                break;
-                            case 4:
-                                Content.StreetInteractionViewModel.EnableBuying = false;
-                                Content.StreetInteractionViewModel.EnableSelling = true;
-                                Content.StreetInteractionViewModel.CashAfterSelling = activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel);
-                                break;
-                            default:
-                                Content.StreetInteractionViewModel.EnableBuying = activePlayer.PlayerCheckBalance(gameCardViewModel.HousePrice);
-                                Content.StreetInteractionViewModel.EnableSelling = true;
-                                Content.StreetInteractionViewModel.CashAfterBuying = activePlayer.PlayerCashAfterBuildingHouse(gameCardViewModel);
-                                break;
+                            switch (gameCardViewModel.NrOfHouses)
+                            {
+                                case -1:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(activePlayer.PlayerCheckBalance(gameCardViewModel.Mortgage[1]));
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(false);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterBuying(activePlayer.PlayerCashAfterPayingMortgage(gameCardViewModel));
+                                    break;
+                                case 5:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(false);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(true);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterSelling(activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel));
+                                    break;
+                                default:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(activePlayer.PlayerCheckBalance(gameCardViewModel.HousePrice));
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(true);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterBuying(activePlayer.PlayerCashAfterBuildingHouse(gameCardViewModel));
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterSelling(activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel));
+
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            switch (gameCardViewModel.NrOfHouses)
+                            {
+                                case -1:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(activePlayer.PlayerCheckBalance(gameCardViewModel.Mortgage[1]));
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(false);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterBuying(activePlayer.PlayerCashAfterPayingMortgage(gameCardViewModel));
+                                    break;
+                                case 0:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(false);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(true);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterSelling(activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel));
+                                    break;
+                                default:
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableBuying(false);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(true);
+                                    Content.GetDetailsViewModel<StreetInteractionViewModel>().SetCashAfterBuying(activePlayer.PlayerCashAfterBuildingHouse(gameCardViewModel));
+                                    break;
+                            }
                         }
                     }
                     else
                     {
-                        switch (gameCardViewModel.NrOfHouses)
-                        {
-                            case -1:
-                                Content.StreetInteractionViewModel.EnableBuying = activePlayer.PlayerCheckBalance(gameCardViewModel.Mortgage[1]);
-                                Content.StreetInteractionViewModel.EnableSelling = false;
-                                Content.StreetInteractionViewModel.CashAfterBuying = activePlayer.PlayerCashAfterPayingMortgage(gameCardViewModel);
-                                break;
-                            case 0:
-                                Content.StreetInteractionViewModel.EnableBuying = false;
-                                Content.StreetInteractionViewModel.EnableSelling = true;
-                                Content.StreetInteractionViewModel.CashAfterSelling = activePlayer.PlayerCashAfterSellingHouse(gameCardViewModel);
-                                break;
-                            default:
-                                Content.StreetInteractionViewModel.EnableBuying = false;
-                                Content.StreetInteractionViewModel.EnableSelling = true;
-                                Content.StreetInteractionViewModel.CashAfterBuying = activePlayer.PlayerCashAfterBuildingHouse(gameCardViewModel);
-                                break;
-                        }
+                        Content.GetDetailsViewModel<StreetBuyingViewModel>().SetEnableBuying(false);
+                        Content.GetDetailsViewModel<StreetInteractionViewModel>().SetEnableSelling(false);
                     }
+                    Content.GetAdditionalViewModel<DoneButtonViewModel>().SetDoneButton(true);
+                    Content.SetDetailsViewModelActive<StreetInteractionViewModel>();
                 }
-                else
-                {
-                    Content.StreetBuyingViewModel.EnableBuying = false;
-                    Content.StreetInteractionViewModel.EnableSelling = false;
-                }
-                Content.GameBoardViewModel.SetDoneButton(true);
-                Content.ChangeDetailsView(Windows.StreetInteractionDetails);
             }
         }
     }

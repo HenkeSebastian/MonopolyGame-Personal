@@ -2,6 +2,7 @@
 using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Resources;
 using MonopolyLibrary.Utility;
+using MonopolyLibrary.Utility.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -10,13 +11,6 @@ namespace MonopolyLibrary.ViewModel
 {
     public class PlayerCreationViewModel: BaseViewModel
     {
-
-        public Windows Window
-        {
-            get { return Windows.PlayerCreation; }
-        }
-
-
         private int avatarIndex;
 
         public int AvatarIndex
@@ -39,13 +33,42 @@ namespace MonopolyLibrary.ViewModel
         public PlayerViewModel CreatedPlayer
         {
             get { return createdPlayer; }
-            set { createdPlayer = value; }
+            set 
+            { 
+                createdPlayer = value;
+                OnPropertyChanged("CreatedPlayer");
+            }
+        }
+
+        public ManagingPlayer ManagingPlayer
+        {
+            get => WindowContent.GetWindowContent().GetManagingPlayer();
+        }
+
+        private PlayerCreationCommands playerCreationCommands;
+
+        public PlayerCreationCommands PlayerCreationCommands
+        {
+            get { return playerCreationCommands; }
+            set { playerCreationCommands = value; }
         }
 
 
-        public PlayerCreationViewModel(WindowContent passedWindowContent)
+
+
+        public PlayerCreationViewModel()
         {
-            Content = passedWindowContent;
+            ViewModelWindow = Windows.PlayerCreation;
+        }
+
+        public override void ViewModelAction()
+        {
+            PlayerCreationCommands.RandomName(this);
+            CreatedPlayer.PlayerAvatar = PlayerCreationCommands.SetInitialPlayerCreationAvatar(0);
+        }
+
+        public void SetInitials()
+        {
             SetReferences();
             SetAvatarIndex();
             SetIDIndex();
@@ -55,7 +78,7 @@ namespace MonopolyLibrary.ViewModel
         /// <summary>
         /// Initializes the Avatar index.
         /// </summary>
-        public void SetAvatarIndex()
+        private void SetAvatarIndex()
         {
             AvatarIndex = 0;
         }
@@ -64,19 +87,25 @@ namespace MonopolyLibrary.ViewModel
         /// <summary>
         /// Initializes the ID index.
         /// </summary>
-        public void SetIDIndex()
+        private void SetIDIndex()
         {
             IDIndex = 0;
+        }
+
+        public void CreateNewPlayerSlate()
+        {
+            CreatedPlayer = new PlayerViewModel(new PlayerModel());
+            ViewModelAction();
         }
 
 
         /// <summary>
         /// Sets needed references.
         /// </summary>
-        public void SetReferences()
+        private void SetReferences()
         {
-            CreatedPlayer = new PlayerViewModel(Content, new PlayerModel());
-
+            CreatedPlayer = new PlayerViewModel(new PlayerModel());
+            PlayerCreationCommands = new PlayerCreationCommands();
         }
 
 

@@ -6,15 +6,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MonopolyLibrary.ViewModel
 {
     public class BaseViewModel: INotifyPropertyChanged
     {
-        Windows Window
+
+        private Windows viewModelWindow;
+
+        public Windows ViewModelWindow
         {
-            get;
+            get { return viewModelWindow; }
+            set { viewModelWindow = value; }
         }
+
 
         private WindowContent content;
 
@@ -27,6 +33,8 @@ namespace MonopolyLibrary.ViewModel
         public BaseViewModel()
         {
         }
+
+        public virtual void ViewModelAction() { }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

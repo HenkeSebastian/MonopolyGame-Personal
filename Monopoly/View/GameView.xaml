@@ -15,7 +15,7 @@
             <StackPanel Orientation="Horizontal">
                 <StackPanel Orientation="Vertical" MaxWidth="350">
                     <StackPanel Orientation="Horizontal" Height="75">
-                        <local:DiceView DataContext="{Binding Content.DiceViewModel}" CommandTarget="{Binding Content.ButtonBindings.Com_DiceMainGame}"/>
+                    <!--<local:DiceView DataContext="{Binding Source={x:Static vm:DiceViewModel.ViewModel}, Path=}" CommandTarget="{Binding Content.ButtonBindings.Com_DiceMainGame}"/>-->
                         <Button x:Name="Done" Content="Fertig" Command="{Binding Content.ButtonBindings.Com_EndTurn}" Padding="20,0" Margin="10,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin"/>
                         <Button x:Name="OneStep" Content="1 Schritt" Command="{Binding Content.ButtonBindings.Com_OneStep}" Padding="20,0" Margin="10,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin"/>
                         <!--Houses and Hotels-->

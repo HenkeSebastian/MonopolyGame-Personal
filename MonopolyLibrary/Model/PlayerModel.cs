@@ -224,16 +224,16 @@ namespace MonopolyLibrary.Model
         /// <summary>
         /// The amount of rolls the player does in a row. If he gets three doubles in a row he will go to prison.
         /// </summary>
-        private int diceRoll;
+        private int prisonRoll;
 
-        public int DiceRoll
+        public int PrisonRoll
         {
-            get { return diceRoll; }
+            get { return prisonRoll; }
             set
             {
-                if (diceRoll <= 3)
+                if (prisonRoll <= 3)
                 {
-                diceRoll = value;
+                prisonRoll = value;
                 }
             }
         }
@@ -243,6 +243,19 @@ namespace MonopolyLibrary.Model
 
         public PlayerModel()
         {
+            IsActive = false;
+            IsNPC = false;
+            PlayerName = "";
+            PlayerID = 0;
+            PlayerAvatar = "";
+            PlayerCash = 0;
+            PlayPulseAnimation = false;
+            FirstThrow = 0;
+            InPrison = false;
+            PrisonRoll = 0;
+            AmountHotels = 0;
+            AmountHouses = 0;
+            CurrentPosition = 0;
             OwnedStreets = new ObservableCollection<GameCardViewModel>();
             for (int i = 0; i < 28; i++)
             {
@@ -265,7 +278,7 @@ namespace MonopolyLibrary.Model
             PlayPulseAnimation = passed.PlayPulseAnimation;
             FirstThrow = passed.FirstThrow;
             InPrison = passed.InPrison;
-            DiceRoll = passed.DiceRoll;
+            PrisonRoll = passed.PrisonRoll;
             AmountHotels = passed.AmountHotels;
             AmountHouses = passed.AmountHouses;
             CurrentPosition = 0;

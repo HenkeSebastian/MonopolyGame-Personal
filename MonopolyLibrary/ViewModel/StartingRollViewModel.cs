@@ -1,4 +1,5 @@
 ﻿using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.PlayerHandling;
 using MonopolyLibrary.Utility;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,55 @@ namespace MonopolyLibrary.ViewModel
 {
     public class StartingRollViewModel:BaseViewModel
     {
-        public Windows Window
+        private ManagingPlayer managingPlayer;
+
+        public ManagingPlayer ManagingPlayer
         {
-            get { return Windows.StartingRoll; }
+            get => WindowContent.GetWindowContent().GetManagingPlayer();
+        }
+
+        private FirstRollRules firstRollRules;
+
+        public FirstRollRules FirstRollRules
+        {
+            get { return firstRollRules; }
+            set { firstRollRules = value; }
         }
 
 
-        private C_FirstRollRules c_firstRollRules;
+        private bool firstThrowDone;
 
-        public C_FirstRollRules C_FirstRollRules
+        public bool FirstThrowDone
         {
-            get { return c_firstRollRules; }
-            set { c_firstRollRules = value; }
+            get { return firstThrowDone; }
+            set
+            {
+                firstThrowDone = value;
+                OnPropertyChanged("FirstThrowDone");
+            }
         }
 
 
-        public StartingRollViewModel(WindowContent content)
+        public StartingRollViewModel()
         {
-            Content = content;
-            C_FirstRollRules = new C_FirstRollRules(Content);
+            ViewModelWindow = Windows.StartingRoll;
+            FirstRollRules = new FirstRollRules();
+            SetFirstThrowDone(false);
+        }
+
+        public override void ViewModelAction()
+        {
+            if (ManagingPlayer.AllPlayers.Count == 0)
+            {
+                ManagingPlayer.SetPlayerIDActive(0);
+                ManagingPlayer.SetAllPlayerCollection();
+            }
+            WindowContent.GetWindowContent().SetWindowSize(800, 800);
+        }
+
+        public void SetFirstThrowDone(bool done)
+        {
+            FirstThrowDone = done;
         }
 
     }

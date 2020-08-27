@@ -76,13 +76,43 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
-
-
-
-
-        public StreetInteractionViewModel(WindowContent content)
+        public StreetInteractionViewModel()
         {
-            Content = content;
+        }
+
+        public void SetInteractionGameCard(GameCardViewModel viewModel)
+        {
+            GameCard = viewModel;
+        }
+
+        public GameCardViewModel GetInteractionGameCard()
+        {
+            return GameCard;
+        }
+
+        public void SetGameCardInteraction(bool state)
+        {
+            GameCard.SetInteractionActive(state);
+        }
+
+        public void SetEnableBuying(bool state)
+        {
+            EnableBuying = state;
+        }
+
+        public void SetEnableSelling(bool state)
+        {
+            EnableSelling = state;
+        }
+
+        public void SetCashAfterBuying(int cash)
+        {
+            CashAfterBuying = cash;
+        }
+
+        public void SetCashAfterSelling(int cash)
+        {
+            CashAfterSelling = cash;
         }
     }
 }

@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Monopoly.View"
              xmlns:dv="clr-namespace:Monopoly.View.DetailsViews"
              xmlns:vm="clr-namespace:MonopolyLibrary.ViewModel;assembly=MonopolyLibrary"
+             xmlns:ut="clr-namespace:MonopolyLibrary.Utility;assembly=MonopolyLibrary"
+             xmlns:ph="clr-namespace:MonopolyLibrary.PlayerHandling;assembly=MonopolyLibrary"
+             xmlns:hv="clr-namespace:Monopoly.View.Houses"
              mc:Ignorable="d" >
 
 
@@ -26,6 +29,7 @@
         <DataTemplate DataType="{x:Type vm:CommunityDetailsViewModel}">
             <dv:CommunityDetailsView/>
         </DataTemplate>
+
     </UserControl.Resources>
 
 
@@ -33,15 +37,19 @@
         <StackPanel MaxWidth="300">
             <StackPanel Orientation="Horizontal" MaxHeight="50">
                 <!--Dice for the main playing action-->
-                <local:DiceView DockPanel.Dock="Left" DataContext="{Binding Content.DiceViewModel}" CommandTarget="{Binding Content.ButtonBindings.Com_DiceMainGame}"/>
+                <local:DiceView DockPanel.Dock="Left" CommandTarget="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_DiceCommand}" WindowsParam="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.ViewModelWindow}"/>
                 <!--Button to finish a players turn-->
-                <Button x:Name="Done" Content="Fertig" Command="{Binding Content.ButtonBindings.Com_EndTurn}" IsEnabled="{Binding DoneButtonEnabled}" Padding="20,0" Margin="10,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin"/>
+                <Button x:Name="Done" Content="Fertig" DataContext="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=AdditionalViewModels[0]}" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_EndTurn}" IsEnabled="{Binding Done}" Padding="0,0" Margin="0,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin"/>
                 <!--Button to  move the currently active player just one step forwards. Used for in game testing purposes-->
                 <!--Will be exchanged with a View showing the current pool of available houses and hotels-->
-                <Button x:Name="OneStep" Content="1 Schritt" Command="{Binding Content.ButtonBindings.Com_OneStep}" Padding="20,0" Margin="10,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin"/>
+                <Button x:Name="OneStep" Content="1 Schritt" Command="{Binding Source={x:Static ut:ButtonBindings.Instance}, Path=Com_OneStep}" Padding="0,0" Margin="0,0" FontFamily="Roboto" FontSize="15" FontWeight="Thin" Width="10"/>
+                <!--<hv:HouseView HouseColor="Green" Width="10" Height="10"/>
+                <Label Content="{Binding Source={x:Static ut:WindowContent.GetWindowContent()}, Path=streetInteractionCommands.gamePool.AvailableHouses}"/>
+                <hv:HouseView HouseColor="Red"/>
+                <Label Content="{Binding Source={x:Static ut:WindowContent.GetWindowContent()}, Path=GameBoardViewModel.GamePool.Hotels.Length}"/> -->
             </StackPanel>
             <!-- Players sidebar -->
-            <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding Content.ManagingPlayer.AllPlayers}">
+            <ItemsControl Padding="0" Margin="0" ItemsSource="{Binding ManagingPlayer.AllPlayers}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Left"/>
@@ -85,17 +93,17 @@
             </Grid.RowDefinitions>
 
             <!--Every instanced Gamecard points to a different cell in the Grid and the rotation is changed based on the location of the cards.-->
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[0]}" Grid.Row="10" Grid.Column="10"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[1]}" Grid.Row="10" Grid.Column="9"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[2]}" Grid.Row="10" Grid.Column="8"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[3]}" Grid.Row="10" Grid.Column="7"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[4]}" Grid.Row="10" Grid.Column="6"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[5]}" Grid.Row="10" Grid.Column="5"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[6]}" Grid.Row="10" Grid.Column="4"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[7]}" Grid.Row="10" Grid.Column="3"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[8]}" Grid.Row="10" Grid.Column="2"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[9]}" Grid.Row="10" Grid.Column="1"/>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[10]}" Grid.Row="10" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[0]}" Grid.Row="10" Grid.Column="10" BigGameCardTextRotation="315"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[1]}" Grid.Row="10" Grid.Column="9"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[2]}" Grid.Row="10" Grid.Column="8"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[3]}" Grid.Row="10" Grid.Column="7"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[4]}" Grid.Row="10" Grid.Column="6"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[5]}" Grid.Row="10" Grid.Column="5"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[6]}" Grid.Row="10" Grid.Column="4"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[7]}" Grid.Row="10" Grid.Column="3"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[8]}" Grid.Row="10" Grid.Column="2"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[9]}" Grid.Row="10" Grid.Column="1"/>
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[10]}" Grid.Row="10" Grid.Column="0" BigGameCardTextRotation="315">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -103,7 +111,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[11]}" Grid.Row="9" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[11]}" Grid.Row="9" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -111,7 +119,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[12]}" Grid.Row="8" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[12]}" Grid.Row="8" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -119,7 +127,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[13]}" Grid.Row="7" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[13]}" Grid.Row="7" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -127,7 +135,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[14]}" Grid.Row="6" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[14]}" Grid.Row="6" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -135,7 +143,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[15]}" Grid.Row="5" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[15]}" Grid.Row="5" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -143,7 +151,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[16]}" Grid.Row="4" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[16]}" Grid.Row="4" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -151,7 +159,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[17]}" Grid.Row="3" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[17]}" Grid.Row="3" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -159,7 +167,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[18]}" Grid.Row="2" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[18]}" Grid.Row="2" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -167,7 +175,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[19]}" Grid.Row="1" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[19]}" Grid.Row="1" Grid.Column="0">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -175,7 +183,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[20]}" Grid.Row="0" Grid.Column="0">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[20]}" Grid.Row="0" Grid.Column="0" BigGameCardTextRotation="45">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -183,7 +191,7 @@
                     <RotateTransform Angle="90"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[21]}" Grid.Row="0" Grid.Column="1">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[21]}" Grid.Row="0" Grid.Column="1">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -191,7 +199,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[22]}" Grid.Row="0" Grid.Column="2">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[22]}" Grid.Row="0" Grid.Column="2">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -199,7 +207,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[23]}" Grid.Row="0" Grid.Column="3">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[23]}" Grid.Row="0" Grid.Column="3">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -207,7 +215,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[24]}" Grid.Row="0" Grid.Column="4">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[24]}" Grid.Row="0" Grid.Column="4">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -215,7 +223,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[25]}" Grid.Row="0" Grid.Column="5">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[25]}" Grid.Row="0" Grid.Column="5">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -223,7 +231,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[26]}" Grid.Row="0" Grid.Column="6">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[26]}" Grid.Row="0" Grid.Column="6">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -231,7 +239,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[27]}" Grid.Row="0" Grid.Column="7">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[27]}" Grid.Row="0" Grid.Column="7">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -239,7 +247,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[28]}" Grid.Row="0" Grid.Column="8">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[28]}" Grid.Row="0" Grid.Column="8">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -247,7 +255,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[29]}" Grid.Row="0" Grid.Column="9">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[29]}" Grid.Row="0" Grid.Column="9">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -255,7 +263,7 @@
                     <RotateTransform Angle="180"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[30]}" Grid.Row="0" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[30]}" Grid.Row="0" Grid.Column="10" BigGameCardTextRotation="315">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -263,7 +271,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[31]}" Grid.Row="1" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[31]}" Grid.Row="1" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -271,7 +279,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[32]}" Grid.Row="2" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[32]}" Grid.Row="2" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -279,7 +287,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[33]}" Grid.Row="3" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[33]}" Grid.Row="3" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -287,7 +295,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[34]}" Grid.Row="4" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[34]}" Grid.Row="4" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -295,7 +303,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[35]}" Grid.Row="5" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[35]}" Grid.Row="5" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -303,7 +311,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[36]}" Grid.Row="6" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[36]}" Grid.Row="6" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -311,7 +319,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[37]}" Grid.Row="7" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[37]}" Grid.Row="7" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -319,7 +327,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[38]}" Grid.Row="8" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[38]}" Grid.Row="8" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -327,7 +335,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <local:GameCardView DataContext="{Binding Content.GameBoardViewModel.GameCards[39]}" Grid.Row="9" Grid.Column="10">
+            <local:GameCardView DataContext="{Binding GamePool.GameCards[39]}" Grid.Row="9" Grid.Column="10">
                 <local:GameCardView.RenderTransformOrigin>
                     <Point X="0.5" Y="0.5"/>
                 </local:GameCardView.RenderTransformOrigin>
@@ -335,8 +343,7 @@
                     <RotateTransform Angle="270"/>
                 </local:GameCardView.LayoutTransform>
             </local:GameCardView>
-            <!--The Content control that holds the details user controls in the center of the of the Gameboard.-->
-            <ContentControl x:Name="navigation" Content="{Binding Content.SelectedDetailsViewModel}" Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="1" Grid.RowSpan="9"/>
+            <ContentControl x:Name="navigation" Content="{Binding Source={x:Static ut:WindowContent.ViewModel}, Path=SelectedDetailsViewModel}" Grid.Column="1" Grid.ColumnSpan="9" Grid.Row="1" Grid.RowSpan="9"/>
         </Grid>
     </DockPanel>
 </UserControl>

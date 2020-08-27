@@ -1,9 +1,11 @@
-﻿using MonopolyLibrary.Model;
+﻿using MonopolyLibrary.Gamerules;
+using MonopolyLibrary.Model;
 using MonopolyLibrary.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -168,23 +170,23 @@ namespace MonopolyLibrary.ViewModel
             }
         }
 
-        public int DiceRoll
+        public int PrisonRoll
         {
-            get { return Player.DiceRoll; }
+            get { return Player.PrisonRoll; }
             set
             {
-                Player.DiceRoll = value;
+                Player.PrisonRoll = value;
                 OnPropertyChanged("DiceRoll");
             }
         }
 
+        private GamePool gamePool = new GamePool();
 
-
-        public PlayerViewModel(WindowContent content, PlayerModel passedModel)
+        public PlayerViewModel(PlayerModel passedModel)
         {
-            Content = content;
-            this.player = passedModel;
+            player = passedModel;
         }
+
 
 
         /// <summary>
@@ -214,13 +216,13 @@ namespace MonopolyLibrary.ViewModel
         /// <param name="overGo">Flag if the player is moving over GO!.</param>
         public void PlayerMoveToPosition(int positionID, bool overGo)
         {
-            Content.GameBoardViewModel.GameCards[CurrentPosition].DeletePlayerOnCard(Content.GameBoardViewModel.GameCards[CurrentPosition].FindPlayerViewModelOnCard(this));
+            gamePool.GameCards[CurrentPosition].DeletePlayerOnCard(gamePool.GameCards[CurrentPosition].FindPlayerViewModelOnCard(this));
             CurrentPosition = positionID;
             if (overGo)
             {
                 MovedOverGo();
             }
-            Content.GameBoardViewModel.GameCards[positionID].AddPlayerOnCard(this);
+            gamePool.GameCards[positionID].AddPlayerOnCard(this);
         }
 
 
@@ -239,7 +241,7 @@ namespace MonopolyLibrary.ViewModel
         public void PlayerGoToPrison()
         {
             InPrison = true;
-            DiceRoll = 0;
+            PrisonRoll = 0;
             PlayerMoveToPosition(10, false);
         }
 
@@ -250,7 +252,7 @@ namespace MonopolyLibrary.ViewModel
         public void PlayerGetsOutOfPrison()
         {
             InPrison = false;
-            DiceRoll = 0;
+            PrisonRoll = 0;
         }
 
 
@@ -445,6 +447,18 @@ namespace MonopolyLibrary.ViewModel
             if (OwnedStreetIDs[20] && OwnedStreetIDs[21] == true)
             {
                 Monopolies[7] = true;
+            }
+        }
+
+        public bool IsMonopolyComplete(GameCardViewModel gameCard)
+        {
+            if (Monopolies[gameCard.MonopoliesID])
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

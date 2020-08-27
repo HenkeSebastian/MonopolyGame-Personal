@@ -13,12 +13,10 @@ namespace MonopolyLibrary.Utility.Commands
 {
     public class PlayerCreationCommands
     {
-        private WindowContent content;
 
-        public WindowContent Content
+        public ManagingPlayer managingPlayer
         {
-            get { return content; }
-            set { content = value; }
+            get => WindowContent.GetWindowContent().GetManagingPlayer();
         }
 
         private Avatars avatarLib;
@@ -37,11 +35,8 @@ namespace MonopolyLibrary.Utility.Commands
             set { namesLib = value; }
         }
 
-
-
-        public PlayerCreationCommands(WindowContent content)
+        public PlayerCreationCommands()
         {
-            Content = content;
             SetRefs();
             InitialSetup();
         }
@@ -64,17 +59,7 @@ namespace MonopolyLibrary.Utility.Commands
         /// </summary>
         public void StartGame()
         {
-            Content.SetWindowContent(Windows.StartingRoll);
-        }
-
-        /// <summary>
-        /// REVIEW Make this function ubiquitous. Every window should call the same function for this.
-        /// </summary>
-        /// <param name="callingWindow"></param>
-        public void CloseGame(Windows callingWindow)
-        {
-            Content.SetClosingWindowRevert(callingWindow);
-            Content.SetWindowContent(Windows.ClosingScreen);
+            WindowContent.GetWindowContent().SetViewModelActive(Windows.StartingRoll);
         }
 
 
@@ -119,27 +104,57 @@ namespace MonopolyLibrary.Utility.Commands
         /// <summary>
         /// Sets an initial player avatar from the list.
         /// </summary>
-        public void SetInitialPlayerCreationAvatar()
+        public string SetInitialPlayerCreationAvatar(int avatarID)
         {
-            Content.PlayerCreationViewModel.CreatedPlayer.PlayerAvatar = AvatarsLib.AvatarSources[Content.PlayerCreationViewModel.AvatarIndex];
+            return AvatarsLib.AvatarSources[avatarID];
         }
 
 
         /// <summary>
         /// Sets a random player name from the list of available predefined names.
         /// </summary>
-        public void RandomName()
+        public void RandomName(PlayerCreationViewModel pcvm)
         {
-            Content.PlayerCreationViewModel.CreatedPlayer.PlayerName = NamesLib.GetRandomName();
+            pcvm.CreatedPlayer.PlayerName = NamesLib.GetRandomName();
         }
 
+        /*
+        public PlayerModel createPlayerModel()
+        {
+            PlayerModel model = new PlayerModel()
+            {
+                AmountHotels = CreatedPlayer.AmountHotels,
+                AmountHouses = CreatedPlayer.AmountHouses,
+                CurrentPosition = CreatedPlayer.CurrentPosition,
+                PrisonRoll = CreatedPlayer.PrisonRoll,
+                FirstThrow = CreatedPlayer.FirstThrow,
+                InPrison = CreatedPlayer.InPrison,
+                IsActive = CreatedPlayer.IsActive,
+                IsNPC = CreatedPlayer.IsNPC,
+                Monopolies = new bool[8],
+                OwnedStreetIDs = new bool[28],
+                OwnedStreets = new System.Collections.ObjectModel.ObservableCollection<GameCardViewModel>(),
+                PlayerAvatar = CreatedPlayer.PlayerAvatar,
+                PlayerCash = CreatedPlayer.PlayerCash,
+                PlayerID = CreatedPlayer.PlayerID,
+                PlayerName = CreatedPlayer.PlayerName,
+                PlayPulseAnimation = CreatedPlayer.PlayPulseAnimation
+            };
+            for (int i = 0; i < 28; i++)
+            {
+                model.OwnedStreets.Add(null);
+            }
 
+            return model;
+        }
+        */
         /// <summary>
         /// Adds a new player to the collection.
         /// </summary>
-        public void AddPlayer()
+        public void AddPlayer(PlayerCreationViewModel pcvm)
         {
-            Content.ManagingPlayer.AddPlayer(Content.PlayerCreationViewModel.CreatedPlayer);
+            managingPlayer.AddPlayer(pcvm.CreatedPlayer);
+            pcvm.CreateNewPlayerSlate();
         }
     }
 }

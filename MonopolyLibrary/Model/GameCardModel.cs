@@ -15,6 +15,15 @@ namespace MonopolyLibrary.Model
     public class GameCardModel
     {
 
+        private int streetBoardID;
+
+        public int StreetBoardID
+        {
+            get { return streetBoardID; }
+            set { streetBoardID = value; }
+        }
+
+
         /// <summary>
         /// Saves the street that this card represents.
         /// </summary>
@@ -29,6 +38,20 @@ namespace MonopolyLibrary.Model
             }
         }
 
+        /// <summary>
+        /// The street name as a string.
+        /// </summary>
+        private string streetName;
+
+        public string StreetName
+        {
+            get { return streetName; }
+            set
+            {
+                streetName = value;
+            }
+        }
+
         private bool cardInteractable;
 
         public bool CardInteractable
@@ -39,6 +62,15 @@ namespace MonopolyLibrary.Model
                 cardInteractable = value;
             }
         }
+
+        private bool interactionActive;
+
+        public bool InteractionActive
+        {
+            get { return interactionActive; }
+            set { interactionActive = value; }
+        }
+
 
 
         /// <summary>
@@ -96,17 +128,18 @@ namespace MonopolyLibrary.Model
             }
         }
 
-        /// <summary>
-        /// The street name as a string.
-        /// </summary>
-        private string streetName;
 
-        public string StreetName
+        /// <summary>
+        /// The color value for the street.
+        /// </summary>
+        private SolidColorBrush streetColor;
+
+        public SolidColorBrush StreetColor
         {
-            get { return streetName; }
+            get { return streetColor; }
             set
             {
-                streetName = value;
+                streetColor = value;
             }
         }
 
@@ -189,20 +222,6 @@ namespace MonopolyLibrary.Model
 
 
         /// <summary>
-        /// The color value for the street.
-        /// </summary>
-        private SolidColorBrush streetColor;
-
-        public SolidColorBrush StreetColor
-        {
-            get { return streetColor; }
-            set
-            {
-                streetColor = value;
-            }
-        }
-
-        /// <summary>
         /// The amount of houses currently on the street/card.
         /// </summary>
         private int nrOfHouses;
@@ -234,6 +253,22 @@ namespace MonopolyLibrary.Model
         {
             get { return hotel; }
             set { hotel = value; }
+        }
+
+        private int maxMonopolyHouses;
+
+        public int MaxMonopolyHouses
+        {
+            get { return maxMonopolyHouses; }
+            set { maxMonopolyHouses = value; }
+        }
+
+        private int minMonopolyHouses;
+
+        public int MinMonopolyHouses
+        {
+            get { return minMonopolyHouses; }
+            set { minMonopolyHouses = value; }
         }
 
         /// <summary>
@@ -283,23 +318,19 @@ namespace MonopolyLibrary.Model
             }
         }
 
-        private int maxMonopolyHouses;
+        /// <summary>
+        /// Flag to play or stop the pulse animation around the GameCard.
+        /// </summary>
+        private bool playPulseAnimation;
 
-        public int MaxMonopolyHouses
+        public bool PlayPulseAnimation
         {
-            get { return maxMonopolyHouses; }
-            set { maxMonopolyHouses = value; }
+            get { return playPulseAnimation; }
+            set
+            {
+                playPulseAnimation = value;
+            }
         }
-
-        private int minMonopolyHouses;
-
-        public int MinMonopolyHouses
-        {
-            get { return minMonopolyHouses; }
-            set { minMonopolyHouses = value; }
-        }
-
-
 
 
 

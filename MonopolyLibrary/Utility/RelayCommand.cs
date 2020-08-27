@@ -27,10 +27,10 @@ namespace MonopolyLibrary.Utility
         /// <param name="execute">Delegate to execute when Execute is called on the command.  This can be null to just hook up a CanExecute delegate.</param>
         /// <remarks><seealso cref="CanExecute"/> will always return true.</remarks>
         /// 
-        public RelayCommand(Action execute, object destinationPage = null)
+       /* public RelayCommand(Action execute, object destinationPage = null)
         : this(execute, null, destinationPage)
         {
-        }
+        }*/
 
         private RelayCommand(Action execute, Predicate<T> canExecute, object destinationPage)
         {
