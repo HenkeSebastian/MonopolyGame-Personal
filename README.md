@@ -13,4 +13,4 @@ Monopoly built on WPF
 -Auf diese Objekte wird über eine Singleton Klasse (WindowContent) zugegriffen.\
 -Grundlegende Spielregeln von Monopoly implementiert.\
 -Bisher nur lokaler Mehrspieler / keine computer kontrollierten Gegner.\
--Tausch von Spielobjekten noch nicht implementiert.\
+-Tausch von Spielobjekten noch nicht implementiert.
