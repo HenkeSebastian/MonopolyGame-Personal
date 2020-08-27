@@ -2,7 +2,7 @@
 Monopoly built on WPF
 
 
--Persönliches Freizeit Projekt
+-Persönliches Freizeit Projekt/n
 -Aufbau der bekannten Monopoly UI in WPF/XAML.
 -Einzelne Fensterinhalte als austauschbare User-Controls.
 -Die UI ist durch MVVM von der business logic getrennt.
